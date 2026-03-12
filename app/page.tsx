@@ -33,7 +33,7 @@ export default function LandingPage() {
 
         
         {/* Giant Timer Simulation (Like Reference Image) */}
-        <div className="text-7xl md:text-9xl font-light tracking-tighter text-white mb-2 drop-shadow-2xl">
+        <div className="text-7xl md:text-9xl font-light tracking-tighter text-white mb-2 drop-shadow-2xl glow-blue-500/50">
           3IN1 Tech Sprint
         </div>
         
@@ -47,7 +47,7 @@ export default function LandingPage() {
             Register Now! <ArrowUpRight className="ml-2 w-5 h-5" />
           </Link>
           <button className="text-gray-400 hover:text-white font-light tracking-wide transition-colors">
-            Join Discord
+            <a href="https://dsc.gg/3in1techsprint" target="_blank" rel="noopener noreferrer">Join Discord</a>
           </button>
         </div>
       </main>
