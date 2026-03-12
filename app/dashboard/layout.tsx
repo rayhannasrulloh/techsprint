@@ -51,7 +51,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   if (!isAuthenticated) return <div className="min-h-screen bg-[#050814]"></div>;
 
   return (
-    <div className="p-4 max-w-6xl mx-auto min-h-screen bg-[#050814] text-white font-sans flex overflow-hidden">
+    <div className="max-w-6xl mx-auto min-h-screen bg-[#050814] text-white font-sans flex overflow-hidden">
       
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
@@ -72,10 +72,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="h-20 flex items-center justify-between px-6 border-b border-white/5">
           {!isCollapsed ? (
             <div className="text-xl font-light tracking-widest text-gray-200 whitespace-nowrap overflow-hidden">
-              3IN1<span className="text-blue-500 font-medium">TECH</span>
+              3IN1<span className="text-blue-500 font-medium">TECHSPRINT</span>
             </div>
           ) : (
-            <div className="text-xl font-medium text-blue-500 w-full text-center">3T</div>
+            <div className="text-xl font-medium text-blue-500 w-full text-center">3IN1</div>
           )}
         </div>
 
