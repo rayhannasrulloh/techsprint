@@ -27,12 +27,12 @@ export default function ForgotPasswordPage() {
       if (error) throw error;
 
       setIsSuccess(true);
-      setMessage("✅ Reset link sent! Please check your email inbox or spam folder.");
+      setMessage("Reset link sent! Please check your email inbox or spam folder.");
       setEmail(""); // Clear input
 
     } catch (error: any) {
       setIsSuccess(false);
-      setMessage(`❌ Error: ${error.message}`);
+      setMessage(`Error: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
