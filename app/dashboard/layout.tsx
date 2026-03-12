@@ -51,7 +51,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   if (!isAuthenticated) return <div className="min-h-screen bg-[#050814]"></div>;
 
   return (
-    <div className="max-w-6xl mx-auto min-h-screen bg-[#050814] text-white font-sans flex overflow-hidden">
+    <div className="mx-auto min-h-screen bg-[#050814] text-white font-sans flex overflow-hidden">
       
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
