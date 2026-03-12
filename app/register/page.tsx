@@ -11,6 +11,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [teamName, setTeamName] = useState("");
+  const [leaderName, setLeaderName] = useState("");
   const [track, setTrack] = useState("UI/UX");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -38,20 +39,22 @@ export default function RegisterPage() {
               id: authData.user.id,
               team_name: teamName,
               track: track,
+              leader_name: leaderName, // <-- Tambahkan state ini dari form input baru
+              leader_email: email      // <-- Masukkan email yang didaftarkan
             },
           ]);
 
         if (dbError) throw dbError;
       }
 
-      setMessage("✅ Registration successful! Please check your email or login.");
+      setMessage("Registration successful! Please check your email or login.");
       // Redirect to login after 2 seconds
       setTimeout(() => {
         router.push("/login");
       }, 2000);
 
     } catch (error: any) {
-      setMessage(`❌ Error: ${error.message}`);
+      setMessage(`Error: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
@@ -68,6 +71,19 @@ export default function RegisterPage() {
         <p className="text-gray-400 font-light text-sm text-center mb-8">Register your team to get started.</p>
 
         <form onSubmit={handleRegister} className="space-y-5">
+          {/* Leader Name */}
+          <div className="relative">
+            <Users className="absolute left-4 top-4 w-5 h-5 text-gray-500" />
+            <input
+              type="text"
+              required
+              value={leaderName}
+              onChange={(e) => setLeaderName(e.target.value)}
+              placeholder="Team Leader Name"
+              className="w-full bg-[#0a0f24] border border-white/10 rounded-xl py-4 pl-12 pr-4 text-gray-200 font-light focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+            />
+          </div>
+
           {/* Email */}
           <div className="relative">
             <Mail className="absolute left-4 top-4 w-5 h-5 text-gray-500" />
