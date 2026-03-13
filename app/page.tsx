@@ -9,7 +9,7 @@ export default function LandingPage() {
       {/* Navigation */}
       <nav className="border-b border-white/5 p-6 flex justify-between items-center max-w-7xl mx-auto">
         <div className="text-xl font-light tracking-widest text-gray-200">
-          3IN1<span className="text-blue-500 font-medium">TECH SPRINT</span>
+          3IN1<span className="text-blue-500 font-medium">TECHSPRINT</span>
         </div>
         <div className="space-x-6 flex items-center">
           <Link href="/login" className="text-sm text-gray-400 hover:text-white transition-colors">

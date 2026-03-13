@@ -123,6 +123,17 @@ export default function AdminPanelPage() {
     return matchSearch && matchTab;
   });
 
+  // CALCULATE STATISTICS
+  const totalTeams = teamsData.length;
+  const approvedTeams = teamsData.filter(t => t.status === 'approved').length;
+  const pendingTeams = teamsData.filter(t => t.status === 'pending').length;
+  const rejectedTeams = teamsData.filter(t => t.status === 'rejected').length;
+  
+  // Track Breakdown
+  const uiuxCount = teamsData.filter(t => t.track === 'UI/UX').length;
+  const dataCount = teamsData.filter(t => t.track === 'Data Automation').length;
+  const saCount = teamsData.filter(t => t.track === 'System Analyst').length;
+
   if (isLoading) return <div className="min-h-screen bg-[#050814] flex items-center justify-center text-blue-500">Loading Secure Data...</div>;
   if (!isAdmin) return <div className="min-h-screen bg-[#050814] flex items-center justify-center"><h1 className="text-4xl text-red-500">Access Denied</h1></div>;
 
@@ -131,12 +142,12 @@ export default function AdminPanelPage() {
       <div className="max-w-[90rem] mx-auto">
         
         {/* Header & Controls */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
           <div>
             <h1 className="text-3xl font-light tracking-wide flex items-center gap-3">
-              <Database className="text-blue-500" /> Participant Verification
+              <Database className="text-blue-500" /> Event Overview & Verifications
             </h1>
-            <p className="text-gray-400 text-sm mt-1">Total Teams: {filteredTeams.length}</p>
+            <p className="text-gray-400 text-sm mt-1">Real-time statistics for 3IN1 Tech Sprint 2026</p>
           </div>
           
           <div className="flex items-center gap-4 w-full md:w-auto">
@@ -150,7 +161,6 @@ export default function AdminPanelPage() {
                 className="w-full bg-[#0c122b] border border-white/10 rounded-full py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-blue-500"
               />
             </div>
-            {/* Download CSV Button */}
             <button 
               onClick={handleExportCSV}
               className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 rounded-full hover:bg-emerald-600/40 transition-colors text-sm font-medium"
@@ -159,6 +169,57 @@ export default function AdminPanelPage() {
             </button>
           </div>
         </div>
+
+        {/* --- STATISTIC DASHBOARD (NEW) --- */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          
+          {/* Total Teams Card */}
+          <div className="bg-[#0c122b] border border-white/5 rounded-2xl p-5 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+            <p className="text-sm font-light text-gray-400 mb-1">Total Teams Registered</p>
+            <h3 className="text-4xl font-normal text-white">{totalTeams}</h3>
+            <p className="text-xs text-blue-400 mt-2">Est. {totalTeams * 3} Individual Participants</p>
+          </div>
+
+          {/* Verification Status Card */}
+          <div className="bg-[#0c122b] border border-white/5 rounded-2xl p-5">
+            <p className="text-sm font-light text-gray-400 mb-3">Verification Status (RSVP)</p>
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-xs text-gray-300 flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400"/> Approved</span>
+              <span className="font-medium text-emerald-400">{approvedTeams}</span>
+            </div>
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-xs text-gray-300 flex items-center gap-1"><AlertTriangle className="w-3 h-3 text-yellow-400"/> Pending</span>
+              <span className="font-medium text-yellow-400">{pendingTeams}</span>
+            </div>
+            <div className="w-full bg-white/5 rounded-full h-1.5 mt-3 overflow-hidden flex">
+              <div style={{ width: `${totalTeams === 0 ? 0 : (approvedTeams/totalTeams)*100}%` }} className="bg-emerald-500 h-full"></div>
+              <div style={{ width: `${totalTeams === 0 ? 0 : (pendingTeams/totalTeams)*100}%` }} className="bg-yellow-500 h-full"></div>
+            </div>
+          </div>
+
+          {/* Track Breakdown Card */}
+          <div className="bg-[#0c122b] border border-white/5 rounded-2xl p-5 lg:col-span-2">
+            <p className="text-sm font-light text-gray-400 mb-3">Registrations by Track Category</p>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="bg-white/[0.02] border border-white/5 p-3 rounded-xl text-center">
+                <p className="text-2xl font-normal text-white">{uiuxCount}</p>
+                <p className="text-[10px] text-gray-500 uppercase tracking-widest mt-1">UI/UX Design</p>
+              </div>
+              <div className="bg-white/[0.02] border border-white/5 p-3 rounded-xl text-center">
+                <p className="text-2xl font-normal text-white">{dataCount}</p>
+                <p className="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Data Automation</p>
+              </div>
+              <div className="bg-white/[0.02] border border-white/5 p-3 rounded-xl text-center">
+                <p className="text-2xl font-normal text-white">{saCount}</p>
+                <p className="text-[10px] text-gray-500 uppercase tracking-widest mt-1">System Analyst</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        {/* --- END OF STATISTIC DASHBOARD --- */}
+
 
         {/* Track Filter Tabs */}
         <div className="flex gap-2 overflow-x-auto mb-6 pb-2 border-b border-white/10">
