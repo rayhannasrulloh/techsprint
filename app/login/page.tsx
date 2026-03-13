@@ -26,14 +26,14 @@ export default function LoginPage() {
 
       if (error) throw error;
 
-      setMessage("✅ Login successful! Redirecting...");
+      setMessage("Login successful! Redirecting...");
       // Redirect to dashboard
       setTimeout(() => {
         router.push("/dashboard");
       }, 1000);
 
     } catch (error: any) {
-      setMessage(`❌ Error: ${error.message}`);
+      setMessage(`Error: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
@@ -42,7 +42,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0f24] via-[#050814] to-black flex flex-col items-center justify-center p-6 text-white font-sans">
       <Link href="/" className="absolute top-8 left-8 text-xl font-light tracking-widest text-gray-200">
-        3IN1<span className="text-blue-500 font-medium">TECH SPRINT</span>
+        3IN1<span className="text-blue-500 font-medium">TECHSPRINT</span>
       </Link>
 
       <div className="max-w-md w-full bg-white/[0.02] border border-white/10 rounded-3xl p-10 shadow-2xl backdrop-blur-md">
