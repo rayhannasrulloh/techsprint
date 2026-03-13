@@ -84,7 +84,12 @@ export default function AdminPanelPage() {
 
   // EXPORT TO CSV
   const handleExportCSV = () => {
-    const headers = ["Team Name", "Track Category", "Leader Name", "Leader Email", "Registration Status", "CP 1", "CP 2", "CP 3", "Final Repo", "Pitch Deck", "Registered At"];
+    // 1. Tambahkan Member 1 dan Member 2 di Header CSV
+    const headers = [
+      "Team Name", "Track Category", "Leader Name", "Leader Email", 
+      "Member 1", "Member 2", "Registration Status", 
+      "CP 1", "CP 2", "CP 3", "Final Repo", "Pitch Deck", "Registered At"
+    ];
     
     const csvData = filteredTeams.map(team => {
       const hasCP = (num: number) => team.checkpoints.some((cp: any) => cp.checkpoint_number === num) ? "Done" : "Pending";
@@ -95,12 +100,14 @@ export default function AdminPanelPage() {
         team.track,
         team.leader_name || "N/A",
         team.leader_email || "N/A",
+        team.member1_name || "-", // Data baru
+        team.member2_name || "-", // Data baru
         team.status,
         hasCP(1), hasCP(2), hasCP(3),
         finalSub?.final_repo_link || "Not Submitted",
         finalSub?.presentation_link || "Not Submitted",
         new Date(team.created_at).toLocaleString()
-      ].map(field => `"${String(field).replace(/"/g, '""')}"`).join(","); // Escape quotes
+      ].map(field => `"${String(field).replace(/"/g, '""')}"`).join(",");
     });
 
     const csvContent = [headers.join(","), ...csvData].join("\n");
