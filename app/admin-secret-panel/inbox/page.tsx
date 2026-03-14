@@ -125,10 +125,19 @@ export default function AdminInboxPage() {
                 </div>
                 
                 <div className="p-8 flex-1 overflow-y-auto">
-                  <div className="text-gray-300 font-light text-sm leading-relaxed whitespace-pre-wrap">
-                    {selectedEmail.text_body || "No text content available."}
-                  </div>
-                </div>
+                    {selectedEmail.html_body ? (
+                        /* Render HTML Email with a safe white background */
+                        <div 
+                        className="bg-white text-black p-6 rounded-xl text-sm leading-relaxed shadow-inner overflow-hidden"
+                        dangerouslySetInnerHTML={{ __html: selectedEmail.html_body }} 
+                        />
+                    ) : (
+                        /* Fallback to Plain Text */
+                        <div className="text-gray-300 font-light text-sm leading-relaxed whitespace-pre-wrap">
+                        {selectedEmail.text_body || "No content available."}
+                        </div>
+                    )}
+                    </div>
                 
                 <div className="p-4 border-t border-white/10 bg-[#080c1f] flex gap-3">
                   <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
