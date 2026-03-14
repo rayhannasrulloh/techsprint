@@ -7,7 +7,7 @@ import { supabase } from "@/lib/supabase";
 import { Mail, ArrowLeft, Search, Trash2, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
-const ADMIN_EMAILS = ["rayhan.nasrulloh@student.president.ac.id", "admin@techsprint.web.id"];
+const ADMIN_EMAILS = ["rayhan.nasrulloh@student.president.ac.id", "academic@techsprint.web.id"];
 
 export default function AdminInboxPage() {
   const router = useRouter();
