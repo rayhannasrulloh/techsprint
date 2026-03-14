@@ -1,13 +1,46 @@
 // File: src/app/page.tsx
 import Link from "next/link";
-import { ArrowUpRight, MonitorSmartphone, DatabaseZap, Cpu } from "lucide-react";
+import { ArrowUpRight, MonitorSmartphone, DatabaseZap, Cpu, Calendar, UserPlus, Timer, MonitorPlay, Rocket } from "lucide-react";
 
 export default function LandingPage() {
+  // Data Timeline Event
+  const timelineEvents = [
+    { 
+      date: "6 - 21 April 2026", 
+      title: "Batch 1 Registration", 
+      desc: "Open registration for early birds. Gather your team of 3 and secure your spot early.", 
+      icon: UserPlus,
+      color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
+    },
+    { 
+      date: "22 April - 1 May 2026", 
+      title: "Batch 2 Registration (Extended)", 
+      desc: "Last chance to join! Registration officially closes on May 1st at 23:59 WIB.", 
+      icon: Timer,
+      color: "text-purple-400", bg: "bg-purple-500/10", border: "border-purple-500/30"
+    },
+    { 
+      date: "6 May 2026", 
+      title: "Technical Meeting", 
+      desc: "Mandatory briefing for all participants. We will discuss rules, submission guidelines, and judging criteria.", 
+      icon: MonitorPlay,
+      color: "text-yellow-400", bg: "bg-yellow-500/10", border: "border-yellow-500/30"
+    },
+    { 
+      date: "9 - 10 May 2026", 
+      title: "Hackathon Day (24-Hour Sprint)", 
+      desc: "The sprint begins! Starts at 12:00 PM and ends the next day at 12:00 PM. Build your solutions and conquer the checkpoints.", 
+      icon: Rocket,
+      color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30"
+    }
+  ];
+
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0f24] via-[#050814] to-black text-white font-sans selection:bg-blue-500 selection:text-white">
       
       {/* Navigation */}
-      <nav className="border-b border-white/5 p-6 flex justify-between items-center max-w-7xl mx-auto">
+      <nav className="border-white/5 p-6 flex justify-between items-center max-w-7xl mx-auto">
         <div className="text-xl font-light tracking-widest text-gray-200">
           3IN1<span className="text-blue-500 font-medium">TECHSPRINT</span>
         </div>
@@ -26,14 +59,14 @@ export default function LandingPage() {
       <main className="max-w-5xl mx-auto px-6 pt-8 pb-20 text-center flex flex-col items-center">
         
         {/* <div className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-blue-200 tracking-wide">
-          <span className="text-blue-500">✨</span> New! Winners announced at closing ceremony <ArrowUpRight className="w-3 h-3" />
+          <span className="text-blue-500"></></span> New! Winners announced at closing ceremony <ArrowUpRight className="w-3 h-3" />
         </div> */}
 
         <img src="/logo-3in1-tech-sprint.png" alt="3IN1 Tech Sprint" className="mix-blend-screen w-1/4 h-auto" />
 
         
         {/* Giant Timer Simulation (Like Reference Image) */}
-        <div className="text-7xl md:text-9xl font-light tracking-tighter text-white mb-2 drop-shadow-2xl glow-blue-500/50">
+        <div className="text-7xl md:text-9xl font-light tracking-tighter text-white mb-2 drop-shadow-2xl text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]">
           3IN1 Tech Sprint
         </div>
         
@@ -94,6 +127,51 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* --- NEW TIMELINE SECTION --- */}
+      <section className="border-t border-white/5 bg-[#050814] py-24 relative overflow-hidden">
+        {/* Glow background effect */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none"></div>
+        
+        <div className="max-w-4xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-2xl font-light tracking-widest text-gray-300 uppercase flex items-center justify-center gap-3">
+              <Calendar className="w-6 h-6 text-blue-500" /> Event Journey
+            </h2>
+            <p className="text-gray-500 font-light mt-4">Mark your calendar for these important dates.</p>
+          </div>
+
+          <div className="relative border-l border-white/10 ml-4 md:ml-10 space-y-12 pb-8">
+            {timelineEvents.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className="relative pl-10 md:pl-16 group">
+                  {/* Glowing Node Marker */}
+                  <span className="absolute -left-5 md:-left-6 top-1 bg-[#050814] p-2 rounded-full border border-white/10 group-hover:border-blue-500/50 transition-colors duration-300">
+                    <div className={`w-6 h-6 md:w-8 md:h-8 ${item.bg} ${item.border} border rounded-full flex items-center justify-center`}>
+                      <Icon className={`w-3 h-3 md:w-4 md:h-4 ${item.color}`} />
+                    </div>
+                  </span>
+                  
+                  {/* Content Card */}
+                  <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-8 hover:bg-white/[0.04] transition-all duration-300">
+                    <span className={`text-xs md:text-sm font-medium tracking-wider uppercase mb-2 block ${item.color}`}>
+                      {item.date}
+                    </span>
+                    <h3 className="text-xl md:text-2xl font-normal text-gray-100 mb-3">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-400 font-light text-sm md:text-base leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
