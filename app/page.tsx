@@ -99,7 +99,7 @@ export default function LandingPage() {
             {/* UI/UX Card */}
             <div className="bg-white/[0.02] p-8 rounded-3xl border border-white/5 hover:border-blue-500/50 hover:bg-white/[0.04] transition-all duration-500 group">
               <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <MonitorSmartphone className="text-blue-400 w-7 h-7 stroke-[1.5]" />
+                <MonitorSmartphone className="text-white w-7 h-7 stroke-[1.5]" />
               </div>
               <h3 className="text-xl font-normal mb-3 text-gray-100">UI/UX Design</h3>
               <p className="text-gray-400 leading-relaxed font-light text-sm">
@@ -110,7 +110,7 @@ export default function LandingPage() {
             {/* Data Automation Card */}
             <div className="bg-white/[0.02] p-8 rounded-3xl border border-white/5 hover:border-emerald-500/50 hover:bg-white/[0.04] transition-all duration-500 group">
               <div className="bg-emerald-500/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <DatabaseZap className="text-emerald-400 w-7 h-7 stroke-[1.5]" />
+                <DatabaseZap className="text-white w-7 h-7 stroke-[1.5]" />
               </div>
               <h3 className="text-xl font-normal mb-3 text-gray-100">Data Automation</h3>
               <p className="text-gray-400 leading-relaxed font-light text-sm">
@@ -121,7 +121,7 @@ export default function LandingPage() {
             {/* System Analyst Card */}
             <div className="bg-white/[0.02] p-8 rounded-3xl border border-white/5 hover:border-purple-500/50 hover:bg-white/[0.04] transition-all duration-500 group">
               <div className="bg-purple-500/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Cpu className="text-purple-400 w-7 h-7 stroke-[1.5]" />
+                <Cpu className="text-white w-7 h-7 stroke-[1.5]" />
               </div>
               <h3 className="text-xl font-normal mb-3 text-gray-100">System Analyst</h3>
               <p className="text-gray-400 leading-relaxed font-light text-sm">
