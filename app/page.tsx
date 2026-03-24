@@ -7,6 +7,7 @@ import FaultyTerminal from "../components/FaultyTerminal";
 import NumberTicker from "../components/NumberTicker";
 import Footer from "../components/Footer";
 import Countdown from "../components/Countdown";
+import PageLoader from "../components/PageLoader";
 import { 
   ArrowUpRight, MonitorSmartphone, DatabaseZap, Cpu, Calendar, 
   UserPlus, Timer, MonitorPlay, Rocket, 
@@ -90,6 +91,8 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0f24] via-[#050814] to-black text-white font-sans selection:bg-blue-500 selection:text-white overflow-x-hidden">
       
+      <PageLoader />
+
       {/* Hero Wrapper with SoftAurora Background */}
       <div className="relative w-full min-h-screen flex flex-col overflow-hidden">
         
@@ -119,13 +122,12 @@ export default function LandingPage() {
           <nav className="border-white/5 p-6 flex justify-between items-center max-w-7xl mx-auto w-full pointer-events-auto">
             
             <div className="flex items-center">
-              <img src="/logo-techsprint-2026.png" alt="3IN1 Tech Sprint 2026" className="h-24 md:h-24 w-auto object-contain mix-blend-screen" />
+              <Link href="/">
+                <img src="/logo-techsprint-2026.png" alt="3IN1 Tech Sprint 2026" className="h-24 md:h-24 w-auto object-contain mix-blend-screen" />
+              </Link>
             </div>
             
             <div className="space-x-6 flex items-center">
-              <Link href="/login" className="text-sm text-gray-400 hover:text-white transition-colors">
-                Login
-              </Link>
               {/* Reference Button Style: Small */}
               <Link href="/register" className="flex items-center text-sm bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-2 rounded-full font-normal shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
                 Register <ArrowUpRight className="ml-1 w-4 h-4" />
@@ -152,15 +154,28 @@ export default function LandingPage() {
             </div> */}
             
             <h1 
-              className="text-xl md:text-3xl font-normal tracking-wide text-white mb-24 leading-tight"
-              style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(255,255,255,0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
+              className="text-xl md:text-3xl font-normal tracking-wide text-white mb-18 leading-tight"
+              style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
             >
               <TextReveal 
-                text="24 Hours of Innovation. Join us for a weekend of creation, collaboration, and competition." 
+                text="Tech Sprint" 
                 delay={0.5} 
-                className="inline-block"
+                className="inline-block mb-10 text-9xl"
               />
             </h1>
+
+            {/* Countdown Timer */}
+            <div 
+              className="flex flex-col items-center text-5xl md:text-12xl font-normal tracking-wide text-white mb-18 leading-tight "
+              style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
+            >
+              <TextReveal 
+                text="Countdown to 1st Batch Registration Deadline"
+                delay={0.5}
+                className="inline-block mb-10 text-2xl"
+              />
+              <Countdown targetDate="2026-04-10T23:59:59" />
+            </div>
             
             <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
               {/* Reference Button Style: Large */}
