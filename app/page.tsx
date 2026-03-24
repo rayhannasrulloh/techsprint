@@ -1,5 +1,8 @@
-// File: src/app/page.tsx
 import Link from "next/link";
+import { TextReveal } from "../components/TextReveal";
+import SoftAurora from "../components/SoftAurora";
+import MagicBento from "../components/MagicBento";
+import MagicTimeline from "../components/MagicTimeline";
 import { 
   ArrowUpRight, MonitorSmartphone, DatabaseZap, Cpu, Calendar, 
   UserPlus, Timer, MonitorPlay, Rocket, 
@@ -8,6 +11,30 @@ import {
 } from "lucide-react";
 
 export default function LandingPage() {
+  const trackCards = [
+    {
+      title: 'UI/UX Design',
+      description: 'Design intuitive interfaces. Focus on user journey, wireframing, and interactive prototypes.',
+      icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><MonitorSmartphone className="text-white w-7 h-7 stroke-[1.5]" /></div>,
+      className: "group",
+      color: 'rgba(255,255,255,0.02)'
+    },
+    {
+      title: 'Data Automation',
+      description: 'Build scripts to process and automate pipelines. Show skills in Python, Node, and data efficiency.',
+      icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><DatabaseZap className="text-white w-7 h-7 stroke-[1.5]" /></div>,
+      className: "group",
+      color: 'rgba(255,255,255,0.02)'
+    },
+    {
+      title: 'System Analyst',
+      description: 'Architect robust systems. Create BRD, SRS, and comprehensive system architecture diagrams.',
+      icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><Cpu className="text-white w-7 h-7 stroke-[1.5]" /></div>,
+      className: "group",
+      color: 'rgba(255,255,255,0.02)'
+    }
+  ];
+
   // Data Timeline Event
   const timelineEvents = [
     { 
@@ -19,117 +46,153 @@ export default function LandingPage() {
     },
     { 
       date: "22 April - 1 May 2026", 
-      title: "Batch 2 Registration (Extended)", 
+      title: "Batch 2 Registration", 
       desc: "Last chance to join! Registration officially closes on May 1st at 23:59 WIB.", 
       icon: Timer,
-      color: "text-purple-400", bg: "bg-purple-500/10", border: "border-purple-500/30"
+      color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
     },
     { 
       date: "6 May 2026", 
       title: "Technical Meeting", 
       desc: "Mandatory briefing for all participants. We will discuss rules, submission guidelines, and judging criteria.", 
       icon: MonitorPlay,
-      color: "text-yellow-400", bg: "bg-yellow-500/10", border: "border-yellow-500/30"
+      color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
     },
     { 
       date: "9 - 10 May 2026", 
       title: "Hackathon Day (24-Hour Sprint)", 
       desc: "The sprint begins! Starts at 12:00 PM and ends the next day at 12:00 PM. Build your solutions and conquer the checkpoints.", 
       icon: Rocket,
-      color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30"
+      color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
     }
   ];
 
+  const serializedTimelineEvents = timelineEvents.map((item) => {
+    const Icon = item.icon;
+    return {
+      date: item.date,
+      title: item.title,
+      desc: item.desc,
+      color: item.color,
+      nodeMarker: (
+        <div className={`w-6 h-6 md:w-8 md:h-8 ${item.bg} ${item.border} border rounded-full flex items-center justify-center`}>
+          <Icon className={`w-3 h-3 md:w-4 md:h-4 ${item.color}`} />
+        </div>
+      )
+    };
+  });
+
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0a0f24] via-[#050814] to-black text-white font-sans selection:bg-blue-500 selection:text-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#0a0f24] via-[#050814] to-black text-white font-sans selection:bg-blue-500 selection:text-white overflow-x-hidden">
       
-      {/* Navigation */}
-      <nav className="border-white/5 p-6 flex justify-between items-center max-w-7xl mx-auto">
-        <div className="text-xl font-light tracking-widest text-gray-200">
-          3IN1<span className="text-blue-500 font-medium">TECHSPRINT</span>
+      {/* Hero Wrapper with SoftAurora Background */}
+      <div className="relative w-full min-h-screen flex flex-col overflow-hidden">
+        
+        {/* Soft Aurora Background Layer */}
+        <div className="absolute inset-0 z-0 opacity-80 mix-blend-screen pointer-events-auto">
+          <SoftAurora
+            speed={0.6}
+            scale={1.5}
+            brightness={1}
+            color1="#0a2a5e" // Tech Sprint Dark Tone
+            color2="#00bbff" // Cyan glow matching theme
+            noiseFrequency={2.5}
+            noiseAmplitude={1}
+            bandHeight={0.5}
+            bandSpread={1}
+            octaveDecay={0.1}
+            layerOffset={0}
+            colorSpeed={1}
+            enableMouseInteraction={true}
+            mouseInfluence={0.25}
+          />
         </div>
-        <div className="space-x-6 flex items-center">
-          <Link href="/login" className="text-sm text-gray-400 hover:text-white transition-colors">
-            Login
-          </Link>
-          {/* Reference Button Style: Small */}
-          <Link href="/register" className="flex items-center text-sm bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-2 rounded-full font-normal shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
-            Register <ArrowUpRight className="ml-1 w-4 h-4" />
-          </Link>
-        </div>
-      </nav>
 
-      {/* Hero Section */}
-      <main className="max-w-5xl mx-auto px-6 pt-8 pb-20 text-center flex flex-col items-center">
-        
-        {/* <div className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-blue-200 tracking-wide">
-          <span className="text-blue-500"></></span> New! Winners announced at closing ceremony <ArrowUpRight className="w-3 h-3" />
-        </div> */}
+        {/* Foreground Layer (Nav + Hero) */}
+        <div className="relative z-10 flex-1 flex flex-col pointer-events-none">
+          {/* Navigation */}
+          <nav className="border-white/5 p-6 flex justify-between items-center max-w-7xl mx-auto w-full pointer-events-auto">
+            
+            <div className="flex items-center">
+              <img src="/logo-techsprint-2026.png" alt="3IN1 Tech Sprint 2026" className="h-24 md:h-24 w-auto object-contain mix-blend-screen" />
+            </div>
+            
+            <div className="space-x-6 flex items-center">
+              <Link href="/login" className="text-sm text-gray-400 hover:text-white transition-colors">
+                Login
+              </Link>
+              {/* Reference Button Style: Small */}
+              <Link href="/register" className="flex items-center text-sm bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-2 rounded-full font-normal shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
+                Register <ArrowUpRight className="ml-1 w-4 h-4" />
+              </Link>
+            </div>
+          </nav>
 
-        <img src="/logo-3in1-tech-sprint.png" alt="3IN1 Tech Sprint" className="mix-blend-screen w-1/4 h-auto" />
+          {/* Hero Section */}
+          <main className="max-w-5xl mx-auto px-6 pt-8 pb-20 text-center flex flex-col items-center flex-1 justify-center pointer-events-auto">
+            
+            {/* <div className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-blue-200 tracking-wide">
+              <span className="text-blue-500"></></span> New! Winners announced at closing ceremony <ArrowUpRight className="w-3 h-3" />
+            </div> */}
 
-        
-        {/* Giant Timer Simulation (Like Reference Image) */}
-        <div className="text-7xl md:text-9xl font-light tracking-tighter text-white mb-2 drop-shadow-2xl text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]">
-          3IN1 Tech Sprint
+            {/* <img src="/logo-3in1-tech-sprint.png" alt="3IN1 Tech Sprint" className="mix-blend-screen w-1/4 h-auto" /> */}
+
+            
+            {/* Giant Timer Simulation (Like Reference Image) */}
+            {/* <div className="mb-2 drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]">
+              <TextReveal 
+                text="3IN1 Tech Sprint" 
+                className="text-7xl md:text-9xl font-light tracking-tighter text-blue-400"
+              />
+            </div> */}
+            
+            <h1 
+              className="text-xl md:text-3xl font-normal tracking-wide text-white mb-24 leading-tight"
+              style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(255,255,255,0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
+            >
+              <TextReveal 
+                text="24 Hours of Innovation. Join us for a weekend of creation, collaboration, and competition." 
+                delay={0.5} 
+                className="inline-block"
+              />
+            </h1>
+            
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
+              {/* Reference Button Style: Large */}
+              <Link href="/register" className="flex items-center text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] px-8 py-3 rounded-full font-normal shadow-[0_0_20px_rgba(0,51,255,0.4)] hover:shadow-[0_0_35px_rgba(0,51,255,0.7)] hover:-translate-y-1 transition-all duration-300">
+                Register Now! <ArrowUpRight className="ml-2 w-5 h-5" />
+              </Link>
+              <button className="text-gray-400 hover:text-white font-light tracking-wide transition-colors">
+                <a href="https://dsc.gg/3in1techsprint" target="_blank" rel="noopener noreferrer">Join Discord</a>
+              </button>
+            </div>
+          </main>
         </div>
-        
-        <h1 className="text-xl md:text-3xl font-light tracking-wide text-gray-100 mb-24 leading-tight">
-          24 Hours of Innovation. Join us for a weekend of creation, collaboration, and competition.
-        </h1>
-        
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-          {/* Reference Button Style: Large */}
-          <Link href="/register" className="flex items-center text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] px-8 py-3 rounded-full font-normal shadow-[0_0_20px_rgba(0,51,255,0.4)] hover:shadow-[0_0_35px_rgba(0,51,255,0.7)] hover:-translate-y-1 transition-all duration-300">
-            Register Now! <ArrowUpRight className="ml-2 w-5 h-5" />
-          </Link>
-          <button className="text-gray-400 hover:text-white font-light tracking-wide transition-colors">
-            <a href="https://dsc.gg/3in1techsprint" target="_blank" rel="noopener noreferrer">Join Discord</a>
-          </button>
-        </div>
-      </main>
+      </div>
 
       {/* Tracks Info Section */}
       <section className="border-t border-white/5 bg-gradient-to-b from-transparent to-black py-24">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-2xl font-light text-center mb-16 tracking-widest text-gray-300 uppercase">Track Categories</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            
-            {/* UI/UX Card */}
-            <div className="bg-white/[0.02] p-8 rounded-3xl border border-white/5 hover:border-blue-500/50 hover:bg-white/[0.04] transition-all duration-500 group">
-              <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <MonitorSmartphone className="text-white w-7 h-7 stroke-[1.5]" />
-              </div>
-              <h3 className="text-xl font-normal mb-3 text-gray-100">UI/UX Design</h3>
-              <p className="text-gray-400 leading-relaxed font-light text-sm">
-                Design intuitive interfaces. Focus on user journey, wireframing, and interactive prototypes.
-              </p>
-            </div>
+          <h2 className="text-2xl font-light text-center mb-16 tracking-widest text-gray-300 uppercase">
+            <TextReveal text="Track Categories" />
+          </h2>
+          
+          <MagicBento 
+            cards={trackCards}
+            textAutoHide={true}
+            enableStars={true}
+            enableSpotlight={true}
+            enableBorderGlow={true}
+            enableTilt={false}
+            enableMagnetism={false}
+            clickEffect={true}
+            spotlightRadius={400}
+            particleCount={12}
+            glowColor="59, 130, 246" 
+            disableAnimations={false}
+          />
 
-            {/* Data Automation Card */}
-            <div className="bg-white/[0.02] p-8 rounded-3xl border border-white/5 hover:border-emerald-500/50 hover:bg-white/[0.04] transition-all duration-500 group">
-              <div className="bg-emerald-500/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <DatabaseZap className="text-white w-7 h-7 stroke-[1.5]" />
-              </div>
-              <h3 className="text-xl font-normal mb-3 text-gray-100">Data Automation</h3>
-              <p className="text-gray-400 leading-relaxed font-light text-sm">
-                Build scripts to process and automate pipelines. Show skills in Python, Node, and data efficiency.
-              </p>
-            </div>
-
-            {/* System Analyst Card */}
-            <div className="bg-white/[0.02] p-8 rounded-3xl border border-white/5 hover:border-purple-500/50 hover:bg-white/[0.04] transition-all duration-500 group">
-              <div className="bg-purple-500/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Cpu className="text-white w-7 h-7 stroke-[1.5]" />
-              </div>
-              <h3 className="text-xl font-normal mb-3 text-gray-100">System Analyst</h3>
-              <p className="text-gray-400 leading-relaxed font-light text-sm">
-                Architect robust systems. Create BRD, SRS, and comprehensive system architecture diagrams.
-              </p>
-            </div>
-
-          </div>
         </div>
       </section>
 
@@ -141,39 +204,12 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-2xl font-light tracking-widest text-gray-300 uppercase flex items-center justify-center gap-3">
-              <Calendar className="w-6 h-6 text-blue-500" /> Event Journey
+              Event Journey
             </h2>
             <p className="text-gray-500 font-light mt-4">Mark your calendar for these important dates.</p>
           </div>
 
-          <div className="relative border-l border-white/10 ml-4 md:ml-10 space-y-12 pb-8">
-            {timelineEvents.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <div key={index} className="relative pl-10 md:pl-16 group">
-                  {/* Glowing Node Marker */}
-                  <span className="absolute -left-5 md:-left-6 top-1 bg-[#050814] p-2 rounded-full border border-white/10 group-hover:border-blue-500/50 transition-colors duration-300">
-                    <div className={`w-6 h-6 md:w-8 md:h-8 ${item.bg} ${item.border} border rounded-full flex items-center justify-center`}>
-                      <Icon className={`w-3 h-3 md:w-4 md:h-4 ${item.color}`} />
-                    </div>
-                  </span>
-                  
-                  {/* Content Card */}
-                  <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-8 hover:bg-white/[0.04] transition-all duration-300">
-                    <span className={`text-xs md:text-sm font-medium tracking-wider uppercase mb-2 block ${item.color}`}>
-                      {item.date}
-                    </span>
-                    <h3 className="text-xl md:text-2xl font-normal text-gray-100 mb-3">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-400 font-light text-sm md:text-base leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <MagicTimeline events={serializedTimelineEvents} glowColor="59, 130, 246" />
         </div>
       </section>
 
