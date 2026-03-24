@@ -4,6 +4,9 @@ import SoftAurora from "../components/SoftAurora";
 import MagicBento from "../components/MagicBento";
 import MagicTimeline from "../components/MagicTimeline";
 import FaultyTerminal from "../components/FaultyTerminal";
+import NumberTicker from "../components/NumberTicker";
+import Footer from "../components/Footer";
+import Countdown from "../components/Countdown";
 import { 
   ArrowUpRight, MonitorSmartphone, DatabaseZap, Cpu, Calendar, 
   UserPlus, Timer, MonitorPlay, Rocket, 
@@ -199,8 +202,26 @@ export default function LandingPage() {
 
         {/* Foreground Content */}
         <div className="relative z-10 pointer-events-none [&>*]:pointer-events-auto">
+          {/* --- EVENT DESCRIPTION SECTION --- */}
+          <section className="py-24 relative overflow-hidden">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+            <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-light tracking-wide text-white mb-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                Ready to Innovate, <br className="hidden md:block" /><span className="text-blue-400 font-normal">Create the Future State</span>
+              </h2>
+              <div className="space-y-6 text-gray-400 font-light text-base md:text-lg leading-relaxed text-justify md:text-center">
+                <p>
+                  Tech Sprint 2026 - <span className="text-gray-200">3IN1</span> is the flagship innovation competition organized by the Research and Development (R&D) Division of the President University Major Association of Information Systems (PUMA IS). Building on the prestigious legacy of previous iterations, evolving from CompClub (2021-2023) to the international Golden Code Hackathon in 2025, this year’s event is designed as an intensive 2-day innovation sprint. With a core philosophy of <span className="text-blue-400 font-medium">"Tech With Impact,"</span> rooted in the philosophy of <span className="text-white font-medium">THINK, BUILD,</span> and <span className="text-white font-medium">IMPACT</span>, the sprint challenges participants to move from analytical thinking (THINK) to hands-on prototyping (BUILD) to deliver measurable real-world implementation (IMPACT).
+                </p>
+                <p>
+                  Carrying the mission to create sustainable tech solutions addressing real campus and student challenges, the event introduces a unique approach across three specialized tracks: <span className="text-gray-200">UI/UX Design, Data Automation, and System Analysis</span>. Each track targets 8 competing teams, bringing together a total of 72 participants across all three tracks. The sprint unfolds in two structured phases: <span className="text-white font-medium">Day 1 (BUILD)</span>, where teams ideate and rapidly prototype their solutions, and <span className="text-white font-medium">Day 2 (TEST + PITCH)</span>, where top teams present their final outputs to a panel of industry judges.
+                </p>
+              </div>
+            </div>
+          </section>
+
           {/* Tracks Info Section */}
-          <section className="border-t border-white/5 py-24">
+          <section className="py-24">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-2xl font-light text-center mb-16 tracking-widest text-gray-300 uppercase">
             <TextReveal text="Track Categories" />
@@ -225,7 +246,7 @@ export default function LandingPage() {
       </section>
 
       {/* --- NEW TIMELINE SECTION --- */}
-      <section className="border-t border-white/5 py-24 relative overflow-hidden">
+      <section className="py-24 relative overflow-hidden">
         {/* Glow background effect */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none"></div>
         
@@ -241,136 +262,90 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* --- NEW: SPONSORS & PARTNERS SECTION --- */}
-      <section className="border-t border-white/5 py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-            <div>
-              <h2 className="text-xs font-semibold tracking-widest text-gray-500 uppercase mb-3">Official Partners</h2>
-              <h3 className="text-3xl md:text-4xl font-light text-white">
-                Supported by <span className="font-medium text-gray-300">industry leaders.</span>
-              </h3>
-            </div>
-            <button className="px-5 py-2 rounded-full border border-white/10 text-sm font-light text-gray-300 hover:bg-white/5 transition-colors">
-              Become a sponsor
-            </button>
+      {/* --- TOTAL PRIZEPOOL SECTION --- */}
+      <section className="border-t border-white/5 py-32 relative overflow-hidden flex flex-col items-center justify-center">
+        {/* Glow effect specific to Prizepool */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-yellow-500/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+        
+        <div className="relative z-10 text-center px-6">
+          <p className="text-sm font-medium tracking-[0.2em] text-yellow-500 uppercase mb-4">
+            Total Prizepool
+          </p>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 text-6xl md:text-8xl lg:text-9xl font-light text-white drop-shadow-[0_0_30px_rgba(234,179,8,0.4)]">
+            <span className="text-4xl md:text-6xl text-yellow-500">Rp</span>
+            <NumberTicker value={20000000} delay={0.5} />
+            <span className="text-4xl md:text-6xl text-yellow-500">+</span>
           </div>
-
-          {/* Grid Style mimicking Supabase's layout */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            
-            {/* Google */}
-            <div className="bg-white/[0.02] border border-white/5 rounded-2xl h-32 flex items-center justify-center hover:bg-white/[0.04] transition-colors group">
-              <div className="flex items-center gap-3 text-gray-400 group-hover:text-white transition-colors">
-                <img src="/g.webp" alt="Google" className="w-6 h-6" />
-                <span className="text-xl font-medium tracking-tight">Google</span>
-              </div>
-            </div>
-
-            {/* KAI */}
-            <div className="bg-white/[0.02] border border-white/5 rounded-2xl h-32 flex items-center justify-center hover:bg-white/[0.04] transition-colors group">
-              <div className="flex items-center gap-3 text-gray-400 group-hover:text-[#f36f21] transition-colors">
-                <Train className="w-8 h-8" />
-                <span className="text-2xl font-bold tracking-tighter italic">KAI</span>
-              </div>
-            </div>
-
-            {/* Google Cloud (Bigger Card Span) */}
-            <div className="bg-white/[0.02] border border-white/5 rounded-2xl h-32 flex items-center justify-center hover:bg-white/[0.04] transition-colors md:col-span-2 group relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="flex items-center gap-3 text-gray-400 group-hover:text-blue-400 transition-colors">
-                <Cloud className="w-8 h-8" />
-                <span className="text-2xl font-normal tracking-tight">Google Cloud</span>
-              </div>
-            </div>
-
-            {/* HokBen */}
-            <div className="bg-white/[0.02] border border-white/5 rounded-2xl h-32 flex items-center justify-center hover:bg-white/[0.04] transition-colors group md:col-span-4 lg:col-span-2">
-              <div className="flex items-center gap-3 text-gray-400 group-hover:text-yellow-500 transition-colors">
-                <Utensils className="w-7 h-7" />
-                <span className="text-2xl font-bold tracking-tight text-white group-hover:text-yellow-500 transition-colors">HokBen</span>
-              </div>
-            </div>
-
-            {/* Placeholder 1 */}
-            <div className="bg-white/[0.02] border border-white/5 rounded-2xl h-32 flex items-center justify-center hover:bg-white/[0.04] transition-colors text-gray-600 font-light text-sm">
-              Your Logo Here
-            </div>
-
-            {/* Placeholder 2 */}
-            <div className="bg-white/[0.02] border border-white/5 rounded-2xl h-32 flex items-center justify-center hover:bg-white/[0.04] transition-colors text-gray-600 font-light text-sm">
-              Your Logo Here
-            </div>
-
-          </div>
+          <p className="text-gray-400 mt-8 font-light max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+            Compete, innovate, and win your share of the massive prize pool along with exclusive opportunities from our industry partners.
+          </p>
         </div>
       </section>
 
-      {/* --- NEW: FOOTER --- */}
-      <footer className="border-t border-white/10 pt-20 pb-10">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-            
-            {/* Brand Column */}
-            <div className="lg:col-span-1">
-              <div className="text-2xl font-light tracking-widest text-gray-200 mb-4">
-                3IN1<span className="text-blue-500 font-medium">TECHSPRINT</span>
+      {/* --- NEW: SPONSORS & PARTNERS SECTION --- */}
+      <section className="border-t border-white/5 py-24 relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+        
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="mb-16 flex flex-col items-center text-center gap-6">
+            <h2 className="text-2xl md:text-3xl font-light tracking-widest text-gray-300 uppercase flex items-center justify-center gap-3">
+              <TextReveal text="Sponsored by" />
+            </h2>
+            <Link href="/sponsorship" className="px-6 py-2.5 rounded-full border border-white/10 bg-white/[0.02] text-sm font-light text-gray-300 hover:bg-white/10 hover:border-blue-500/50 hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.02)] hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+              Become a sponsor
+            </Link>
+          </div>
+
+          <div className="flex flex-col gap-6">
+            {/* Case Collaborator / Main Sponsor (Full Width) */}
+            <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-8 md:p-12 flex flex-col xl:flex-row items-center justify-between gap-8 md:gap-12 hover:bg-white/[0.04] transition-all duration-500 group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-duration-700"></div>
+              
+              <div className="flex flex-col items-center xl:items-start text-center xl:text-left z-10 w-full xl:w-1/3">
+                <span className="text-xs font-medium tracking-[0.2em] text-blue-400 uppercase mb-4">Case Collaborator</span>
+                <span className="text-4xl md:text-5xl lg:text-6xl font-normal tracking-tight text-white group-hover:text-blue-400 transition-colors duration-500 mb-2">Coming Soon</span>
+                <span className="text-sm text-gray-400 font-light">The grand reveal of our main case collaborator will unlock on May 1st, 2026.</span>
               </div>
-              <p className="text-gray-400 font-light text-sm leading-relaxed mb-6">
-                Empowering the next generation of tech leaders through intense innovation, collaboration, and 24-hour sprints.
-              </p>
-            </div>
-
-            {/* Quick Links */}
-            <div>
-              <h4 className="text-white font-medium mb-6">Quick Links</h4>
-              <ul className="space-y-4 text-sm font-light text-gray-400">
-                <li><Link href="/register" className="hover:text-blue-400 transition-colors">Registration</Link></li>
-                <li><Link href="/login" className="hover:text-blue-400 transition-colors">Team Dashboard</Link></li>
-                <li><a href="#" className="flex items-center gap-2 hover:text-blue-400 transition-colors"><MessageSquare className="w-4 h-4"/> Feedback Form</a></li>
-              </ul>
-            </div>
-
-            {/* Contact Us */}
-            <div>
-              <h4 className="text-white font-medium mb-6">Contact Us</h4>
-              <ul className="space-y-4 text-sm font-light text-gray-400">
-                <li className="flex items-center gap-3"><Mail className="w-4 h-4 text-blue-500" /> academic@techsprint.web.id</li>
-                <li className="flex items-start gap-3"><MapPin className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" /> <span>President University<br/>Cikarang, Bekasi</span></li>
-              </ul>
-            </div>
-
-            {/* Follow Us */}
-            <div>
-              <h4 className="text-white font-medium mb-6">Follow Us</h4>
-              <p className="text-sm font-light text-gray-400 mb-4">Stay updated with our latest announcements.</p>
-              <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:border-blue-500 transition-all">
-                  <Instagram className="w-4 h-4" />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-400 hover:border-blue-400 transition-all">
-                  <Twitter className="w-4 h-4" />
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-700 hover:border-blue-600 transition-all">
-                  <Linkedin className="w-4 h-4" />
-                </a>
+              
+              <div className="z-10 flex items-center justify-center bg-[#03050a]/50 p-6 md:p-8 py-8 md:py-10 border border-white/5 rounded-3xl shadow-inner w-full xl:w-auto overflow-x-auto">
+                <Countdown targetDate="2026-05-01T00:00:00" />
               </div>
             </div>
 
-          </div>
+            {/* Grid Style for Tiered Sponsors */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-4">
+              {/* Sponsor 2 */}
+              <div className="bg-white/[0.02] border border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-white/[0.04] transition-all duration-300 group hover:border-white/20">
+                <div className="flex items-center gap-4 text-gray-400 group-hover:text-white transition-colors">
+                  {/* <img src="/g.webp" alt="Google" className="w-8 h-8 md:w-10 md:h-10" /> */}
+                  <span className="text-2xl md:text-3xl font-medium tracking-tight">Coming Soon</span>
+                </div>
+              </div>
 
-          {/* Copyright */}
-          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-500 font-light text-xs">
-              © {new Date().getFullYear()} 3IN1 Tech Sprint. All rights reserved.
-            </p>
-            <div className="flex gap-6 text-xs font-light text-gray-500">
-              <a href="#" className="hover:text-gray-300">Privacy Policy</a>
-              <a href="#" className="hover:text-gray-300">Terms of Service</a>
+              {/* Sponsor 3 */}
+              <div className="bg-white/[0.02] border border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-white/[0.04] transition-all duration-300 group hover:border-white/20">
+                <div className="flex items-center gap-4 text-gray-400 group-hover:text-white transition-colors">
+                  {/* <Train className="w-8 h-8 md:w-10 md:h-10" /> */}
+                  <span className="text-2xl md:text-3xl font-medium tracking-tight">Coming Soon</span>
+                </div>
+              </div>
+
+              {/* Sponsor 4 */}
+              <div className="bg-white/[0.02] border border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-white/[0.04] transition-all duration-300 group hover:border-white/20">
+                <div className="flex items-center gap-4 text-gray-400 group-hover:text-white transition-colors">
+                  {/* <Utensils className="w-8 h-8 md:w-10 md:h-10" /> */}
+                  <span className="text-2xl md:text-3xl font-medium tracking-tight">Coming Soon</span>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
-      </footer>
+      </section>
+
+      {/* --- FOOTER --- */}
+      <Footer />
 
         </div>
       </div>
