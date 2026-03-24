@@ -3,6 +3,7 @@ import { TextReveal } from "../components/TextReveal";
 import SoftAurora from "../components/SoftAurora";
 import MagicBento from "../components/MagicBento";
 import MagicTimeline from "../components/MagicTimeline";
+import FaultyTerminal from "../components/FaultyTerminal";
 import { 
   ArrowUpRight, MonitorSmartphone, DatabaseZap, Cpu, Calendar, 
   UserPlus, Timer, MonitorPlay, Rocket, 
@@ -171,8 +172,35 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Tracks Info Section */}
-      <section className="border-t border-white/5 bg-gradient-to-b from-transparent to-black py-24">
+      {/* --- LOWER PAGE CONTENT WITH FAULTY TERMINAL BACKGROUND --- */}
+      <div className="relative w-full overflow-hidden">
+        {/* Faulty Terminal Background Layer */}
+        <div className="absolute inset-0 z-0 mix-blend-screen pointer-events-auto">
+          <FaultyTerminal
+            scale={1.5}
+            gridMul={[2, 1]}
+            digitSize={1.2}
+            timeScale={0.5}
+            pause={false}
+            scanlineIntensity={0.5}
+            glitchAmount={1}
+            flickerAmount={1}
+            noiseAmp={1}
+            chromaticAberration={0}
+            dither={0}
+            curvature={0.1}
+            tint="#051e3652"
+            mouseReact={true}
+            mouseStrength={0.5}
+            pageLoadAnimation={true}
+            brightness={0.1}
+          />
+        </div>
+
+        {/* Foreground Content */}
+        <div className="relative z-10 pointer-events-none [&>*]:pointer-events-auto">
+          {/* Tracks Info Section */}
+          <section className="border-t border-white/5 py-24">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-2xl font-light text-center mb-16 tracking-widest text-gray-300 uppercase">
             <TextReveal text="Track Categories" />
@@ -197,7 +225,7 @@ export default function LandingPage() {
       </section>
 
       {/* --- NEW TIMELINE SECTION --- */}
-      <section className="border-t border-white/5 bg-[#050814] py-24 relative overflow-hidden">
+      <section className="border-t border-white/5 py-24 relative overflow-hidden">
         {/* Glow background effect */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none"></div>
         
@@ -214,7 +242,7 @@ export default function LandingPage() {
       </section>
 
       {/* --- NEW: SPONSORS & PARTNERS SECTION --- */}
-      <section className="border-t border-white/5 bg-[#03050a] py-24">
+      <section className="border-t border-white/5 py-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
             <div>
@@ -279,7 +307,7 @@ export default function LandingPage() {
       </section>
 
       {/* --- NEW: FOOTER --- */}
-      <footer className="border-t border-white/10 bg-[#020308] pt-20 pb-10">
+      <footer className="border-t border-white/10 pt-20 pb-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             
@@ -343,6 +371,9 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
+
+        </div>
+      </div>
 
     </div>
   );
