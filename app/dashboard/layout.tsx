@@ -43,7 +43,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const navItems = [
     { name: "Overview", path: "/dashboard", icon: Bell },
-    { name: "Roadmap", path: "/dashboard/timeline", icon: Map },
+    { name: "Timeline", path: "/dashboard/timeline", icon: Map },
     { name: "Checkpoints", path: "/dashboard/checkpoint", icon: Flag },
     { name: "Submission", path: "/dashboard/submission", icon: UploadCloud },
   ];
@@ -72,10 +72,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="h-20 flex items-center justify-between px-6 border-b border-white/5">
           {!isCollapsed ? (
             <div className="text-xl font-light tracking-widest text-gray-200 whitespace-nowrap overflow-hidden">
-              3IN1<span className="text-blue-500 font-medium">TECHSPRINT</span>
+              <img src="/logo-only.png" alt="Logo" className="w-10" />
             </div>
           ) : (
-            <div className="text-xl font-medium text-blue-500 w-full text-center">3IN1</div>
+            <div className="text-xl font-medium text-blue-500 w-full text-center">
+              <img src="/logo-only.png" alt="Logo" className="w-10" />
+            </div>
           )}
         </div>
 

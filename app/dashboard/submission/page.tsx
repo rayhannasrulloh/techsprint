@@ -6,7 +6,7 @@ import { Rocket, CheckCircle2, AlertCircle, Lock, Clock } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 // 🕒 KONFIGURASI WAKTU FINAL (WIB)
-const FINAL_DEADLINE = new Date("2026-03-26T09:00:00+07:00").getTime();
+const FINAL_DEADLINE = new Date("2026-05-10T12:00:00+07:00").getTime();
 const FINAL_OPEN = FINAL_DEADLINE - (60 * 60 * 1000); // buka submission form jam 11:00 WIB
 
 export default function SubmissionPage() {
