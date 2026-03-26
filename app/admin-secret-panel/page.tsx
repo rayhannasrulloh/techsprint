@@ -133,14 +133,27 @@ export default function AdminPanelPage() {
   const handleDeleteTeam = async (teamId: string, teamName: string) => {
     const confirmDelete = window.prompt(`DANGER: Type "${teamName}" to confirm deletion.`);
     if (confirmDelete !== teamName) return;
+    
     try {
       const res = await fetch("/api/admin/team", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ teamId }),
       });
-      if (res.ok) { alert("Team deleted."); await fetchTeams(); }
-    } catch (err) { alert("Error deleting team"); }
+      
+      const data = await res.json(); // ambil isi pesan dari backend
+      
+      if (res.ok) { 
+        alert("Team successfully deleted."); 
+        await fetchTeams(); 
+      } else {
+        // TAMPILKAN ERROR ASLI DARI SUPABASE
+        alert(`GAGAL MENGHAPUS!\n\nAlasan: ${data.error}`);
+        console.error("Delete Error:", data.error);
+      }
+    } catch (err: any) { 
+      alert(`JARINGAN ERROR: ${err.message}`); 
+    }
   };
 
   // ACTION: Review Checkpoint

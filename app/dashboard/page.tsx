@@ -51,7 +51,7 @@ export default function AnnouncementsPage() {
         <h1 className="text-3xl font-light tracking-wide mb-1 text-gray-100">
           Welcome back, <span className="font-medium text-blue-400">{teamData?.team_name || "Team"}</span>!
         </h1>
-        <p className="text-gray-400 font-light text-sm">Last update: {new Date().toLocaleDateString()} | 48 Hours Remaining</p>
+        <p className="text-gray-400 font-light text-sm">Last update: {new Date().toLocaleDateString()} | 24 Hours Remaining</p>
       </div>
 
       {/* Global Warning Banner for Pending/Rejected */}
@@ -105,7 +105,7 @@ export default function AnnouncementsPage() {
             <span className="text-xs font-medium bg-blue-500/10 text-blue-400 px-2 py-1 rounded-full">Next Deadline</span>
           </div>
           <div>
-            <h3 className="text-3xl font-normal text-white mb-1">16:00</h3>
+            <h3 className="text-3xl font-normal text-white mb-1">18:00</h3>
             <p className="text-sm font-light text-gray-500">Checkpoint 1 Submission</p>
           </div>
         </div>
