@@ -5,197 +5,108 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { 
-  ShieldAlert, Search, Database, CheckCircle2, XCircle, 
-  Trash2, UserCheck, UserX, AlertTriangle, Download, ExternalLink, Mail, User,
-  Timer, Lock, Unlock, Activity, Clock, Eye, X, Github, CircleDashed, Megaphone, Send, Receipt, Phone
+  Database, CheckCircle2, XCircle, Trash2, UserCheck, UserX, AlertTriangle, 
+  Download, ExternalLink, Mail, User, Timer, Lock, Unlock, Activity, Clock, 
+  Eye, Github, CircleDashed, Megaphone, Receipt, Phone, Search
 } from "lucide-react";
 import Link from "next/link";
 
-// 🔒 GANTI DENGAN EMAIL PANITIA & JURI
+// Import Komponen Modals
+import BroadcastModal from "@/components/admin/BroadcastModal";
+import CheckpointModal from "@/components/admin/CheckpointModal";
+
 const ADMIN_EMAILS = ["rayhan.nasrulloh@student.president.ac.id", "admin@techsprint.web.id"];
 
-// 🕒 KONFIGURASI WAKTU HACKATHON (WIB)
+// KONFIGURASI WAKTU HACKATHON (WIB)
 const START_TIME = new Date("2026-05-09T12:00:00+07:00").getTime();
 const END_TIME = new Date("2026-05-10T12:00:00+07:00").getTime();
 const CP_DEADLINES: Record<number, number> = {
-  1: START_TIME + (6 * 60 * 60 * 1000),  // 09 May 18:00
-  2: START_TIME + (12 * 60 * 60 * 1000), // 10 May 00:00
-  3: START_TIME + (18 * 60 * 60 * 1000), // 10 May 06:00
+  1: START_TIME + (6 * 60 * 60 * 1000),  
+  2: START_TIME + (12 * 60 * 60 * 1000), 
+  3: START_TIME + (18 * 60 * 60 * 1000), 
 };
 
 export default function AdminPanelPage() {
   const router = useRouter();
   
-  // Auth & Data States
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [teamsData, setTeamsData] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeTab, setActiveTab] = useState("All");
   
-  // Timer State
+  // Filter States
+  const [activeStatusTab, setActiveStatusTab] = useState("Pending");
+  const [activeTrackTab, setActiveTrackTab] = useState("All");
+  
   const [now, setNow] = useState<number>(new Date().getTime());
   
-  // MODAL STATE
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Modal States
+  const [isCpModalOpen, setIsCpModalOpen] = useState(false);
   const [selectedCp, setSelectedCp] = useState<any>(null);
-
-  // BROADCAST MODAL STATE
   const [isBroadcastModalOpen, setIsBroadcastModalOpen] = useState(false);
-  const [broadcastTitle, setBroadcastTitle] = useState("");
-  const [broadcastContent, setBroadcastContent] = useState("");
-  const [isPinned, setIsPinned] = useState(false);
-  const [isBroadcasting, setIsBroadcasting] = useState(false);
 
-  // ACTION: Send Broadcast
-  const handleSendBroadcast = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsBroadcasting(true);
-    try {
-      const res = await fetch("/api/admin/announcement", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: broadcastTitle,
-          content: broadcastContent,
-          is_pinned: isPinned,
-          author: "Academic Team"
-        }),
-      });
-      
-      if (res.ok) {
-        alert("Broadcast sent to all teams!");
-        setIsBroadcastModalOpen(false);
-        setBroadcastTitle("");
-        setBroadcastContent("");
-        setIsPinned(false);
-      } else {
-        alert("Failed to send broadcast");
-      }
-    } catch (err) {
-      alert("Error sending broadcast");
-    } finally {
-      setIsBroadcasting(false);
-    }
-  };
-
-  // Real-time Clock Effect
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date().getTime()), 1000);
     return () => clearInterval(timer);
   }, []);
 
   const fetchTeams = async () => {
-    const { data, error } = await supabase
-      .from('teams')
-      .select(`
+    const { data } = await supabase.from('teams').select(`
         id, team_name, track, status, created_at, 
         institution, leader_name, leader_email, leader_nim, leader_phone, discord_username,
         member1_name, member2_nim, member2_name, member3_nim,
         cv_link, payment_proof_url,
         checkpoints ( id, checkpoint_number, github_link, report_text, created_at, is_reviewed ),
         submissions ( final_repo_link, presentation_link )
-      `)
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error("SUPABASE ERROR:", error.message); // INI PENTING UNTUK DEBUGGING
-    } else if (data) {
-      setTeamsData(data);
-    }
+      `).order('created_at', { ascending: false });
+    if (data) setTeamsData(data);
   };
+
   useEffect(() => {
     const checkAdmin = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session || !ADMIN_EMAILS.includes(session.user.email || "")) {
-        setIsAdmin(false);
-        setIsLoading(false);
-        return;
+        setIsAdmin(false); setIsLoading(false); return;
       }
-      setIsAdmin(true);
-      await fetchTeams();
-      setIsLoading(false);
+      setIsAdmin(true); await fetchTeams(); setIsLoading(false);
     };
     checkAdmin();
   }, [router]);
 
-  // ACTION: Update Status Registrasi (Approve/Reject)
+  // Actions
   const handleUpdateStatus = async (teamId: string, newStatus: string) => {
     if (!window.confirm(`Mark this team as ${newStatus.toUpperCase()}?`)) return;
     try {
-      const res = await fetch("/api/admin/team", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ teamId, status: newStatus }),
-      });
-      if (res.ok) await fetchTeams();
+      await fetch("/api/admin/team", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ teamId, status: newStatus }) });
+      await fetchTeams();
     } catch (err) { alert("Error updating status"); }
   };
 
-  // ACTION: Hapus Tim
   const handleDeleteTeam = async (teamId: string, teamName: string) => {
-    const confirmDelete = window.prompt(`DANGER: Type "${teamName}" to confirm deletion.`);
-    if (confirmDelete !== teamName) return;
-    
+    if (window.prompt(`DANGER: Type "${teamName}" to confirm deletion.`) !== teamName) return;
     try {
-      const res = await fetch("/api/admin/team", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ teamId }),
-      });
-      
-      const data = await res.json(); // ambil isi pesan dari backend
-      
-      if (res.ok) { 
-        alert("Team successfully deleted."); 
-        await fetchTeams(); 
-      } else {
-        // TAMPILKAN ERROR ASLI DARI SUPABASE
-        alert(`GAGAL MENGHAPUS!\n\nAlasan: ${data.error}`);
-        console.error("Delete Error:", data.error);
-      }
-    } catch (err: any) { 
-      alert(`JARINGAN ERROR: ${err.message}`); 
-    }
+      const res = await fetch("/api/admin/team", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ teamId }) });
+      if (res.ok) { alert("Team deleted."); await fetchTeams(); }
+    } catch (err: any) { alert(`Error: ${err.message}`); }
   };
 
-  // ACTION: Review Checkpoint
   const handleReviewCheckpoint = async (cpId: string) => {
     try {
-      const res = await fetch("/api/admin/checkpoint", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cpId, is_reviewed: true }),
-      });
-      if (res.ok) {
-        setIsModalOpen(false);
-        await fetchTeams();
-      }
+      const res = await fetch("/api/admin/checkpoint", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ cpId, is_reviewed: true }) });
+      if (res.ok) { setIsCpModalOpen(false); await fetchTeams(); }
     } catch (err) { alert("Failed to review checkpoint"); }
   };
 
-  // ACTION: Open Modal Pop-up Checkpoint
   const openCpModal = (team: any, cp: any, cpNum: number) => {
-    const deadline = CP_DEADLINES[cpNum];
     const submitTime = new Date(cp.created_at).getTime();
-    const isLate = submitTime > deadline;
-    
-    setSelectedCp({
-      ...cp,
-      team_name: team.team_name,
-      track: team.track,
-      isLate,
-      deadline,
-      submitTime
-    });
-    setIsModalOpen(true);
+    setSelectedCp({ ...cp, team_name: team.team_name, track: team.track, isLate: submitTime > CP_DEADLINES[cpNum], deadline: CP_DEADLINES[cpNum], submitTime });
+    setIsCpModalOpen(true);
   };
 
-  // EXPORT TO CSV
   const handleExportCSV = () => {
     const headers = [
       "Team Name", "Track", "Institution", "Status", "Discord Username",
-      "Leader Name", "Leader Email", "Leader Phone", "Leader NIM",
+      "Leader Name", "Leader Email", "Leader Phone", "Leader NIM", 
       "Member 2 Name", "Member 2 NIM", "Member 3 Name", "Member 3 NIM", 
       "CV Link", "Payment Receipt URL",
       "CP 1", "CP 2", "CP 3", "Final Repo", "Pitch Deck"
@@ -204,7 +115,6 @@ export default function AdminPanelPage() {
     const csvData = filteredTeams.map(team => {
       const hasCP = (num: number) => team.checkpoints.some((cp: any) => cp.checkpoint_number === num) ? "Done" : "Pending";
       const finalSub = team.submissions && team.submissions.length > 0 ? team.submissions[0] : null;
-      
       return [
         team.team_name, team.track, team.institution || "-", team.status, team.discord_username || "-",
         team.leader_name || "-", team.leader_email || "-", team.leader_phone || "-", team.leader_nim || "-",
@@ -217,21 +127,17 @@ export default function AdminPanelPage() {
     const csvContent = [headers.join(","), ...csvData].join("\n");
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", `3IN1_TechSprint_Teams.csv`);
-    document.body.appendChild(link);
+    link.href = URL.createObjectURL(blob);
+    link.download = `3IN1_TechSprint_${activeTrackTab.replace('/', '')}_${activeStatusTab}_Teams.csv`;
     link.click();
-    document.body.removeChild(link);
   };
 
-  // FILTERING TEAMS (Search & Tabs)
-  const filteredTeams = teamsData.filter(team => {
-    const matchSearch = team.team_name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                        (team.leader_email && team.leader_email.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchTab = activeTab === "All" || team.track === activeTab;
-    return matchSearch && matchTab;
-  });
+  // --- FILTERING ---
+  const filteredTeams = teamsData.filter(t => 
+    (t.team_name.toLowerCase().includes(searchQuery.toLowerCase()) || (t.leader_email && t.leader_email.toLowerCase().includes(searchQuery.toLowerCase()))) &&
+    (activeTrackTab === "All" || t.track === activeTrackTab) &&
+    (activeStatusTab === "All" || t.status.toLowerCase() === activeStatusTab.toLowerCase())
+  );
 
   // --- LOGIKA PERHITUNGAN TIMELINE ---
   const isStarted = now >= START_TIME;
@@ -250,193 +156,53 @@ export default function AdminPanelPage() {
   let lockColor = "text-red-400 bg-red-400/10";
   
   if (isEnded) {
-    currentPhase = "Event Ended";
-    lockStatus = "ALL LOCKED";
+    currentPhase = "Event Ended"; lockStatus = "ALL LOCKED";
   } else if (isStarted) {
     if (now < CP_DEADLINES[1]) { currentPhase = "Phase 1 (Towards CP1)"; lockStatus = "OPEN: CP 1"; lockColor = "text-emerald-400 bg-emerald-400/10"; }
     else if (now < CP_DEADLINES[2]) { currentPhase = "Phase 2 (Towards CP2)"; lockStatus = "OPEN: CP 2"; lockColor = "text-emerald-400 bg-emerald-400/10"; }
     else if (now < CP_DEADLINES[3]) { currentPhase = "Phase 3 (Towards CP3)"; lockStatus = "OPEN: CP 3"; lockColor = "text-emerald-400 bg-emerald-400/10"; }
     else { currentPhase = "Final Sprint (Towards Final)"; lockStatus = "OPEN: FINAL"; lockColor = "text-emerald-400 bg-emerald-400/10"; }
   }
+  const progressPct = isEnded ? 100 : isStarted ? ((now - START_TIME) / (END_TIME - START_TIME)) * 100 : 0;
 
-  const totalDuration = END_TIME - START_TIME;
-  let progressPct = 0;
-  if (isEnded) progressPct = 100;
-  else if (isStarted) progressPct = ((now - START_TIME) / totalDuration) * 100;
-
-  // --- LOGIKA STATISTIK ---
+  // --- STATS LOGIC ---
   const totalTeams = teamsData.length;
   const approvedTeams = teamsData.filter(t => t.status === 'approved').length;
   const pendingTeams = teamsData.filter(t => t.status === 'pending').length;
+  const rejectedTeams = teamsData.filter(t => t.status === 'rejected').length;
   const uiuxCount = teamsData.filter(t => t.track === 'UI/UX').length;
   const dataCount = teamsData.filter(t => t.track === 'Data Automation').length;
   const saCount = teamsData.filter(t => t.track === 'System Analyst').length;
 
-  // RENDER LOADING / UNAUTHORIZED
   if (isLoading) return <div className="min-h-screen bg-[#050814] flex items-center justify-center text-blue-500">Loading Secure Data...</div>;
   if (!isAdmin) return <div className="min-h-screen bg-[#050814] flex items-center justify-center"><h1 className="text-4xl text-red-500">Access Denied</h1></div>;
 
   return (
     <div className="min-h-screen bg-[#050814] text-white p-8 font-sans relative">
-
-      {/* --- MODAL POP-UP BROADCAST --- */}
-      {isBroadcastModalOpen && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-          <div className="bg-[#0c122b] border border-white/10 rounded-3xl w-full max-w-xl shadow-2xl overflow-hidden flex flex-col">
-            <div className="p-6 border-b border-white/10 flex justify-between items-start bg-[#080c1f]">
-              <div>
-                <h2 className="text-2xl font-light text-white flex items-center gap-2"><Megaphone className="w-6 h-6 text-purple-500" /> New Broadcast</h2>
-                <p className="text-gray-400 text-sm mt-1">Send a global announcement to all teams.</p>
-              </div>
-              <button onClick={() => setIsBroadcastModalOpen(false)} className="p-2 hover:bg-white/10 rounded-full transition-colors text-gray-400 hover:text-white"><X className="w-5 h-5" /></button>
-            </div>
-
-            <form onSubmit={handleSendBroadcast} className="p-6 space-y-5">
-              <div>
-                <label className="block text-xs uppercase tracking-widest text-gray-400 mb-2">Announcement Title</label>
-                <input required type="text" value={broadcastTitle} onChange={(e) => setBroadcastTitle(e.target.value)} placeholder="e.g. Checkpoint 2 is now open!" className="w-full bg-[#050814] border border-white/10 rounded-xl p-3 text-white focus:border-purple-500 focus:outline-none" />
-              </div>
-              
-              <div>
-                <label className="block text-xs uppercase tracking-widest text-gray-400 mb-2">Message Content</label>
-                <textarea required rows={5} value={broadcastContent} onChange={(e) => setBroadcastContent(e.target.value)} placeholder="Type your message here..." className="w-full bg-[#050814] border border-white/10 rounded-xl p-3 text-white focus:border-purple-500 focus:outline-none resize-none"></textarea>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <input type="checkbox" id="pin-checkbox" checked={isPinned} onChange={(e) => setIsPinned(e.target.checked)} className="w-4 h-4 accent-purple-500 bg-gray-800 border-gray-700 rounded" />
-                <label htmlFor="pin-checkbox" className="text-sm font-light text-gray-300">Pin this announcement to the top</label>
-              </div>
-
-              <div className="pt-4 flex justify-end gap-3">
-                <button type="button" onClick={() => setIsBroadcastModalOpen(false)} className="px-5 py-2.5 rounded-full text-sm font-medium text-gray-400 hover:text-white transition-colors">Cancel</button>
-                <button type="submit" disabled={isBroadcasting} className="flex items-center gap-2 px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-full text-sm font-medium transition-all shadow-[0_0_15px_rgba(147,51,234,0.4)] disabled:opacity-50">
-                  {isBroadcasting ? "Sending..." : "Send Broadcast"} <Send className="w-4 h-4" />
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-      
-      {/* --- MODAL POP-UP CHECKPOINT PREVIEW --- */}
-      {isModalOpen && selectedCp && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-          <div className="bg-[#0c122b] border border-white/10 rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col">
-            
-            <div className="p-6 border-b border-white/10 flex justify-between items-start bg-[#080c1f]">
-              <div>
-                <div className="flex items-center gap-3 mb-1">
-                  <h2 className="text-2xl font-light text-white">{selectedCp.team_name}</h2>
-                  <span className="text-[10px] px-2 py-0.5 bg-blue-900/30 text-blue-300 border border-blue-500/20 rounded-md">{selectedCp.track}</span>
-                </div>
-                <p className="text-gray-400 text-sm">Checkpoint {selectedCp.checkpoint_number} Submission Preview</p>
-              </div>
-              <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-white/10 rounded-full transition-colors text-gray-400 hover:text-white">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="p-6 space-y-6 flex-1 overflow-y-auto">
-              <div className={`p-4 rounded-xl border flex items-center gap-4 ${selectedCp.isLate ? 'bg-red-500/10 border-red-500/20' : 'bg-emerald-500/10 border-emerald-500/20'}`}>
-                {selectedCp.isLate ? <AlertTriangle className="w-8 h-8 text-red-400" /> : <CheckCircle2 className="w-8 h-8 text-emerald-400" />}
-                <div>
-                  <h3 className={`font-medium ${selectedCp.isLate ? 'text-red-400' : 'text-emerald-400'}`}>
-                    {selectedCp.isLate ? "LATE SUBMISSION" : "ON TIME SUBMISSION"}
-                  </h3>
-                  <p className="text-sm font-light text-gray-300 mt-1">
-                    Submitted at: <strong className="text-white">{new Date(selectedCp.submitTime).toLocaleString()}</strong><br/>
-                    Deadline was: <strong className="text-gray-400">{new Date(selectedCp.deadline).toLocaleString()}</strong>
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-2">Progress Report</h4>
-                <div className="bg-[#050814] border border-white/5 rounded-xl p-4 text-gray-300 text-sm font-light leading-relaxed whitespace-pre-wrap">
-                  {selectedCp.report_text}
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-2">Repository</h4>
-                <a href={selectedCp.github_link} target="_blank" rel="noreferrer" className="flex items-center gap-3 bg-[#050814] border border-white/5 hover:border-blue-500/30 rounded-xl p-4 transition-colors group">
-                  <Github className="w-6 h-6 text-gray-400 group-hover:text-blue-400" />
-                  <span className="text-sm font-light text-blue-400 group-hover:underline truncate">{selectedCp.github_link}</span>
-                  <ExternalLink className="w-4 h-4 text-gray-500 ml-auto group-hover:text-blue-400" />
-                </a>
-              </div>
-            </div>
-
-            <div className="p-6 border-t border-white/10 bg-[#080c1f] flex justify-end gap-3">
-              <button onClick={() => setIsModalOpen(false)} className="px-5 py-2.5 rounded-full text-sm font-medium text-gray-400 hover:text-white transition-colors">
-                Close
-              </button>
-              {!selectedCp.is_reviewed && (
-                <button 
-                  onClick={() => handleReviewCheckpoint(selectedCp.id)}
-                  className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm font-medium transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)]"
-                >
-                  Mark as Reviewed
-                </button>
-              )}
-            </div>
-
-          </div>
-        </div>
-      )}
-      {/* --- END OF MODAL --- */}
+      <BroadcastModal isOpen={isBroadcastModalOpen} onClose={() => setIsBroadcastModalOpen(false)} />
+      <CheckpointModal isOpen={isCpModalOpen} onClose={() => setIsCpModalOpen(false)} selectedCp={selectedCp} onReview={handleReviewCheckpoint} />
 
       <div className="max-w-[90rem] mx-auto">
-        
-        {/* HEADER & CONTROLS */}
+        {/* HEADER CONTROLS */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
           <div>
-            <h1 className="text-3xl font-light tracking-wide flex items-center gap-3">
-              <Database className="text-blue-500" /> Command Center
-            </h1>
+            <h1 className="text-3xl font-light flex items-center gap-3"><Database className="text-blue-500" /> Command Center</h1>
             <p className="text-gray-400 text-sm mt-1">Real-time statistics for 3IN1 Tech Sprint 2026</p>
           </div>
-          
           <div className="flex items-center gap-3 w-full md:w-auto">
             <div className="relative w-full md:w-64">
               <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-500" />
-              <input 
-                type="text" 
-                placeholder="Search team or email..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#0c122b] border border-white/10 rounded-full py-2 pl-9 pr-4 text-sm focus:outline-none focus:border-blue-500"
-              />
+              <input type="text" placeholder="Search team or email..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-[#0c122b] border border-white/10 rounded-full py-2 pl-9 pr-4 text-sm focus:outline-none focus:border-blue-500" />
             </div>
-            
-            <Link 
-              href="/admin-secret-panel/inbox"
-              className="flex items-center gap-2 px-4 py-2.5 bg-blue-600/20 text-blue-400 border border-blue-500/30 rounded-full hover:bg-blue-600/40 transition-colors text-sm font-medium"
-            >
-              <Mail className="w-4 h-4" /> Inbox
-            </Link>
-
-            {/* Tombol Broadcast */}
-            <button 
-              onClick={() => setIsBroadcastModalOpen(true)}
-              className="flex items-center gap-2 px-4 py-2.5 bg-purple-600/20 text-purple-400 border border-purple-500/30 rounded-full hover:bg-purple-600/40 transition-colors text-sm font-medium"
-            >
-              <Megaphone className="w-4 h-4" /> Broadcast
-            </button>
-
-            <button 
-              onClick={handleExportCSV}
-              className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 rounded-full hover:bg-emerald-600/40 transition-colors text-sm font-medium"
-            >
-              <Download className="w-4 h-4" /> Export CSV
-            </button>
+            <Link href="/admin-secret-panel/inbox" className="flex items-center gap-2 px-4 py-2.5 bg-blue-600/20 text-blue-400 border border-blue-500/30 rounded-full hover:bg-blue-600/40 text-sm"><Mail className="w-4 h-4"/> Inbox</Link>
+            <button onClick={() => setIsBroadcastModalOpen(true)} className="flex items-center gap-2 px-4 py-2.5 bg-purple-600/20 text-purple-400 border border-purple-500/30 rounded-full hover:bg-purple-600/40 text-sm"><Megaphone className="w-4 h-4"/> Broadcast</button>
+            <button onClick={handleExportCSV} className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 rounded-full hover:bg-emerald-600/40 text-sm"><Download className="w-4 h-4"/> Export CSV</button>
           </div>
         </div>
 
-        {/* --- GLOBAL TIMELINE & COUNTDOWN --- */}
+        {/* --- GLOBAL TIMELINE & COUNTDOWN (DIKEMBALIKAN) --- */}
         <div className="bg-[#0c122b] border border-white/5 rounded-3xl p-8 mb-8 relative overflow-hidden shadow-2xl">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-32 bg-blue-600/10 blur-[100px] rounded-full"></div>
-          
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative z-10">
             <div className="text-center lg:text-left">
               <p className="text-sm text-gray-400 font-light mb-2 flex items-center justify-center lg:justify-start gap-2">
@@ -456,14 +222,12 @@ export default function AdminPanelPage() {
                 <span className="text-center">CP3<br/><span className="font-light text-gray-600">10 May 06:00</span></span>
                 <span className="text-right">Final<br/><span className="font-light text-gray-600">10 May 12:00</span></span>
               </div>
-              
               <div className="relative w-full h-3 bg-gray-900 rounded-full overflow-hidden border border-white/5">
                 <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-600 to-cyan-400 transition-all duration-1000 ease-linear" style={{ width: `${progressPct}%` }}></div>
                 <div className="absolute top-0 left-1/4 w-px h-full bg-black/50"></div>
                 <div className="absolute top-0 left-2/4 w-px h-full bg-black/50"></div>
                 <div className="absolute top-0 left-3/4 w-px h-full bg-black/50"></div>
               </div>
-
               <div className="flex justify-between items-center mt-4">
                 <div className="flex items-center gap-2">
                   <Activity className="w-4 h-4 text-gray-400" />
@@ -478,8 +242,9 @@ export default function AdminPanelPage() {
           </div>
         </div>
 
-        {/* --- STATISTIC DASHBOARD --- */}
+        {/* --- STATISTIC DASHBOARD DENGAN TRACK COUNTS (DIKEMBALIKAN) --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {/* Box 1: Total Teams */}
           <div className="bg-[#0c122b] border border-white/5 rounded-2xl p-5 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
             <p className="text-sm font-light text-gray-400 mb-1">Total Teams Registered</p>
@@ -487,22 +252,24 @@ export default function AdminPanelPage() {
             <p className="text-xs text-blue-400 mt-2">Est. {totalTeams * 3} Individual Participants</p>
           </div>
 
+          {/* Box 2: Verification Status */}
           <div className="bg-[#0c122b] border border-white/5 rounded-2xl p-5">
             <p className="text-sm font-light text-gray-400 mb-3">Verification Status (RSVP)</p>
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex justify-between items-center mb-1">
               <span className="text-xs text-gray-300 flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400"/> Approved</span>
               <span className="font-medium text-emerald-400">{approvedTeams}</span>
             </div>
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex justify-between items-center mb-1">
               <span className="text-xs text-gray-300 flex items-center gap-1"><AlertTriangle className="w-3 h-3 text-yellow-400"/> Pending</span>
               <span className="font-medium text-yellow-400">{pendingTeams}</span>
             </div>
-            <div className="w-full bg-white/5 rounded-full h-1.5 mt-3 overflow-hidden flex">
-              <div style={{ width: `${totalTeams === 0 ? 0 : (approvedTeams/totalTeams)*100}%` }} className="bg-emerald-500 h-full"></div>
-              <div style={{ width: `${totalTeams === 0 ? 0 : (pendingTeams/totalTeams)*100}%` }} className="bg-yellow-500 h-full"></div>
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-gray-300 flex items-center gap-1"><XCircle className="w-3 h-3 text-red-400"/> Rejected</span>
+              <span className="font-medium text-red-400">{rejectedTeams}</span>
             </div>
           </div>
 
+          {/* Box 3 & 4: Track Categories */}
           <div className="bg-[#0c122b] border border-white/5 rounded-2xl p-5 lg:col-span-2">
             <p className="text-sm font-light text-gray-400 mb-3">Registrations by Track Category</p>
             <div className="grid grid-cols-3 gap-4">
@@ -522,154 +289,128 @@ export default function AdminPanelPage() {
           </div>
         </div>
 
-        {/* TABS & MAIN TABLE */}
-        <div className="flex gap-2 overflow-x-auto mb-6 pb-2 border-b border-white/10">
-          {["All", "UI/UX", "Data Automation", "System Analyst"].map((tab) => (
-            <button key={tab} onClick={() => setActiveTab(tab)} className={`px-6 py-2 rounded-t-lg font-light transition-all ${activeTab === tab ? "bg-blue-600/20 text-blue-400 border-b-2 border-blue-500" : "text-gray-400 hover:bg-white/5"}`}>
-              {tab}
-            </button>
-          ))}
+        {/* DUAL FILTERS: TRACK & STATUS */}
+        <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4 mb-6 pb-4 border-b border-white/10">
+          
+          {/* TRACK TABS (DIKEMBALIKAN KE KIRI BERSAMAAN DENGAN STATUS) */}
+          <div className="flex gap-2 overflow-x-auto">
+            {["All", "UI/UX", "Data Automation", "System Analyst"].map((tab) => (
+              <button key={tab} onClick={() => setActiveTrackTab(tab)} className={`px-6 py-2.5 rounded-lg text-sm font-light transition-all ${activeTrackTab === tab ? "bg-blue-600/20 text-blue-400 border border-blue-500/50" : "text-gray-400 hover:bg-white/5 border border-transparent"}`}>
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          {/* STATUS TABS */}
+          <div className="flex gap-2 bg-[#0c122b] p-1.5 rounded-xl border border-white/5">
+            {["Pending", "Approved", "Rejected", "All"].map(tab => (
+              <button key={tab} onClick={() => setActiveStatusTab(tab)} className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${activeStatusTab === tab ? "bg-white/10 text-white shadow-sm" : "text-gray-500 hover:text-gray-300"}`}>
+                {tab}
+              </button>
+            ))}
+          </div>
         </div>
 
+        {/* TABEL DATA */}
         <div className="bg-[#0c122b] border border-white/10 rounded-2xl overflow-hidden shadow-2xl overflow-x-auto">
           <table className="w-full text-left border-collapse whitespace-nowrap">
             <thead>
               <tr className="bg-white/5 text-xs uppercase tracking-widest text-gray-400 border-b border-white/10">
                 <th className="p-5 font-semibold">Team Info</th>
-                <th className="p-5 font-semibold">Registration</th>
-                <th className="p-5 font-semibold">Checkpoints Tracker</th>
+                <th className="p-5 font-semibold">Status & Payment</th>
+                <th className="p-5 font-semibold">Checkpoints</th>
                 <th className="p-5 font-semibold">Final Submission</th>
                 <th className="p-5 font-semibold text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
-              {filteredTeams.map((team) => {
-                const finalSub = team.submissions && team.submissions.length > 0 ? team.submissions[0] : null;
+              {filteredTeams.length > 0 ? (
+                filteredTeams.map((team) => {
+                  const finalSub = team.submissions && team.submissions.length > 0 ? team.submissions[0] : null;
 
-                return (
-                  <tr key={team.id} className="hover:bg-white/[0.02] transition-colors">
-                    
-                    {/* Column: Team Info */}
-                    <td className="p-5">
-                      <div className="flex flex-col gap-1">
-                        <div className="flex items-center gap-2">
-                          <p className="font-medium text-lg text-blue-100">{team.team_name}</p>
-                          <span className="text-[10px] px-2 py-0.5 bg-gray-800 text-gray-300 border border-gray-700 rounded-md">{team.track}</span>
+                  return (
+                    <tr key={team.id} className="hover:bg-white/[0.02] transition-colors">
+                      <td className="p-5">
+                        <div className="flex flex-col gap-1">
+                          <div className="flex items-center gap-2"><p className="font-medium text-lg text-blue-100">{team.team_name}</p><span className="text-[10px] px-2 py-0.5 bg-gray-800 text-gray-300 rounded-md">{team.track}</span></div>
+                          <div className="text-xs font-medium text-purple-400 mt-1">{team.institution}</div>
+                          <div className="text-sm text-gray-400 mt-1 flex items-center gap-1"><User className="w-3 h-3"/> {team.leader_name} <span className="text-gray-600">({team.leader_nim})</span></div>
+                          <div className="text-sm text-gray-500 flex items-center gap-1"><Phone className="w-3 h-3"/> {team.leader_phone}</div>
                         </div>
-                        <div className="text-xs font-medium text-purple-400 mt-1">{team.institution}</div>
-                        <div className="text-sm font-light text-gray-400 flex items-center gap-1 mt-1">
-                          <User className="w-3 h-3" /> {team.leader_name} <span className="text-gray-600">({team.leader_nim})</span>
+                      </td>
+                      <td className="p-5">
+                        <div className="flex flex-col gap-2 items-start">
+                          <span className={`text-xs px-3 py-1.5 rounded-full ${team.status === 'approved' ? 'text-emerald-400 bg-emerald-400/10' : team.status === 'pending' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-400 bg-red-400/10'}`}>{team.status.toUpperCase()}</span>
+                          {team.payment_proof_url && <a href={team.payment_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[11px] text-blue-400 hover:text-blue-300 hover:underline bg-blue-500/10 px-2 py-1 rounded-md border border-blue-500/20"><Receipt className="w-3 h-3" /> View Receipt</a>}
                         </div>
-                        <div className="text-sm font-light text-gray-500 flex items-center gap-1">
-                          <Phone className="w-3 h-3" /> {team.leader_phone || <span className="italic">No Phone</span>}
+                      </td>
+                      <td className="p-5">
+                        <div className="flex gap-4">
+                          {[1, 2, 3].map((cpNum) => {
+                            const cp = team.checkpoints?.find((c: any) => c.checkpoint_number === cpNum);
+                            let statusColor = ""; let Icon = null;
+                            if (cp) {
+                              const isLate = new Date(cp.created_at).getTime() > CP_DEADLINES[cpNum];
+                              if (!cp.is_reviewed) { statusColor = "text-yellow-400 bg-yellow-400/10 border-yellow-500/30 hover:bg-yellow-400/20"; Icon = Clock; } 
+                              else { statusColor = isLate ? "text-red-400 bg-red-400/10 border-red-500/30 hover:bg-red-400/20" : "text-emerald-400 bg-emerald-400/10 border-emerald-500/30 hover:bg-emerald-400/20"; Icon = isLate ? AlertTriangle : CheckCircle2; }
+                            } else {
+                              if (now > CP_DEADLINES[cpNum]) { statusColor = "text-gray-600 bg-gray-900 border-gray-800"; Icon = XCircle; } 
+                              else { statusColor = "text-gray-500 bg-white/5 border-white/10"; Icon = CircleDashed; }
+                            }
+                            return (
+                              <div key={cpNum} className="flex flex-col items-center gap-1">
+                                <span className="text-[10px] text-gray-500 uppercase font-semibold">CP {cpNum}</span>
+                                {cp ? (
+                                  <button onClick={() => openCpModal(team, cp, cpNum)} className={`p-2 rounded-xl border transition-all hover:scale-105 ${statusColor} group relative`}><Icon className="w-5 h-5" /><span className="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"><Eye className="w-3 h-3" /></span></button>
+                                ) : (
+                                  <div className={`p-2 rounded-xl border ${statusColor}`}><Icon className="w-5 h-5 opacity-50" /></div>
+                                )}
+                              </div>
+                            );
+                          })}
                         </div>
-                      </div>
-                    </td>
-
-                    {/* Column: Registration Status & Payment */}
-                    <td className="p-5">
-                      <div className="flex flex-col gap-3 items-start">
-                        {/* Status Label */}
-                        {team.status === 'approved' && <span className="text-xs text-emerald-400 bg-emerald-400/10 px-3 py-1.5 rounded-full"><CheckCircle2 className="w-3 h-3 inline mr-1"/> Approved</span>}
-                        {team.status === 'rejected' && <span className="text-xs text-red-400 bg-red-400/10 px-3 py-1.5 rounded-full"><XCircle className="w-3 h-3 inline mr-1"/> Rejected</span>}
-                        {team.status === 'pending' && <span className="text-xs text-yellow-400 bg-yellow-400/10 px-3 py-1.5 rounded-full"><AlertTriangle className="w-3 h-3 inline mr-1"/> Pending</span>}
-                        
-                        {/* Payment Proof Button */}
-                        {team.payment_proof_url && (
-                          <a href={team.payment_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[11px] text-blue-400 hover:text-blue-300 hover:underline bg-blue-500/10 px-2 py-1 rounded-md border border-blue-500/20">
-                            <Receipt className="w-3 h-3" /> View Receipt
-                          </a>
+                      </td>
+                      
+                      {/* --- KOLOM FINAL SUBMISSION DIKEMBALIKAN (REPO & PITCH DECK) --- */}
+                      <td className="p-5">
+                        {finalSub ? (
+                          <div className="flex flex-col gap-2">
+                            <a href={finalSub.final_repo_link} target="_blank" rel="noreferrer" className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                              <ExternalLink className="w-3 h-3" /> Repo Link
+                            </a>
+                            <a href={finalSub.presentation_link} target="_blank" rel="noreferrer" className="text-sm text-purple-400 hover:text-purple-300 flex items-center gap-1">
+                              <ExternalLink className="w-3 h-3" /> Pitch Deck
+                            </a>
+                          </div>
+                        ) : (
+                          <span className="text-sm text-gray-600 italic">No submission yet</span>
                         )}
-                      </div>
-                    </td>
+                      </td>
 
-                    {/* Column: Checkpoints Tracker */}
-                    <td className="p-5">
-                      <div className="flex gap-4">
-                        {[1, 2, 3].map((cpNum) => {
-                          const cp = team.checkpoints.find((c: any) => c.checkpoint_number === cpNum);
-                          const deadline = CP_DEADLINES[cpNum];
-                          
-                          let statusColor = "";
-                          let Icon = null;
-                          let tooltipText = "";
-
-                          if (cp) {
-                            const isLate = new Date(cp.created_at).getTime() > deadline;
-                            if (!cp.is_reviewed) {
-                              statusColor = "text-yellow-400 bg-yellow-400/10 border-yellow-500/30 hover:bg-yellow-400/20"; 
-                              Icon = Clock;
-                              tooltipText = "Needs Review";
-                            } else {
-                              statusColor = isLate ? "text-red-400 bg-red-400/10 border-red-500/30 hover:bg-red-400/20" : "text-emerald-400 bg-emerald-400/10 border-emerald-500/30 hover:bg-emerald-400/20";
-                              Icon = isLate ? AlertTriangle : CheckCircle2;
-                              tooltipText = isLate ? "Reviewed (Late)" : "Reviewed (On Time)";
-                            }
-                          } else {
-                            if (now > deadline) {
-                              statusColor = "text-gray-600 bg-gray-900 border-gray-800";
-                              Icon = XCircle;
-                              tooltipText = "Missed Deadline";
-                            } else {
-                              statusColor = "text-gray-500 bg-white/5 border-white/10";
-                              Icon = CircleDashed;
-                              tooltipText = "Waiting for submission";
-                            }
-                          }
-
-                          return (
-                            <div key={cpNum} className="flex flex-col items-center gap-1">
-                              <span className="text-[10px] text-gray-500 uppercase font-semibold">CP {cpNum}</span>
-                              {cp ? (
-                                <button onClick={() => openCpModal(team, cp, cpNum)} title={tooltipText} className={`p-2 rounded-xl border transition-all ${statusColor} group relative`}>
-                                  <Icon className="w-5 h-5" />
-                                  <span className="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
-                                    <Eye className="w-3 h-3" />
-                                  </span>
-                                </button>
-                              ) : (
-                                <div title={tooltipText} className={`p-2 rounded-xl border ${statusColor}`}>
-                                  <Icon className="w-5 h-5 opacity-50" />
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </td>
-
-                    {/* Column: Final Submission */}
-                    <td className="p-5">
-                      {finalSub ? (
-                        <div className="flex flex-col gap-2">
-                          <a href={finalSub.final_repo_link} target="_blank" rel="noreferrer" className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1">
-                            <ExternalLink className="w-3 h-3" /> GitHub Repo
-                          </a>
-                          <a href={finalSub.presentation_link} target="_blank" rel="noreferrer" className="text-sm text-purple-400 hover:text-purple-300 flex items-center gap-1">
-                            <ExternalLink className="w-3 h-3" /> Pitch Deck
-                          </a>
+                      <td className="p-5 text-right">
+                        <div className="flex justify-end gap-2">
+                          {team.status !== 'approved' && <button onClick={() => handleUpdateStatus(team.id, 'approved')} className="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg hover:bg-emerald-500/20"><UserCheck className="w-5 h-5" /></button>}
+                          {team.status !== 'rejected' && <button onClick={() => handleUpdateStatus(team.id, 'rejected')} className="p-2 bg-orange-500/10 text-orange-400 rounded-lg hover:bg-orange-500/20"><UserX className="w-5 h-5" /></button>}
+                          <button onClick={() => handleDeleteTeam(team.id, team.team_name)} className="p-2 bg-red-500/10 text-red-500 rounded-lg ml-2 hover:bg-red-500/20"><Trash2 className="w-5 h-5" /></button>
                         </div>
-                      ) : (
-                        <span className="text-sm text-gray-600 italic">No final submission</span>
-                      )}
-                    </td>
-
-                    {/* Column: Actions */}
-                    <td className="p-5 text-right">
-                      <div className="flex justify-end gap-2">
-                        {team.status !== 'approved' && <button onClick={() => handleUpdateStatus(team.id, 'approved')} className="p-2 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 rounded-lg" title="Approve"><UserCheck className="w-5 h-5" /></button>}
-                        {team.status !== 'rejected' && <button onClick={() => handleUpdateStatus(team.id, 'rejected')} className="p-2 bg-orange-500/10 text-orange-400 hover:bg-orange-500/20 rounded-lg" title="Reject"><UserX className="w-5 h-5" /></button>}
-                        <button onClick={() => handleDeleteTeam(team.id, team.team_name)} className="p-2 bg-red-500/10 text-red-500 hover:bg-red-500/20 rounded-lg ml-2" title="Delete"><Trash2 className="w-5 h-5" /></button>
-                      </div>
-                    </td>
-
-                  </tr>
-                );
-              })}
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan={5} className="p-16 text-center text-gray-500">
+                    <Database className="w-12 h-12 mx-auto mb-4 opacity-20" />
+                    <p className="text-lg">No Teams Found</p>
+                    <p className="text-sm mt-1 font-light">
+                      No matching teams in <strong className="text-white">{activeTrackTab}</strong> track with <strong className="text-white">{activeStatusTab}</strong> status.
+                    </p>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
-
       </div>
     </div>
   );

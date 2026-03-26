@@ -37,6 +37,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }, [router]);
 
   const handleLogout = async () => {
+    const isConfirmed = window.confirm("Are you sure you want to sign out?");
+    
+    if (!isConfirmed) return;
+
     await supabase.auth.signOut();
     router.push("/login");
   };
