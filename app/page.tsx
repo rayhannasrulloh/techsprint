@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { TextReveal } from "../components/TextReveal";
 import SoftAurora from "../components/SoftAurora";
@@ -16,6 +19,17 @@ import {
 } from "lucide-react";
 
 export default function LandingPage() {
+  const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const checkIsMobile = () => setIsMobile(window.innerWidth < 768);
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => window.removeEventListener("resize", checkIsMobile);
+  }, []);
+
   const trackCards = [
     {
       title: 'UI/UX Design',
@@ -98,22 +112,24 @@ export default function LandingPage() {
         
         {/* Soft Aurora Background Layer */}
         <div className="hidden md:block absolute inset-0 z-0 opacity-80 mix-blend-screen pointer-events-auto">
-          <SoftAurora
-            speed={0.6}
-            scale={1.5}
-            brightness={1}
-            color1="#0a2a5e" // Tech Sprint Dark Tone
-            color2="#00bbff" // Cyan glow matching theme
-            noiseFrequency={2.5}
-            noiseAmplitude={1}
-            bandHeight={0.5}
-            bandSpread={1}
-            octaveDecay={0.1}
-            layerOffset={0}
-            colorSpeed={1}
-            enableMouseInteraction={true}
-            mouseInfluence={0.25}
-          />
+          {mounted && !isMobile && (
+            <SoftAurora
+              speed={0.6}
+              scale={1.5}
+              brightness={1}
+              color1="#0a2a5e" // Tech Sprint Dark Tone
+              color2="#00bbff" // Cyan glow matching theme
+              noiseFrequency={2.5}
+              noiseAmplitude={1}
+              bandHeight={0.5}
+              bandSpread={1}
+              octaveDecay={0.1}
+              layerOffset={0}
+              colorSpeed={1}
+              enableMouseInteraction={true}
+              mouseInfluence={0.25}
+            />
+          )}
         </div>
 
         {/* Foreground Layer (Nav + Hero) */}
@@ -194,25 +210,27 @@ export default function LandingPage() {
       <div className="relative w-full overflow-hidden">
         {/* Faulty Terminal Background Layer */}
         <div className="absolute inset-0 z-0 mix-blend-screen pointer-events-auto">
-          <FaultyTerminal
-            scale={1.5}
-            gridMul={[2, 1]}
-            digitSize={1.2}
-            timeScale={0.5}
-            pause={false}
-            scanlineIntensity={0.5}
-            glitchAmount={1}
-            flickerAmount={1}
-            noiseAmp={1}
-            chromaticAberration={0}
-            dither={0}
-            curvature={0.1}
-            tint="#051e3652"
-            mouseReact={true}
-            mouseStrength={0.5}
-            pageLoadAnimation={true}
-            brightness={0.1}
-          />
+          {mounted && !isMobile && (
+            <FaultyTerminal
+              scale={1.5}
+              gridMul={[2, 1]}
+              digitSize={1.2}
+              timeScale={0.5}
+              pause={false}
+              scanlineIntensity={0.5}
+              glitchAmount={1}
+              flickerAmount={1}
+              noiseAmp={1}
+              chromaticAberration={0}
+              dither={0}
+              curvature={0.1}
+              tint="#051e3652"
+              mouseReact={true}
+              mouseStrength={0.5}
+              pageLoadAnimation={true}
+              brightness={0.1}
+            />
+          )}
         </div>
 
         {/* Foreground Content */}
@@ -245,16 +263,16 @@ export default function LandingPage() {
           <MagicBento 
             cards={trackCards}
             textAutoHide={true}
-            enableStars={true}
-            enableSpotlight={true}
-            enableBorderGlow={true}
+            enableStars={mounted ? !isMobile : true}
+            enableSpotlight={mounted ? !isMobile : true}
+            enableBorderGlow={mounted ? !isMobile : true}
             enableTilt={false}
             enableMagnetism={false}
-            clickEffect={true}
+            clickEffect={mounted ? !isMobile : true}
             spotlightRadius={400}
-            particleCount={12}
+            particleCount={mounted && isMobile ? 0 : 12}
             glowColor="59, 130, 246" 
-            disableAnimations={false}
+            disableAnimations={mounted ? isMobile : false}
           />
 
         </div>
