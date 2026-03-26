@@ -173,11 +173,15 @@ export default function LandingPage() {
               className="text-xl md:text-3xl font-normal tracking-wide text-white mb-18 leading-tight"
               style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
             >
-              <TextReveal 
-                text="Tech Sprint" 
-                delay={0.5} 
-                className="inline-block mb-10 text-9xl"
-              />
+              {mounted && !isMobile ? (
+                <TextReveal 
+                  text="Tech Sprint" 
+                  delay={2.5} 
+                  className="inline-block mb-10 text-9xl"
+                />
+              ) : (
+                <span className="inline-block mb-10 text-9xl">Tech Sprint</span>
+              )}
             </h1>
 
             {/* Countdown Timer */}
@@ -185,11 +189,15 @@ export default function LandingPage() {
               className="flex flex-col items-center text-5xl md:text-12xl font-normal tracking-wide text-white mb-18 leading-tight "
               style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
             >
-              <TextReveal 
-                text="Countdown to 1st Batch Registration Deadline"
-                delay={0.5}
-                className="inline-block mb-10 text-2xl"
-              />
+              {mounted && !isMobile ? (
+                <TextReveal 
+                  text="Countdown to 1st Batch Registration Deadline"
+                  delay={2.6}
+                  className="inline-block mb-10 text-2xl"
+                />
+              ) : (
+                <span className="inline-block mb-10 text-2xl text-center">Countdown to 1st Batch Registration Deadline</span>
+              )}
               <Countdown targetDate="2026-04-10T23:59:59" />
             </div>
             

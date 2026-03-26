@@ -10,11 +10,14 @@ export default function PageLoader() {
     // Lock scroll while loading
     document.body.style.overflow = "hidden";
     
+    const isMobileView = window.innerWidth < 768;
+    const timeoutDuration = isMobileView ? 0 : 2500; // Skip loader on mobile to fix LCP
+    
     const timer = setTimeout(() => {
       setIsLoading(false);
       // Restore scroll
       document.body.style.overflow = "unset";
-    }, 2500); // 2.5 seconds loading intro
+    }, timeoutDuration);
     
     return () => {
       clearTimeout(timer);
