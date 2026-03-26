@@ -97,7 +97,7 @@ export default function LandingPage() {
       <div className="relative w-full min-h-screen flex flex-col overflow-hidden">
         
         {/* Soft Aurora Background Layer */}
-        <div className="absolute inset-0 z-0 opacity-80 mix-blend-screen pointer-events-auto">
+        <div className="hidden md:block absolute inset-0 z-0 opacity-80 mix-blend-screen pointer-events-auto">
           <SoftAurora
             speed={0.6}
             scale={1.5}
@@ -263,7 +263,7 @@ export default function LandingPage() {
       {/* --- NEW TIMELINE SECTION --- */}
       <section className="py-24 relative overflow-hidden">
         {/* Glow background effect */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none"></div>
+        <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none"></div>
         
         <div className="max-w-4xl mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
