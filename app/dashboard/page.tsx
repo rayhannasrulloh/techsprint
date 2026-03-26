@@ -7,26 +7,33 @@ import { supabase } from "@/lib/supabase";
 
 export default function AnnouncementsPage() {
   const [teamData, setTeamData] = useState<any>(null);
+  const [announcements, setAnnouncements] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchTeamData = async () => {
+    const fetchData = async () => {
       const { data: { session } } = await supabase.auth.getSession();
+      
       if (session) {
-        const { data, error } = await supabase
+        // Fetch Team Status
+        const { data: teamRes } = await supabase
           .from('teams')
           .select('team_name, status')
           .eq('id', session.user.id)
           .single();
-          
-        if (!error && data) {
-          setTeamData(data);
-        }
+        if (teamRes) setTeamData(teamRes);
+        
+        // Fetch Announcements (Sort descending)
+        const { data: annRes } = await supabase
+          .from('announcements')
+          .select('*')
+          .order('created_at', { ascending: false });
+        if (annRes) setAnnouncements(annRes);
       }
       setIsLoading(false);
     };
 
-    fetchTeamData();
+    fetchData();
   }, []);
 
   if (isLoading) return <div className="animate-pulse flex space-x-4"><div className="flex-1 space-y-4 py-1"><div className="h-4 bg-white/10 rounded w-3/4"></div></div></div>;
@@ -104,25 +111,43 @@ export default function AnnouncementsPage() {
         </div>
       </div>
 
-      {/* Announcements Feed (Sama seperti sebelumnya) */}
-      <h2 className="text-lg font-light text-gray-300 mb-4">Recent Activity</h2>
+      {/* Announcements Feed Dynamic */}
+      <h2 className="text-lg font-light text-gray-300 mb-4 flex items-center gap-2"><Megaphone className="w-5 h-5 text-blue-500" /> Recent Activity</h2>
       <div className="space-y-4">
         
-        {/* Pinned Card */}
-        <div className="bg-gradient-to-r from-blue-900/20 to-[#0c122b] border border-blue-500/20 rounded-2xl p-6 relative overflow-hidden flex gap-4">
-          <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
-          <div className="mt-1"><Pin className="w-5 h-5 text-blue-400" /></div>
-          <div>
-            <div className="flex items-center gap-3 mb-1">
-              <h3 className="text-base font-normal text-blue-100">Welcome to 3IN1 Tech Sprint 2026!</h3>
-              <span className="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full uppercase tracking-wider">Pinned</span>
+        {announcements.length === 0 ? (
+          <div className="text-gray-500 font-light text-sm italic p-6 bg-white/[0.02] border border-white/5 rounded-2xl text-center">No announcements yet.</div>
+        ) : (
+          announcements.map((ann) => (
+            <div key={ann.id} className={`rounded-2xl p-6 relative overflow-hidden flex gap-4 transition-colors ${ann.is_pinned ? 'bg-gradient-to-r from-blue-900/20 to-[#0c122b] border border-blue-500/20' : 'bg-[#0c122b] border border-white/5 hover:bg-white/[0.03]'}`}>
+              
+              {/* Blue line for pinned */}
+              {ann.is_pinned && <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>}
+              
+              <div className="mt-1">
+                {ann.is_pinned ? <Pin className="w-5 h-5 text-blue-400" /> : <Megaphone className="w-5 h-5 text-gray-500" />}
+              </div>
+              
+              <div className="w-full">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
+                  <div className="flex items-center gap-3">
+                    <h3 className={`text-base font-normal ${ann.is_pinned ? 'text-blue-100' : 'text-gray-200'}`}>{ann.title}</h3>
+                    {ann.is_pinned && <span className="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full uppercase tracking-wider">Pinned</span>}
+                  </div>
+                  <span className="text-xs text-gray-500 font-light whitespace-nowrap">
+                    {new Date(ann.created_at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}
+                  </span>
+                </div>
+                
+                <p className="text-gray-400 font-light text-sm leading-relaxed mb-3 whitespace-pre-wrap">
+                  {ann.content}
+                </p>
+                
+                <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">Posted by {ann.author}</p>
+              </div>
             </div>
-            <p className="text-gray-400 font-light text-sm leading-relaxed mb-2">
-              The hackathon has officially started. Make sure your team joins the Discord server.
-            </p>
-            <p className="text-xs text-gray-500 font-light">Posted by Academic Team</p>
-          </div>
-        </div>
+          ))
+        )}
 
       </div>
     </div>
