@@ -186,7 +186,7 @@ export default function LandingPage() {
 
             {/* Countdown Timer */}
             <div 
-              className="flex flex-col items-center text-5xl md:text-12xl font-normal tracking-wide text-white mb-18 leading-tight "
+              className="flex flex-col items-center text-4xl md:text-12xl font-normal tracking-wide text-white mb-18 leading-tight "
               style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
             >
               {mounted && !isMobile ? (

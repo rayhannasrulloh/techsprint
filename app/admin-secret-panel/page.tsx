@@ -7,7 +7,7 @@ import { supabase } from "@/lib/supabase";
 import { 
   ShieldAlert, Search, Database, CheckCircle2, XCircle, 
   Trash2, UserCheck, UserX, AlertTriangle, Download, ExternalLink, Mail, User,
-  Timer, Lock, Unlock, Activity, Clock, Eye, X, Github, CircleDashed, Megaphone, Send
+  Timer, Lock, Unlock, Activity, Clock, Eye, X, Github, CircleDashed, Megaphone, Send, Receipt, Phone
 } from "lucide-react";
 import Link from "next/link";
 
@@ -89,7 +89,10 @@ export default function AdminPanelPage() {
     const { data, error } = await supabase
       .from('teams')
       .select(`
-        id, team_name, track, status, created_at, leader_name, leader_email,
+        id, team_name, track, status, created_at, 
+        institution, leader_name, leader_email, leader_nim, leader_phone, discord_username,
+        member1_name, member2_nim, member2_name, member3_nim,
+        cv_link, payment_proof_url,
         checkpoints ( id, checkpoint_number, github_link, report_text, created_at, is_reviewed ),
         submissions ( final_repo_link, presentation_link )
       `)
@@ -191,8 +194,11 @@ export default function AdminPanelPage() {
   // EXPORT TO CSV
   const handleExportCSV = () => {
     const headers = [
-      "Team Name", "Track Category", "Leader Name", "Leader Email", 
-      "Registration Status", "CP 1", "CP 2", "CP 3", "Final Repo", "Pitch Deck"
+      "Team Name", "Track", "Institution", "Status", "Discord Username",
+      "Leader Name", "Leader Email", "Leader Phone", "Leader NIM",
+      "Member 2 Name", "Member 2 NIM", "Member 3 Name", "Member 3 NIM", 
+      "CV Link", "Payment Receipt URL",
+      "CP 1", "CP 2", "CP 3", "Final Repo", "Pitch Deck"
     ];
     
     const csvData = filteredTeams.map(team => {
@@ -200,14 +206,11 @@ export default function AdminPanelPage() {
       const finalSub = team.submissions && team.submissions.length > 0 ? team.submissions[0] : null;
       
       return [
-        team.team_name,
-        team.track,
-        team.leader_name || "N/A",
-        team.leader_email || "N/A",
-        team.status,
-        hasCP(1), hasCP(2), hasCP(3),
-        finalSub?.final_repo_link || "No",
-        finalSub?.presentation_link || "No"
+        team.team_name, team.track, team.institution || "-", team.status, team.discord_username || "-",
+        team.leader_name || "-", team.leader_email || "-", team.leader_phone || "-", team.leader_nim || "-",
+        team.member1_name || "-", team.member2_nim || "-", team.member2_name || "-", team.member3_nim || "-",
+        team.cv_link || "-", team.payment_proof_url || "-",
+        hasCP(1), hasCP(2), hasCP(3), finalSub?.final_repo_link || "No", finalSub?.presentation_link || "No"
       ].map(field => `"${String(field).replace(/"/g, '""')}"`).join(",");
     });
 
@@ -553,20 +556,31 @@ export default function AdminPanelPage() {
                           <p className="font-medium text-lg text-blue-100">{team.team_name}</p>
                           <span className="text-[10px] px-2 py-0.5 bg-gray-800 text-gray-300 border border-gray-700 rounded-md">{team.track}</span>
                         </div>
+                        <div className="text-xs font-medium text-purple-400 mt-1">{team.institution}</div>
                         <div className="text-sm font-light text-gray-400 flex items-center gap-1 mt-1">
-                          <User className="w-3 h-3" /> {team.leader_name || <span className="italic">N/A</span>}
+                          <User className="w-3 h-3" /> {team.leader_name} <span className="text-gray-600">({team.leader_nim})</span>
                         </div>
                         <div className="text-sm font-light text-gray-500 flex items-center gap-1">
-                          <Mail className="w-3 h-3" /> {team.leader_email || <span className="italic">No Email</span>}
+                          <Phone className="w-3 h-3" /> {team.leader_phone || <span className="italic">No Phone</span>}
                         </div>
                       </div>
                     </td>
 
-                    {/* Column: Registration Status */}
+                    {/* Column: Registration Status & Payment */}
                     <td className="p-5">
-                      {team.status === 'approved' && <span className="text-xs text-emerald-400 bg-emerald-400/10 px-3 py-1.5 rounded-full"><CheckCircle2 className="w-3 h-3 inline mr-1"/> Approved</span>}
-                      {team.status === 'rejected' && <span className="text-xs text-red-400 bg-red-400/10 px-3 py-1.5 rounded-full"><XCircle className="w-3 h-3 inline mr-1"/> Rejected</span>}
-                      {team.status === 'pending' && <span className="text-xs text-yellow-400 bg-yellow-400/10 px-3 py-1.5 rounded-full"><AlertTriangle className="w-3 h-3 inline mr-1"/> Pending</span>}
+                      <div className="flex flex-col gap-3 items-start">
+                        {/* Status Label */}
+                        {team.status === 'approved' && <span className="text-xs text-emerald-400 bg-emerald-400/10 px-3 py-1.5 rounded-full"><CheckCircle2 className="w-3 h-3 inline mr-1"/> Approved</span>}
+                        {team.status === 'rejected' && <span className="text-xs text-red-400 bg-red-400/10 px-3 py-1.5 rounded-full"><XCircle className="w-3 h-3 inline mr-1"/> Rejected</span>}
+                        {team.status === 'pending' && <span className="text-xs text-yellow-400 bg-yellow-400/10 px-3 py-1.5 rounded-full"><AlertTriangle className="w-3 h-3 inline mr-1"/> Pending</span>}
+                        
+                        {/* Payment Proof Button */}
+                        {team.payment_proof_url && (
+                          <a href={team.payment_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[11px] text-blue-400 hover:text-blue-300 hover:underline bg-blue-500/10 px-2 py-1 rounded-md border border-blue-500/20">
+                            <Receipt className="w-3 h-3" /> View Receipt
+                          </a>
+                        )}
+                      </div>
                     </td>
 
                     {/* Column: Checkpoints Tracker */}
