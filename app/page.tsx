@@ -8,6 +8,7 @@ import MagicBento from "../components/MagicBento";
 import MagicTimeline from "../components/MagicTimeline";
 import FaultyTerminal from "../components/FaultyTerminal";
 import NumberTicker from "../components/NumberTicker";
+import FAQ from "../components/FAQ";
 import Footer from "../components/Footer";
 import Countdown from "../components/Countdown";
 import PageLoader from "../components/PageLoader";
@@ -322,6 +323,9 @@ export default function LandingPage() {
           </p>
         </div>
       </section>
+
+      {/* --- FAQ SECTION --- */}
+      <FAQ />
 
       {/* --- NEW: SPONSORS & PARTNERS SECTION --- */}
       <section className="border-t border-white/5 py-24 relative overflow-hidden">
