@@ -157,9 +157,14 @@ export default function LandingPage() {
             <div className="space-x-6 flex items-center">
               {/* Reference Button Style: Small */}
               {isAuthenticated ? (
-                <Link href="/dashboard" className="flex items-center text-sm bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-2 rounded-full font-normal shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
-                  Dashboard <ArrowUpRight className="ml-1 w-4 h-4" />
-                </Link>
+                <div className="flex items-center gap-4">
+                  <a href="https://www.instagram.com/techsprint26/" target="_blank" rel="noopener noreferrer" className="text-sm font-light text-gray-300 hover:text-white transition-colors">
+                    <Instagram className="w-5 h-5" />
+                  </a>
+                  <Link href="/dashboard" className="flex items-center text-sm bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-2 rounded-full font-normal shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
+                    Dashboard
+                  </Link>
+                </div>
               ) : (
                 <div className="flex items-center gap-4">
                   <Link href="/login" className="text-sm font-light text-gray-300 hover:text-white transition-colors">
