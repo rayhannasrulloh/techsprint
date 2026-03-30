@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { supabase } from "@/lib/supabase";
 import { TextReveal } from "../components/TextReveal";
 import SoftAurora from "../components/SoftAurora";
 import MagicBento from "../components/MagicBento";
@@ -22,11 +23,20 @@ import {
 export default function LandingPage() {
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     const checkIsMobile = () => setIsMobile(window.innerWidth < 768);
     checkIsMobile();
+
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        setIsAuthenticated(true);
+      }
+    };
+    checkUser();
     window.addEventListener("resize", checkIsMobile);
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
@@ -146,9 +156,20 @@ export default function LandingPage() {
             
             <div className="space-x-6 flex items-center">
               {/* Reference Button Style: Small */}
-              <Link href="/register" className="flex items-center text-sm bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-2 rounded-full font-normal shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
-                Register <ArrowUpRight className="ml-1 w-4 h-4" />
-              </Link>
+              {isAuthenticated ? (
+                <Link href="/dashboard" className="flex items-center text-sm bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-2 rounded-full font-normal shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
+                  Dashboard <ArrowUpRight className="ml-1 w-4 h-4" />
+                </Link>
+              ) : (
+                <div className="flex items-center gap-4">
+                  <Link href="/login" className="text-sm font-light text-gray-300 hover:text-white transition-colors">
+                    Login
+                  </Link>
+                  <Link href="/register" className="flex items-center text-sm bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-2 rounded-full font-normal shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
+                    Register <ArrowUpRight className="ml-1 w-4 h-4" />
+                  </Link>
+                </div>
+              )}
             </div>
           </nav>
 
@@ -171,17 +192,17 @@ export default function LandingPage() {
             </div> */}
             
             <h1 
-              className="text-xl md:text-3xl font-normal tracking-wide text-white mb-18 leading-tight"
+              className="text-xl md:text-3xl font-normal tracking-wide text-white leading-tight"
               style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
             >
               {mounted && !isMobile ? (
                 <TextReveal 
                   text="Tech Sprint" 
                   delay={2.5} 
-                  className="inline-block mb-10 text-9xl"
+                  className="inline-block mb-10 text-9xl font-bold"
                 />
               ) : (
-                <span className="inline-block mb-10 text-9xl">Tech Sprint</span>
+                <span className="inline-block mb-2 text-9xl font-bold">Tech Sprint</span>
               )}
             </h1>
 
@@ -207,8 +228,11 @@ export default function LandingPage() {
               <Link href="/register" className="flex items-center text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] px-8 py-3 rounded-full font-normal shadow-[0_0_20px_rgba(0,51,255,0.4)] hover:shadow-[0_0_35px_rgba(0,51,255,0.7)] hover:-translate-y-1 transition-all duration-300">
                 Register Now! <ArrowUpRight className="ml-2 w-5 h-5" />
               </Link>
-              <button className="text-gray-400 hover:text-white font-light tracking-wide transition-colors">
-                <a href="https://dsc.gg/3in1techsprint" target="_blank" rel="noopener noreferrer">Join Discord</a>
+              <button 
+                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+                className="text-gray-400 hover:text-white font-light tracking-wide transition-colors"
+              >
+                Learn More
               </button>
             </div>
           </main>
@@ -245,15 +269,26 @@ export default function LandingPage() {
         {/* Foreground Content */}
         <div className="relative z-10 pointer-events-none [&>*]:pointer-events-auto">
           {/* --- EVENT DESCRIPTION SECTION --- */}
-          <section className="py-24 relative overflow-hidden">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+          <section id="about" className="py-24 relative overflow-hidden">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-blue-900/10 rounded-full pointer-events-none z-0"></div>
             <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-light tracking-wide text-white mb-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
-                Ready to Innovate, <br className="hidden md:block" /><span className="text-blue-400 font-normal">Create the Future State</span>
+              <h2 
+                className="text-xl md:text-3xl font-normal tracking-wide text-white leading-tight mb-10"
+                style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
+              >
+                {mounted && !isMobile ? (
+                  <TextReveal 
+                    text="Ready to Innovate, Create the Future State" 
+                    delay={0.5} 
+                    className="inline-block text-4xl md:text-5xl lg:text-6xl font-bold"
+                  />
+                ) : (
+                  <span className="inline-block text-4xl md:text-5xl lg:text-6xl font-bold">Ready to Innovate,<br />Create the Future State</span>
+                )}
               </h2>
               <div className="space-y-6 text-gray-400 font-light text-base md:text-lg leading-relaxed text-justify md:text-center">
                 <p>
-                  Tech Sprint 2026 - <span className="text-gray-200">3IN1</span> is the flagship innovation competition organized by the Research and Development (R&D) Division of the President University Major Association of Information Systems (PUMA IS). Building on the prestigious legacy of previous iterations, evolving from CompClub (2021-2023) to the international Golden Code Hackathon in 2025, this year’s event is designed as an intensive 2-day innovation sprint. With a core philosophy of <span className="text-blue-400 font-medium">"Tech With Impact,"</span> rooted in the philosophy of <span className="text-white font-medium">THINK, BUILD,</span> and <span className="text-white font-medium">IMPACT</span>, the sprint challenges participants to move from analytical thinking (THINK) to hands-on prototyping (BUILD) to deliver measurable real-world implementation (IMPACT).
+                  Tech Sprint 2026 - <span className="text-gray-200">3IN1</span> is the flagship innovation competition organized by the Research and Development (R&D) Division of the President University Major Association of Information Systems (PUMA IS). Building on the prestigious legacy of previous iterations, evolving from CompClub (2021-2023) to the international Golden Code Hackathon in 2025, this year’s event is designed as an intensive 2-day innovation sprint. With a core philosophy of <span className="text-white font-medium">"Tech With Impact,"</span> rooted in the philosophy of <span className="text-white font-medium">THINK, BUILD,</span> and <span className="text-white font-medium">IMPACT</span>, the sprint challenges participants to move from analytical thinking (THINK) to hands-on prototyping (BUILD) to deliver measurable real-world implementation (IMPACT).
                 </p>
                 <p>
                   Carrying the mission to create sustainable tech solutions addressing real campus and student challenges, the event introduces a unique approach across three specialized tracks: <span className="text-gray-200">UI/UX Design, Data Automation, and System Analysis</span>. Each track targets 8 competing teams, bringing together a total of 72 participants across all three tracks. The sprint unfolds in two structured phases: <span className="text-white font-medium">Day 1 (BUILD)</span>, where teams ideate and rapidly prototype their solutions, and <span className="text-white font-medium">Day 2 (TEST + PITCH)</span>, where top teams present their final outputs to a panel of industry judges.

@@ -26,7 +26,7 @@ export default function ParticipantsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   
   // Filter States
-  const [activeStatusTab, setActiveStatusTab] = useState("Pending");
+  const [activeStatusTab, setActiveStatusTab] = useState("All");
   const [activeTrackTab, setActiveTrackTab] = useState("All");
   
   const [now, setNow] = useState<number>(new Date().getTime());
@@ -190,7 +190,7 @@ export default function ParticipantsPage() {
 
         {/* STATUS TABS */}
         <div className="flex gap-2 bg-[#0c122b] p-1.5 rounded-xl border border-white/5">
-          {["Pending", "Approved", "Rejected", "All"].map(tab => (
+          {["Approved", "Pending", "Rejected", "All"].map(tab => (
             <button 
               key={tab} 
               onClick={() => setActiveStatusTab(tab)} 
