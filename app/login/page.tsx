@@ -41,12 +41,13 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0f24] via-[#050814] to-black flex flex-col items-center justify-center p-6 text-white font-sans">
-      <Link href="/" className="absolute top-8 left-8 text-xl font-light tracking-widest text-gray-200">
-        3IN1<span className="text-blue-500 font-medium">TECHSPRINT</span>
+      
+      <Link href="/" className="-mt-20 flex items-center justify-center">
+        <img src="/logo-techsprint-2026.png" alt="Logo" className="w-30 h-30" />
       </Link>
 
       <div className="max-w-md w-full bg-white/[0.02] border border-white/10 rounded-3xl p-10 shadow-2xl backdrop-blur-md">
-        <h2 className="text-3xl font-light tracking-wide mb-2 text-center">Welcome Back</h2>
+        <h2 className="text-3xl font-light tracking-wide mb-2 text-center uppercase">Welcome Back</h2>
         <p className="text-gray-400 font-light text-sm text-center mb-8">Enter your credentials to access the dashboard.</p>
 
         <form onSubmit={handleLogin} className="space-y-5">
@@ -59,7 +60,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Team Leader Email"
-              className="w-full bg-[#0a0f24] border border-white/10 rounded-xl py-4 pl-12 pr-4 text-gray-200 font-light focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+              className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/5 rounded-xl py-4 pl-12 pr-4 text-gray-200 font-light focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
             />
           </div>
 
@@ -72,16 +73,16 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
-              className="w-full bg-[#0a0f24] border border-white/10 rounded-xl py-4 pl-12 pr-4 text-gray-200 font-light focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+              className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/5 rounded-xl py-4 pl-12 pr-4 text-gray-200 font-light focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
             />
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full flex items-center justify-center mt-6 text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] py-4 rounded-full font-normal shadow-[0_0_20px_rgba(0,51,255,0.3)] hover:shadow-[0_0_35px_rgba(0,51,255,0.6)] hover:-translate-y-1 transition-all duration-300 disabled:opacity-50"
+            className="w-full flex items-center justify-center mt-6 text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] py-4 rounded-full font-normal shadow-[0_0_10px_rgba(0,51,255,0.3)] hover:shadow-[0_0_25px_rgba(0,51,255,0.6)] transition-all duration-300 disabled:opacity-50 cursor-pointer"
           >
-            {isLoading ? "Authenticating..." : "Access Dashboard"} 
+            {isLoading ? "Authenticating..." : "Log In"} 
             {!isLoading && <ArrowRight className="ml-2 w-5 h-5" />}
           </button>
         </form>
