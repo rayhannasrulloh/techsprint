@@ -38,11 +38,11 @@ export default function TimelinePage() {
 
   // Data Visual Roadmap
   const roadmapSteps = [
-    { title: "Hackathon Starts", time: "09 May, 12:00 WIB", desc: "The 24-hour sprint officially begins.", idx: 0 },
-    { title: "Checkpoint 1", time: "09 May, 18:00 WIB", desc: "Submit your initial progress and wireframes.", idx: 1 },
-    { title: "Checkpoint 2", time: "10 May, 00:00 WIB", desc: "Midnight check-in. Core features should be working.", idx: 2 },
-    { title: "Checkpoint 3", time: "10 May, 06:00 WIB", desc: "Morning sprint. Polishing and debugging.", idx: 3 },
-    { title: "Final Submission", time: "10 May, 12:00 WIB", desc: "Times up! Submit your repo and pitch deck.", idx: 4 },
+    { title: "Hackathon Starts", time: "09 May, 12:00 WIB", desc: "The 24h sprint begins.", idx: 0 },
+    { title: "Checkpoint 1", time: "09 May, 18:00 WIB", desc: "Initial progress", idx: 1 },
+    { title: "Checkpoint 2", time: "10 May, 00:00 WIB", desc: "Midnight check-in", idx: 2 },
+    { title: "Checkpoint 3", time: "10 May, 06:00 WIB", desc: "Morning sprint", idx: 3 },
+    { title: "Final Submission", time: "10 May, 12:00 WIB", desc: "Times up!", idx: 4 },
   ];
 
   return (
@@ -50,18 +50,17 @@ export default function TimelinePage() {
       
       <div className="mb-10">
         <h1 className="text-3xl font-light tracking-wide mb-1 text-gray-100 flex items-center gap-3">
-          <Map className="text-purple-500 w-8 h-8" /> Event Timeline
+          <Map className="text-blue-500 w-8 h-8" /> Event Timeline
         </h1>
         <p className="text-gray-400 font-light text-sm">Track your sprint progress and upcoming deadlines.</p>
       </div>
 
-      <div className="bg-[#0c122b] border border-white/5 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+      <div className="bg-[#0c122b] rounded-3xl p-8 shadow-2xl relative overflow-hidden">
         {/* Glow Background */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl -mr-20 -mt-20"></div>
 
         <div className="flex items-center gap-2 mb-12 relative z-10">
-          <Flag className="w-5 h-5 text-purple-400" />
-          <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-widest">24-Hour Roadmap</h3>
+          <h3 className="text-sm font text-gray-300 tracking-widest">24-Hour Roadmap</h3>
         </div>
         
         {/* Horizontal Roadmap (Adapted for full page width) */}
@@ -72,7 +71,7 @@ export default function TimelinePage() {
           
           {/* Garis Progress Aktif */}
           <div 
-            className="absolute left-10 top-5 h-1.5 bg-gradient-to-r from-purple-600 to-blue-400 transition-all duration-1000 rounded-full" 
+            className="absolute left-10 top-5 h-1.5 bg-gradient-to-r from-emerald-700 to-blue-400 transition-all duration-1000 rounded-full" 
             style={{ width: `${Math.min((currentPhaseIndex / 4) * 100, 100)}%` }}
           ></div>
 
@@ -83,13 +82,13 @@ export default function TimelinePage() {
             return (
               <div key={step.idx} className="relative z-10 flex flex-col items-center gap-4 w-32 group">
                 {/* Node Status Indicator */}
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-500 ${isPast ? 'bg-emerald-500 border-emerald-400 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]' : isCurrent ? 'bg-[#0c122b] border-purple-400 text-purple-400 shadow-[0_0_25px_rgba(168,85,247,0.6)] scale-110' : 'bg-[#050814] border-gray-700 text-gray-600'}`}>
-                  {isPast ? <CheckCircle2 className="w-6 h-6" /> : isCurrent ? <Clock className="w-5 h-5 animate-pulse" /> : <span className="text-sm font-bold">{step.idx === 4 ? '🏁' : step.idx}</span>}
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-500 ${isPast ? 'bg-[#0c122b] border-emerald-700 text-white' : isCurrent ? 'bg-[#0c122b] border-blue-400 text-blue-400' : 'bg-[#050814] border-gray-700 text-gray-600'}`}>
+                  {isPast ? <CheckCircle2 className="w-6 h-6 text-emerald-700" /> : isCurrent ? <Clock className="w-5 h-5 animate-pulse" /> : <span className="text-sm font-bold">{step.idx === 4 ? 'E' : step.idx}</span>}
                 </div>
                 
                 {/* Text Details */}
                 <div className="text-center mt-2">
-                  <p className={`text-sm font-semibold tracking-wide mb-1 ${isCurrent ? 'text-purple-400' : isPast ? 'text-emerald-400' : 'text-gray-400'}`}>{step.title}</p>
+                  <p className={`text-sm tracking-wide mb-1 ${isCurrent ? 'text-blue-400' : isPast ? 'text-emerald-700' : 'text-gray-400'}`}>{step.title}</p>
                   <p className="text-[11px] text-gray-500 font-medium bg-white/5 inline-block px-2 py-1 rounded-md mb-2">{step.time}</p>
                   <p className="text-[10px] text-gray-600 font-light leading-relaxed px-2">{step.desc}</p>
                 </div>

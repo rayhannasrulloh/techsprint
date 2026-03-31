@@ -38,7 +38,7 @@ export default function DashboardPage() {
     fetchData();
   }, []);
 
-  // --- LOGIKA REAL-TIME COUNTDOWN ---
+  // --- REAL-TIME COUNTDOWN ---
   let nextStageName = "Event Starts";
   let targetTime = START_TIME;
 
@@ -79,13 +79,10 @@ export default function DashboardPage() {
           </h1>
           <p className="text-gray-400 font-light text-sm">Dashboard Overview</p>
         </div>
-        <div className="mt-4 md:mt-0 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-xs tracking-wider uppercase font-semibold flex items-center gap-2">
-          <Activity className="w-4 h-4" /> Live
-        </div>
       </div>
 
       {isPending && (
-        <div className="mb-8 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-2xl flex items-center gap-4">
+        <div className="mb-8 p-4 bg-yellow-500/10 rounded-2xl flex items-center gap-4 bg-gradient-to-r from-yellow-300/10 to-yellow-950/10">
           <AlertTriangle className="w-6 h-6 text-yellow-500" />
           <div>
             <h3 className="text-yellow-400 font-medium">Your account is pending verification</h3>
@@ -95,7 +92,7 @@ export default function DashboardPage() {
       )}
 
       {isRejected && (
-        <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center gap-4">
+        <div className="mb-8 p-4 bg-red-500/10 rounded-2xl flex items-center gap-4 bg-gradient-to-r from-red-300/10 to-red-950/10">
           <XCircle className="w-6 h-6 text-red-500" />
           <div>
             <h3 className="text-red-400 font-medium">Registration Rejected</h3>
@@ -104,11 +101,11 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* --- LIVE STATS GRID (Tanpa Roadmap) --- */}
+      {/* --- LIVE STATS GRID --- */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-        <div className="bg-[#0c122b] border border-white/5 rounded-2xl p-6 flex flex-col justify-between">
+        <div className="bg-[#0c122b] bg-gradient-to-b from-emerald-300/10 to-emerald-950/10 rounded-2xl p-6 flex flex-col justify-between ">
           <div className="flex justify-between items-start mb-4">
-            <div className={`p-2 rounded-lg ${isApproved ? 'bg-emerald-500/10' : isPending ? 'bg-yellow-500/10' : 'bg-red-500/10'}`}>
+            <div className={`p-2 rounded-full ${isApproved ? 'bg-emerald-500/10' : isPending ? 'bg-yellow-500/10' : 'bg-red-500/10'}`}>
               <CheckCircle2 className={`w-5 h-5 ${isApproved ? 'text-emerald-400' : isPending ? 'text-yellow-400' : 'text-red-400'}`} />
             </div>
             <span className="text-xs font-medium bg-white/5 px-2 py-1 rounded-full text-gray-400">Registration</span>
@@ -119,19 +116,19 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="bg-[#0c122b] border border-blue-500/20 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden lg:col-span-2 shadow-[0_0_30px_rgba(37,99,235,0.1)]">
+        <div className="bg-gradient-to-b from-blue-300/10 to-blue-950/10 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden lg:col-span-2">
           <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
           <div className="flex justify-between items-start mb-2 relative z-10">
-            <div className="bg-blue-500/10 p-2 rounded-lg">
+            <div className="bg-blue-500/10 p-2 rounded-full">
               <Timer className="w-5 h-5 text-blue-400" />
             </div>
-            <span className="text-xs font-medium bg-blue-500/10 text-blue-400 px-2 py-1 rounded-full flex items-center gap-1">
+            <span className="text-xs font-medium bg-white/10 text-white/80 px-2 py-1 rounded-full flex items-center gap-1">
                Towards: {nextStageName}
             </span>
           </div>
           <div className="relative z-10">
             <h3 className="text-4xl md:text-5xl font-light text-white tracking-widest tabular-nums">{timeString}</h3>
-            <p className="text-sm font-light text-gray-400 mt-2">Hours : Minutes : Seconds</p>
+            <p className="text-sm font-light text-gray-400 mt-2">Time Remaining to {nextStageName}</p>
           </div>
         </div>
       </div>
@@ -143,19 +140,19 @@ export default function DashboardPage() {
           <div className="text-gray-500 font-light text-sm italic p-6 bg-white/[0.02] border border-white/5 rounded-2xl text-center">No announcements yet.</div>
         ) : (
           announcements.map((ann) => (
-            <div key={ann.id} className={`rounded-2xl p-6 relative overflow-hidden flex gap-4 transition-colors ${ann.is_pinned ? 'bg-gradient-to-r from-blue-900/20 to-[#0c122b] border border-blue-500/20 shadow-lg' : 'bg-[#0c122b] border border-white/5 hover:bg-white/[0.03]'}`}>
+            <div key={ann.id} className={`rounded-2xl p-6 relative overflow-hidden flex gap-4 transition-colors ${ann.is_pinned ? 'bg-gradient-to-b from-blue-900/20 to-blue-950/10 shadow-lg' : 'bg-[#0c122b] border border-white/5 hover:bg-white/[0.03]'}`}>
               {ann.is_pinned && <div className="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>}
               <div className="mt-1">{ann.is_pinned ? <Pin className="w-5 h-5 text-blue-400" /> : <Megaphone className="w-5 h-5 text-gray-500" />}</div>
               <div className="w-full">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
                   <div className="flex items-center gap-3">
                     <h3 className={`text-base font-normal ${ann.is_pinned ? 'text-blue-100' : 'text-gray-200'}`}>{ann.title}</h3>
-                    {ann.is_pinned && <span className="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full uppercase tracking-wider">Pinned</span>}
+                    {ann.is_pinned && <span className="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full tracking-wider">Pinned</span>}
                   </div>
                   <span className="text-xs text-gray-500 font-light whitespace-nowrap">{new Date(ann.created_at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</span>
                 </div>
                 <p className="text-gray-400 font-light text-sm leading-relaxed mb-3 whitespace-pre-wrap">{ann.content}</p>
-                <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">Posted by {ann.author}</p>
+                <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wider justify-end">Posted by {ann.author}</p>
               </div>
             </div>
           ))

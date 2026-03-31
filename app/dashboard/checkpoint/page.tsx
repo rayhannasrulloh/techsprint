@@ -99,14 +99,14 @@ export default function CheckpointPage() {
         <p className="text-gray-400 font-light text-sm">Update your progress. Form opens exactly 1 hour before the deadline.</p>
       </div>
 
-      <div className="max-w-2xl bg-[#0c122b] border border-white/5 rounded-3xl p-10 shadow-2xl relative overflow-hidden">
+      <div className="max-w-2xl bg-[#0c122b] rounded-3xl p-10 shadow-2xl relative overflow-hidden">
         
         {/* LOCK SCREEN: Jika Belum Di-Approve */}
         {teamStatus !== 'approved' && (
-          <div className="absolute inset-0 bg-[#050814]/90 backdrop-blur-md flex flex-col items-center justify-center z-30">
-             <div className="bg-gray-800/50 p-4 rounded-2xl mb-4 border border-white/5"><Lock className="w-8 h-8 text-yellow-500" /></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900/50 to-gray-900/90 backdrop-blur-md flex flex-col items-center justify-center z-30">
+             <div className="bg-gray-800/50 p-4 rounded-2xl mb-4 border border-white/5"><Lock className="w-8 h-8 text-white" /></div>
              <h2 className="text-xl font-normal text-gray-200 mb-2">Account Unverified</h2>
-             <p className="text-sm font-light text-gray-400 text-center max-w-xs">Your team status is currently <span className="text-yellow-400 font-medium uppercase">{teamStatus}</span>.</p>
+             <p className="text-sm font-light text-gray-400 text-center max-w-xs">Your team status is currently <span className="text-white font-medium">{teamStatus}</span>.</p>
           </div>
         )}
 

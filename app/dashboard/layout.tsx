@@ -140,7 +140,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Main Content Area */}
       <main className="flex-1 h-screen overflow-y-auto bg-gradient-to-br from-[#050814] via-[#0a0f24] to-black">
         
-        {/* Top Header */}
+        {/* Top header */}
         <header className="h-20 px-8 flex items-center justify-between border-b border-white/5 bg-[#050814]/50 backdrop-blur-md sticky top-0 z-30">
           <div className="flex items-center gap-4">
             <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden text-gray-300">
@@ -152,8 +152,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
           
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-blue-900/30 border border-blue-500/20 flex items-center justify-center">
-              <User className="w-5 h-5 text-blue-400" />
+            <div className="w-10 h-10 rounded-full bg-gradient-to-b from-blue-600/20 to-transparent flex items-center justify-center">
+              <User className="w-5 h-5 text-white" />
             </div>
           </div>
         </header>
