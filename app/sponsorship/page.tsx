@@ -97,7 +97,7 @@ export default function SponsorshipPage() {
             <a href="#contact" className="px-8 py-3 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors shadow-[0_0_20px_rgba(37,99,235,0.4)]">
               Contact Us
             </a>
-            <a href="/Proposal_Sponsorship_TechSprint.pdf" target="_blank" rel="noopener noreferrer" className="px-8 py-3 rounded-full border border-white/10 text-gray-300 hover:text-white hover:bg-white/5 transition-colors flex items-center gap-2">
+            <a href="/TECH-SPRINT-2026-BOOKLET-SPONSORSHIP.pdf" target="_blank" rel="noopener noreferrer" className="px-8 py-3 rounded-full border border-white/10 text-gray-300 hover:text-white hover:bg-white/5 transition-colors flex items-center gap-2">
               <Download className="w-4 h-4" /> Download Proposal
             </a>
           </div>
