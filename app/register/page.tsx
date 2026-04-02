@@ -238,10 +238,10 @@ export default function RegisterPage() {
                 </p>
 
                 {/* 1. Follow IG */}
-                <div className="bg-[#0a0f24] border border-white/10 rounded-xl p-4">
+                <div className="bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl p-4">
                   <p className="text-sm text-gray-200 mb-1 font-medium">1. Bukti Follow Instagram</p>
                   <p className="text-xs text-gray-500 mb-3">Wajib follow IG @techsprint26 (Semua anggota tim).</p>
-                  <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-pink-500/50 rounded-lg p-3 cursor-pointer transition-colors">
+                  <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
                     <span className="text-xs text-gray-300 truncate max-w-[200px]">{igFollowFile ? igFollowFile.name : "Upload File (.pdf)"}</span>
                     <Upload className="w-4 h-4 text-gray-400" />
                     <input type="file" accept=".pdf" required onChange={(e) => setIgFollowFile(e.target.files?.[0] || null)} className="hidden" />
@@ -249,10 +249,10 @@ export default function RegisterPage() {
                 </div>
 
                 {/* 2. Upload Twibbon */}
-                <div className="bg-[#0a0f24] border border-white/10 rounded-xl p-4">
+                <div className="bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl p-4">
                   <p className="text-sm text-gray-200 mb-1 font-medium">2. Bukti Upload Twibbon</p>
                   <p className="text-xs text-gray-500 mb-3">SS feed/postingan Twibbon di akun IG masing-masing.</p>
-                  <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-pink-500/50 rounded-lg p-3 cursor-pointer transition-colors">
+                  <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
                     <span className="text-xs text-gray-300 truncate max-w-[200px]">{twibbonFile ? twibbonFile.name : "Upload File (.pdf)"}</span>
                     <Upload className="w-4 h-4 text-gray-400" />
                     <input type="file" accept=".pdf" required onChange={(e) => setTwibbonFile(e.target.files?.[0] || null)} className="hidden" />
@@ -260,10 +260,10 @@ export default function RegisterPage() {
                 </div>
 
                 {/* 3. Story, Comment & Tag */}
-                <div className="bg-[#0a0f24] border border-white/10 rounded-xl p-4">
+                <div className="bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl p-4">
                   <p className="text-sm text-gray-200 mb-1 font-medium">3. Bukti Instastory & Comment</p>
                   <p className="text-xs text-gray-500 mb-3">SS bukti komen + tag 3 teman di feed pendaftaran, dan SS share poster acara ke Instastory.</p>
-                  <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-pink-500/50 rounded-lg p-3 cursor-pointer transition-colors">
+                  <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
                     <span className="text-xs text-gray-300 truncate max-w-[200px]">{igStoryFile ? igStoryFile.name : "Upload File (.pdf)"}</span>
                     <Upload className="w-4 h-4 text-gray-400" />
                     <input type="file" accept=".pdf" required onChange={(e) => setIgStoryFile(e.target.files?.[0] || null)} className="hidden" />
