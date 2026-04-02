@@ -27,6 +27,10 @@ export default function RegisterPage() {
   const [member3Nim, setMember3Nim] = useState("");
   const [cvLink, setCvLink] = useState("");
   const [paymentFile, setPaymentFile] = useState<File | null>(null);
+  // Social Media Proofs (.pdf)
+  const [igFollowFile, setIgFollowFile] = useState<File | null>(null);
+  const [twibbonFile, setTwibbonFile] = useState<File | null>(null);
+  const [igStoryFile, setIgStoryFile] = useState<File | null>(null);
   
 // UI State
   const [isLoading, setIsLoading] = useState(false);
@@ -38,8 +42,8 @@ export default function RegisterPage() {
   // 1. Tahan submit form dan buka modal konfirmasi
   const handlePreSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!paymentFile) {
-      toast.error("Please upload your payment proof.");
+    if (!paymentFile || !igFollowFile || !twibbonFile || !igStoryFile) {
+      toast.error("Mohon upload semua dokumen bukti pembayaran dan sosial media!");
       return;
     }
     setShowConfirmModal(true);
@@ -57,16 +61,29 @@ export default function RegisterPage() {
       if (authError) throw authError;
 
       if (authData.user) {
-        toast.loading("Uploading payment proof...", { id: toastId });
-        const fileExt = paymentFile!.name.split('.').pop();
-        const fileName = `${authData.user.id}_${Date.now()}.${fileExt}`;
-        
-        const { error: uploadError } = await supabase.storage.from('payment_proofs').upload(fileName, paymentFile!);
-        if (uploadError) throw uploadError;
+        toast.loading("Uploading documents...", { id: toastId });
+        const userId = authData.user.id;
 
-        const { data: publicUrlData } = supabase.storage.from('payment_proofs').getPublicUrl(fileName);
+        // Fungsi pembantu untuk upload file ke bucket payment_proofs
+        const uploadDoc = async (file: File, prefix: string) => {
+          const fileExt = file.name.split('.').pop();
+          const fileName = `${userId}_${prefix}_${Date.now()}.${fileExt}`;
+          const { error: uploadError } = await supabase.storage.from('payment_proofs').upload(fileName, file);
+          if (uploadError) throw uploadError;
+          const { data } = supabase.storage.from('payment_proofs').getPublicUrl(fileName);
+          return data.publicUrl;
+        };
+
+        // Upload semua file secara paralel agar cepat
+        const [paymentUrl, igFollowUrl, twibbonUrl, igStoryUrl] = await Promise.all([
+          uploadDoc(paymentFile!, 'payment'),
+          uploadDoc(igFollowFile!, 'ig_follow'),
+          uploadDoc(twibbonFile!, 'twibbon'),
+          uploadDoc(igStoryFile!, 'ig_story')
+        ]);
         
         toast.loading("Saving team data securely...", { id: toastId });
+        
         const { error: dbError } = await supabase.from("teams").insert([{
             id: authData.user.id,
             team_name: teamName,
@@ -82,7 +99,10 @@ export default function RegisterPage() {
             member2_name: member3Name, 
             member3_nim: member3Nim,
             cv_link: cvLink,
-            payment_proof_url: publicUrlData.publicUrl,
+            payment_proof_url: paymentUrl,
+            ig_follow_proof_url: igFollowUrl,   // URL PDF Follow IG
+            twibbon_proof_url: twibbonUrl,      // URL PDF Twibbon
+            ig_story_proof_url: igStoryUrl,     // URL PDF Story & Comment
             status: 'pending'
         }]);
 
@@ -191,10 +211,8 @@ export default function RegisterPage() {
                 <div className="relative"><Phone className="absolute left-4 top-4 w-5 h-5 text-gray-500" /><input type="tel" required value={leaderPhone} onChange={(e) => setLeaderPhone(e.target.value)} placeholder="Leader WhatsApp" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
                 <div className="relative"><MessageSquare className="absolute left-4 top-4 w-5 h-5 text-gray-500" /><input type="text" required value={discordUsername} onChange={(e) => setDiscordUsername(e.target.value)} placeholder="Leader Discord Username" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
               </div>
-            </div>
 
-            {/* COLUMN 2 */}
-            <div className="space-y-6">
+              {/* Team Members */}
               <div className="space-y-4">
                 <h3 className="text-sm tracking-widest border-b border-white/10 pb-2 uppercase">Team Members</h3>
                 <div className="flex gap-2">
@@ -204,6 +222,52 @@ export default function RegisterPage() {
                 <div className="flex gap-2">
                   <div className="relative w-full"><UserPlus className="absolute left-3 top-4 w-4 h-4 text-gray-500" /><input type="text" value={member3Name} onChange={(e) => setMember3Name(e.target.value)} placeholder="Member 3 Name" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-10 pr-3 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
                   <div className="relative w-full"><input type="text" value={member3Nim} onChange={(e) => setMember3Nim(e.target.value)} placeholder="Member 3 NIM" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 px-4 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
+                </div>
+              </div>
+            </div>
+
+            {/* COLUMN 2 */}
+            <div className="space-y-6">
+              
+
+              {/* --- SOCIAL MEDIA REQUIREMENTS --- */}
+              <div className="space-y-4">
+                <h3 className="text-sm uppercase tracking-widest border-b border-white/10 pb-2">Social Media Requirements</h3>
+                <p className="text-xs text-gray-400 leading-relaxed mb-4">
+                  Satukan bukti *screenshot* (SS) dari <strong>seluruh anggota tim</strong> (Ketua & Anggota) ke dalam masing-masing <strong>satu file PDF</strong> untuk setiap poin di bawah ini.
+                </p>
+
+                {/* 1. Follow IG */}
+                <div className="bg-[#0a0f24] border border-white/10 rounded-xl p-4">
+                  <p className="text-sm text-gray-200 mb-1 font-medium">1. Bukti Follow Instagram</p>
+                  <p className="text-xs text-gray-500 mb-3">Wajib follow IG @techsprint26 (Semua anggota tim).</p>
+                  <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-pink-500/50 rounded-lg p-3 cursor-pointer transition-colors">
+                    <span className="text-xs text-gray-300 truncate max-w-[200px]">{igFollowFile ? igFollowFile.name : "Upload File (.pdf)"}</span>
+                    <Upload className="w-4 h-4 text-gray-400" />
+                    <input type="file" accept=".pdf" required onChange={(e) => setIgFollowFile(e.target.files?.[0] || null)} className="hidden" />
+                  </label>
+                </div>
+
+                {/* 2. Upload Twibbon */}
+                <div className="bg-[#0a0f24] border border-white/10 rounded-xl p-4">
+                  <p className="text-sm text-gray-200 mb-1 font-medium">2. Bukti Upload Twibbon</p>
+                  <p className="text-xs text-gray-500 mb-3">SS feed/postingan Twibbon di akun IG masing-masing.</p>
+                  <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-pink-500/50 rounded-lg p-3 cursor-pointer transition-colors">
+                    <span className="text-xs text-gray-300 truncate max-w-[200px]">{twibbonFile ? twibbonFile.name : "Upload File (.pdf)"}</span>
+                    <Upload className="w-4 h-4 text-gray-400" />
+                    <input type="file" accept=".pdf" required onChange={(e) => setTwibbonFile(e.target.files?.[0] || null)} className="hidden" />
+                  </label>
+                </div>
+
+                {/* 3. Story, Comment & Tag */}
+                <div className="bg-[#0a0f24] border border-white/10 rounded-xl p-4">
+                  <p className="text-sm text-gray-200 mb-1 font-medium">3. Bukti Instastory & Comment</p>
+                  <p className="text-xs text-gray-500 mb-3">SS bukti komen + tag 3 teman di feed pendaftaran, dan SS share poster acara ke Instastory.</p>
+                  <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-pink-500/50 rounded-lg p-3 cursor-pointer transition-colors">
+                    <span className="text-xs text-gray-300 truncate max-w-[200px]">{igStoryFile ? igStoryFile.name : "Upload File (.pdf)"}</span>
+                    <Upload className="w-4 h-4 text-gray-400" />
+                    <input type="file" accept=".pdf" required onChange={(e) => setIgStoryFile(e.target.files?.[0] || null)} className="hidden" />
+                  </label>
                 </div>
               </div>
 
