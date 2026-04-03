@@ -90,11 +90,11 @@ const MagicTimeline: React.FC<MagicTimelineProps> = ({
 
       {/* Renders the Vertical Timeline Layout */}
       <div 
-        className="bento-section relative border-l border-white/10 ml-4 md:ml-10 space-y-12 pb-8 w-full select-none"
+        className="bento-section relative border-l-3 border-blue-500/30 ml-4 md:ml-10 space-y-12 pb-8 w-full select-none"
         ref={gridRef}
       >
         {events.map((item, index) => {
-          const baseClassName = `card w-full p-6 md:p-8 rounded-2xl border border-solid font-light overflow-hidden transition-all duration-500 ease-in-out hover:bg-white/[0.04] ${
+          const baseClassName = `card w-full p-6 md:p-8 rounded-2xl font-light overflow-hidden transition-all duration-500 ease-in-out hover:bg-white/[0.04] ${
             enableBorderGlow ? 'card--border-glow' : ''
           }`;
 
@@ -125,7 +125,7 @@ const MagicTimeline: React.FC<MagicTimelineProps> = ({
           return (
             <div key={index} className="relative pl-10 md:pl-16 group flex flex-col justify-center">
               {/* Glowing Node Marker */}
-              <span className="absolute -left-5 md:-left-6 top-1 bg-[#050814] p-2 rounded-full border border-white/10 group-hover:border-blue-500/50 transition-colors duration-300 z-20 pointer-events-none">
+              <span className="absolute -left-5 md:-left-6 top-1 bg-[#050814] p-2 rounded-full border-2 border-blue-500/30 group-hover:border-blue-500/50 transition-colors duration-300 z-20 pointer-events-none">
                 {item.nodeMarker}
               </span>
 

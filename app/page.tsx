@@ -164,7 +164,7 @@ export default function LandingPage() {
                   <a href="https://www.instagram.com/techsprint26/" target="_blank" rel="noopener noreferrer" className="text-sm font-light text-gray-300 hover:text-white transition-colors">
                     <Instagram className="w-5 h-5" />
                   </a>
-                  <Link href="/dashboard" className="flex items-center text-sm bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-2 rounded-full font-normal shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
+                  <Link href="/dashboard" aria-describedby="Masuk ke Dashboard anda" className="flex items-center text-sm bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-2 rounded-full font-normal shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
                     Dashboard
                   </Link>
                 </div>
@@ -194,15 +194,19 @@ export default function LandingPage() {
               >
                 {mounted && !isMobile ? (
                   <Typewriter
-                    text="Countdown to 1st Batch Registration Deadline"
+                    text={[
+                      "Countdown to 1st Batch Registration Deadline",
+                      "Early bird spots are limited. Register now!"
+                    ]}
                     delay={1.8}
                     speed={0.05}
-                    className="inline-block mb-6 text-xl md:text-2xl h-8"
+                    pauseBetween={2500}
+                    className="inline-block mb-6 text-xl md:text-2xl h-8 text-center md:text-left"
                   />
                 ) : (
                   <span className="inline-block mb-6 text-xl md:text-2xl text-center md:text-left h-8">Countdown to 1st Batch Registration Deadline</span>
                 )}
-                <Countdown targetDate="2026-04-10T23:59:59" />
+                <Countdown targetDate="2026-04-12T23:59:59" />
               </div>
 
               <div className="flex flex-col sm:flex-row justify-center md:justify-start items-center gap-6 mt-4">
@@ -331,9 +335,9 @@ export default function LandingPage() {
           </section>
 
           {/* --- TOTAL PRIZEPOOL SECTION --- */}
-          <section className="border-t border-white/5 py-32 relative overflow-hidden flex flex-col items-center justify-center">
+          <section className="py-32 relative overflow-hidden flex flex-col items-center justify-center">
             {/* Glow effect specific to Prizepool */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-yellow-500/5 blur-[60px] rounded-full pointer-events-none z-0"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[250px] bg-yellow-500/10 blur-[60px] rounded-full pointer-events-none z-0"></div>
 
             <div className="relative z-10 text-center px-6">
               <p className="text-sm font-medium tracking-[0.2em] text-yellow-500 uppercase mb-4">
@@ -354,7 +358,7 @@ export default function LandingPage() {
           <FAQ />
 
           {/* --- NEW: SPONSORS & PARTNERS SECTION --- */}
-          <section className="border-t border-white/5 py-24 relative overflow-hidden">
+          <section className="py-24 relative overflow-hidden">
             {/* Subtle background glow */}
             <div className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
 

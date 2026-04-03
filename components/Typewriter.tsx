@@ -1,16 +1,30 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 interface TypewriterProps {
-  text: string;
+  text: string | string[];
   className?: string;
   delay?: number;
   speed?: number;
+  pauseBetween?: number;
 }
 
-export function Typewriter({ text, className = "", delay = 0, speed = 0.05 }: TypewriterProps) {
-  const characters = text.split("");
+export function Typewriter({ 
+  text, 
+  className = "", 
+  delay = 0, 
+  speed = 0.05,
+  pauseBetween = 1500 
+}: TypewriterProps) {
+  const texts = Array.isArray(text) ? text : [text];
+  const [textIndex, setTextIndex] = useState(0);
+
+  const currentString = texts[textIndex];
+  const characters = currentString.split("");
+
+  const isLast = textIndex === texts.length - 1;
 
   const container = {
     hidden: { opacity: 0 },
@@ -18,7 +32,7 @@ export function Typewriter({ text, className = "", delay = 0, speed = 0.05 }: Ty
       opacity: 1,
       transition: { 
         staggerChildren: speed,
-        delayChildren: delay,
+        delayChildren: textIndex === 0 ? delay : 0,
       },
     },
   };
@@ -31,11 +45,21 @@ export function Typewriter({ text, className = "", delay = 0, speed = 0.05 }: Ty
     },
   };
 
+  const handleAnimationComplete = (definition: any) => {
+    if (definition === "visible" && !isLast) {
+      setTimeout(() => {
+        setTextIndex(prev => prev + 1);
+      }, pauseBetween);
+    }
+  };
+
   return (
     <motion.span
+      key={textIndex}
       variants={container}
       initial="hidden"
       animate="visible"
+      onAnimationComplete={handleAnimationComplete}
       className={className}
     >
       {characters.map((char, index) => (

@@ -40,7 +40,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="border-t border-white/5 py-24 relative overflow-hidden">
+    <section className="py-24 relative overflow-hidden">
       {/* Background glow for FAQ */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
       
