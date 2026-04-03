@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { TextReveal } from "../components/TextReveal";
-import SoftAurora from "../components/SoftAurora";
+import { Typewriter } from "../components/Typewriter";
 import MagicBento from "../components/MagicBento";
 import MagicTimeline from "../components/MagicTimeline";
 import FaultyTerminal from "../components/FaultyTerminal";
@@ -13,11 +13,11 @@ import FAQ from "../components/FAQ";
 import Footer from "../components/Footer";
 import Countdown from "../components/Countdown";
 import PageLoader from "../components/PageLoader";
-import { 
-  ArrowUpRight, MonitorSmartphone, DatabaseZap, Cpu, Calendar, 
-  UserPlus, Timer, MonitorPlay, Rocket, 
-  Search, Train, Cloud, Utensils, // Sponsor Icons
-  Mail, MapPin, MessageSquare, Instagram, Twitter, Linkedin // Footer Icons
+import {
+  ArrowUpRight, MonitorSmartphone, DatabaseZap, Cpu, Calendar,
+  UserPlus, Timer, MonitorPlay, Rocket,
+  Search, Train, Cloud, Utensils,
+  Mail, MapPin, MessageSquare, Instagram, Twitter, Linkedin
 } from "lucide-react";
 
 export default function LandingPage() {
@@ -67,31 +67,31 @@ export default function LandingPage() {
 
   // Data Timeline Event
   const timelineEvents = [
-    { 
-      date: "6 - 21 April 2026", 
-      title: "Batch 1 Registration", 
-      desc: "Open registration for early birds. Gather your team of 3 and secure your spot early.", 
+    {
+      date: "6 - 12 April 2026",
+      title: "Batch 1 Registration",
+      desc: "Open registration for early birds. Gather your team of 3 and secure your spot early.",
       icon: UserPlus,
       color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
     },
-    { 
-      date: "22 April - 1 May 2026", 
-      title: "Batch 2 Registration", 
-      desc: "Last chance to join! Registration officially closes on May 1st at 23:59 WIB.", 
+    {
+      date: "13 April - 1 May 2026",
+      title: "Batch 2 Registration",
+      desc: "Last chance to join! Registration officially closes on May 1st at 23:59 WIB.",
       icon: Timer,
       color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
     },
-    { 
-      date: "6 May 2026", 
-      title: "Technical Meeting", 
-      desc: "Mandatory briefing for all participants. We will discuss rules, submission guidelines, and judging criteria.", 
+    {
+      date: "6 May 2026",
+      title: "Technical Meeting",
+      desc: "Mandatory briefing for all participants. We will discuss rules, submission guidelines, and judging criteria.",
       icon: MonitorPlay,
       color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
     },
-    { 
-      date: "9 - 10 May 2026", 
-      title: "Hackathon Day (24-Hour Sprint)", 
-      desc: "The sprint begins! Starts at 12:00 PM and ends the next day at 12:00 PM. Build your solutions and conquer the checkpoints.", 
+    {
+      date: "9 - 10 May 2026",
+      title: "Hackathon Day",
+      desc: "The sprint begins! Starts at 12:00 PM and ends the next day at 12:00 PM. Build your solutions and conquer the checkpoints.",
       icon: Rocket,
       color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
     }
@@ -114,46 +114,49 @@ export default function LandingPage() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0a0f24] via-[#050814] to-black text-white font-sans selection:bg-blue-500 selection:text-white overflow-x-hidden">
-      
+    <div className="min-h-screen bg-gradient-to-b from-[#0a0f24] via-[#050814] to-black text-white font-sans selection:bg-blue-500 selection:text-white overflow-x-hidden relative">
+
+      {/* Unified Faulty Terminal Background Layer */}
+      <div className="fixed inset-0 z-0 mix-blend-screen pointer-events-auto">
+        {mounted && !isMobile && (
+          <FaultyTerminal
+            scale={1.5}
+            gridMul={[2, 1]}
+            digitSize={1.2}
+            timeScale={0.5}
+            pause={false}
+            scanlineIntensity={0.5}
+            glitchAmount={1}
+            flickerAmount={1}
+            noiseAmp={1}
+            chromaticAberration={0}
+            dither={0}
+            curvature={0.1}
+            tint="#051e3652"
+            mouseReact={true}
+            mouseStrength={0.5}
+            pageLoadAnimation={true}
+            brightness={0.1}
+          />
+        )}
+      </div>
+
       <PageLoader />
 
-      {/* Hero Wrapper with SoftAurora Background */}
-      <div className="relative w-full min-h-screen flex flex-col overflow-hidden">
-        
-        {/* Soft Aurora Background Layer */}
-        <div className="hidden md:block absolute inset-0 z-0 opacity-80 mix-blend-screen pointer-events-auto">
-          {mounted && !isMobile && (
-            <SoftAurora
-              speed={0.6}
-              scale={1.5}
-              brightness={1}
-              color1="#0a2a5e" // Tech Sprint Dark Tone
-              color2="#00bbff" // Cyan glow matching theme
-              noiseFrequency={2.5}
-              noiseAmplitude={1}
-              bandHeight={0.5}
-              bandSpread={1}
-              octaveDecay={0.1}
-              layerOffset={0}
-              colorSpeed={1}
-              enableMouseInteraction={true}
-              mouseInfluence={0.25}
-            />
-          )}
-        </div>
+      {/* Hero Content Wrapper */}
+      <div className="relative w-full min-h-screen flex flex-col z-10 pointer-events-none">
 
         {/* Foreground Layer (Nav + Hero) */}
         <div className="relative z-10 flex-1 flex flex-col pointer-events-none">
           {/* Navigation */}
           <nav className="border-white/5 p-6 flex justify-between items-center max-w-7xl mx-auto w-full pointer-events-auto">
-            
+
             <div className="flex items-center">
               <Link href="/">
-                <img src="/logo-techsprint-2026.png" alt="3IN1 Tech Sprint 2026" className="h-24 md:h-24 w-auto object-contain mix-blend-screen" />
+                <img src="/logo-only.png" alt="3IN1 Tech Sprint 2026" className="h-18 md:h-18 w-auto object-contain mix-blend-screen" />
               </Link>
             </div>
-            
+
             <div className="space-x-6 flex items-center">
               {/* Reference Button Style: Small */}
               {isAuthenticated ? (
@@ -179,112 +182,95 @@ export default function LandingPage() {
           </nav>
 
           {/* Hero Section */}
-          <main className="max-w-5xl mx-auto px-6 pt-8 pb-20 text-center flex flex-col items-center flex-1 justify-center pointer-events-auto">
-            
-            {/* <div className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-blue-200 tracking-wide">
-              <span className="text-blue-500"></></span> New! Winners announced at closing ceremony <ArrowUpRight className="w-3 h-3" />
-            </div> */}
+          <main className="max-w-7xl mx-auto px-6 pt-12 pb-20 flex flex-col md:flex-row items-center justify-between w-full flex-1 pointer-events-auto gap-12 md:gap-8">
 
-            {/* <img src="/logo-3in1-tech-sprint.png" alt="3IN1 Tech Sprint" className="mix-blend-screen w-1/4 h-auto" /> */}
+            {/* Left Column (Text, Countdown, Buttons) */}
+            <div className="flex flex-col items-center md:items-start text-center md:text-left md:w-1/2 z-10">
 
-            
-            {/* Giant Timer Simulation (Like Reference Image) */}
-            {/* <div className="mb-2 drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]">
-              <TextReveal 
-                text="3IN1 Tech Sprint" 
-                className="text-7xl md:text-9xl font-light tracking-tighter text-blue-400"
-              />
-            </div> */}
-            
-            <h1 
-              className="text-xl md:text-3xl font-normal tracking-wide text-white leading-tight"
-              style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
-            >
-              {mounted && !isMobile ? (
-                <TextReveal 
-                  text="Tech Sprint" 
-                  delay={2.5} 
-                  className="inline-block mb-10 text-9xl font-bold"
-                />
-              ) : (
-                <span className="inline-block mb-2 text-9xl font-bold">Tech Sprint</span>
-              )}
-            </h1>
-
-            {/* Countdown Timer */}
-            <div 
-              className="flex flex-col items-center text-4xl md:text-12xl font-normal tracking-wide text-white mb-18 leading-tight "
-              style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
-            >
-              {mounted && !isMobile ? (
-                <TextReveal 
-                  text="Countdown to 1st Batch Registration Deadline"
-                  delay={2.6}
-                  className="inline-block mb-10 text-2xl"
-                />
-              ) : (
-                <span className="inline-block mb-10 text-2xl text-center">Countdown to 1st Batch Registration Deadline</span>
-              )}
-              <Countdown targetDate="2026-04-10T23:59:59" />
-            </div>
-            
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-              {/* Reference Button Style: Large */}
-              <Link href="/register" className="flex items-center text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] px-8 py-3 rounded-full font-normal shadow-[0_0_20px_rgba(0,51,255,0.4)] hover:shadow-[0_0_35px_rgba(0,51,255,0.7)] hover:-translate-y-1 transition-all duration-300">
-                Register Now! <ArrowUpRight className="ml-2 w-5 h-5" />
-              </Link>
-              <button 
-                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-gray-400 hover:text-white font-light tracking-wide transition-colors"
+              {/* Countdown Timer */}
+              <div
+                className="flex flex-col items-center md:items-start text-4xl md:text-12xl font-normal tracking-wide text-white mb-10 leading-tight"
+                style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
               >
-                Learn More
-              </button>
+                {mounted && !isMobile ? (
+                  <Typewriter
+                    text="Countdown to 1st Batch Registration Deadline"
+                    delay={1.8}
+                    speed={0.05}
+                    className="inline-block mb-6 text-xl md:text-2xl h-8"
+                  />
+                ) : (
+                  <span className="inline-block mb-6 text-xl md:text-2xl text-center md:text-left h-8">Countdown to 1st Batch Registration Deadline</span>
+                )}
+                <Countdown targetDate="2026-04-10T23:59:59" />
+              </div>
+
+              <div className="flex flex-col sm:flex-row justify-center md:justify-start items-center gap-6 mt-4">
+                {/* Reference Button Style: Large */}
+                <Link href="/register" className="flex items-center text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] px-8 py-3 rounded-full font-normal shadow-[0_0_20px_rgba(0,51,255,0.4)] hover:shadow-[0_0_35px_rgba(0,51,255,0.7)] hover:-translate-y-1 transition-all duration-300">
+                  Register Now! <ArrowUpRight className="ml-2 w-5 h-5" />
+                </Link>
+                <button
+                  onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="text-gray-400 hover:text-white font-light tracking-wide transition-colors"
+                >
+                  Learn More
+                </button>
+              </div>
             </div>
+
+            {/* Right Column (Glitch Logo) */}
+            <div className="md:w-1/2 flex justify-center items-center mt-12 md:mt-0 relative group z-10 w-full max-w-sm md:max-w-md lg:max-w-lg">
+              <style dangerouslySetInnerHTML={{
+                __html: `
+                @keyframes continuousGlitch {
+                  0% { transform: translate(0) scale(1); filter: drop-shadow(0 0 0 transparent); }
+                  2% { transform: translate(-4px, 3px) scale(1.02); filter: drop-shadow(-3px 0 0 rgba(59,130,246,0.7)) drop-shadow(3px 0 0 rgba(147,197,253,0.7)); }
+                  4% { transform: translate(4px, -3px) scale(0.98); filter: drop-shadow(3px 0 0 rgba(59,130,246,0.5)) drop-shadow(-3px 0 0 rgba(147,197,253,0.5)); }
+                  6% { transform: translate(0) scale(1); filter: drop-shadow(0 0 0 transparent); }
+                  50% { transform: translate(0) scale(1); filter: drop-shadow(0 0 0 transparent); }
+                  52% { transform: translate(-3px, -4px) scale(1.01); filter: drop-shadow(3px 3px 0 rgba(59,130,246,0.8)) drop-shadow(-3px -3px 0 rgba(147,197,253,0.8)); }
+                  54% { transform: translate(3px, 4px) scale(0.99); filter: drop-shadow(-3px -3px 0 rgba(59,130,246,0.6)) drop-shadow(3px 3px 0 rgba(147,197,253,0.6)); }
+                  56% { transform: translate(0) scale(1); filter: drop-shadow(0 0 0 transparent); }
+                  80% { transform: translate(0) scale(1); filter: drop-shadow(0 0 0 transparent); }
+                  81% { transform: translate(-1px, 1px) scale(1); filter: drop-shadow(-1px 0 0 rgba(59,130,246,0.4)) drop-shadow(1px 0 0 rgba(147,197,253,0.4)); }
+                  82% { transform: translate(1px, -1px) scale(1); filter: drop-shadow(1px 0 0 rgba(59,130,246,0.4)) drop-shadow(-1px 0 0 rgba(147,197,253,0.4)); }
+                  83% { transform: translate(0) scale(1); filter: drop-shadow(0 0 0 transparent); }
+                  100% { transform: translate(0) scale(1); filter: drop-shadow(0 0 0 transparent); }
+                }
+                .glitch-logo {
+                  animation: continuousGlitch 4s infinite;
+                  transform-style: preserve-3d;
+                }
+              `}} />
+              <img
+                src="/logo-techsprint-2026.png"
+                alt="3IN1 Tech Sprint 2026"
+                className="w-full h-auto object-contain mix-blend-screen glitch-logo drop-shadow-[0_0_40px_rgba(59,130,246,0.2)]"
+              />
+            </div>
+
           </main>
         </div>
       </div>
 
-      {/* --- LOWER PAGE CONTENT WITH FAULTY TERMINAL BACKGROUND --- */}
-      <div className="relative w-full overflow-hidden">
-        {/* Faulty Terminal Background Layer */}
-        <div className="absolute inset-0 z-0 mix-blend-screen pointer-events-auto">
-          {mounted && !isMobile && (
-            <FaultyTerminal
-              scale={1.5}
-              gridMul={[2, 1]}
-              digitSize={1.2}
-              timeScale={0.5}
-              pause={false}
-              scanlineIntensity={0.5}
-              glitchAmount={1}
-              flickerAmount={1}
-              noiseAmp={1}
-              chromaticAberration={0}
-              dither={0}
-              curvature={0.1}
-              tint="#051e3652"
-              mouseReact={true}
-              mouseStrength={0.5}
-              pageLoadAnimation={true}
-              brightness={0.1}
-            />
-          )}
-        </div>
+      {/* --- LOWER PAGE CONTENT --- */}
+      <div className="relative w-full overflow-hidden z-10 pointer-events-none">
 
         {/* Foreground Content */}
         <div className="relative z-10 pointer-events-none [&>*]:pointer-events-auto">
           {/* --- EVENT DESCRIPTION SECTION --- */}
           <section id="about" className="py-24 relative overflow-hidden">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-blue-900/10 rounded-full pointer-events-none z-0"></div>
+
             <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
-              <h2 
+              <h2
                 className="text-xl md:text-3xl font-normal tracking-wide text-white leading-tight mb-10"
                 style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
               >
                 {mounted && !isMobile ? (
-                  <TextReveal 
-                    text="Ready to Innovate, Create the Future State" 
-                    delay={0.5} 
+                  <TextReveal
+                    text="Ready to Innovate, Create the Future State"
+                    delay={0.5}
                     className="inline-block text-4xl md:text-5xl lg:text-6xl font-bold"
                   />
                 ) : (
@@ -304,133 +290,133 @@ export default function LandingPage() {
 
           {/* Tracks Info Section */}
           <section className="py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-2xl font-light text-center mb-16 tracking-widest text-gray-300 uppercase">
-            <TextReveal text="Track Categories" />
-          </h2>
-          
-          <MagicBento 
-            cards={trackCards}
-            textAutoHide={true}
-            enableStars={mounted ? !isMobile : true}
-            enableSpotlight={mounted ? !isMobile : true}
-            enableBorderGlow={mounted ? !isMobile : true}
-            enableTilt={false}
-            enableMagnetism={false}
-            clickEffect={mounted ? !isMobile : true}
-            spotlightRadius={400}
-            particleCount={mounted && isMobile ? 0 : 12}
-            glowColor="59, 130, 246" 
-            disableAnimations={mounted ? isMobile : false}
-          />
+            <div className="max-w-7xl mx-auto px-6">
+              <h2 className="text-2xl font-light text-center mb-16 tracking-widest text-gray-300 uppercase">
+                <TextReveal text="Track Categories" />
+              </h2>
 
-        </div>
-      </section>
+              <MagicBento
+                cards={trackCards}
+                textAutoHide={true}
+                enableStars={mounted ? !isMobile : true}
+                enableSpotlight={mounted ? !isMobile : true}
+                enableBorderGlow={mounted ? !isMobile : true}
+                enableTilt={false}
+                enableMagnetism={false}
+                clickEffect={mounted ? !isMobile : true}
+                spotlightRadius={400}
+                particleCount={mounted && isMobile ? 0 : 12}
+                glowColor="59, 130, 246"
+                disableAnimations={mounted ? isMobile : false}
+              />
 
-      {/* --- NEW TIMELINE SECTION --- */}
-      <section className="py-24 relative overflow-hidden">
-        {/* Glow background effect */}
-        <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none"></div>
-        
-        <div className="max-w-4xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-2xl font-light tracking-widest text-gray-300 uppercase flex items-center justify-center gap-3">
-              Event Journey
-            </h2>
-            <p className="text-gray-500 font-light mt-4">Mark your calendar for these important dates.</p>
-          </div>
-
-          <MagicTimeline events={serializedTimelineEvents} glowColor="59, 130, 246" />
-        </div>
-      </section>
-
-      {/* --- TOTAL PRIZEPOOL SECTION --- */}
-      <section className="border-t border-white/5 py-32 relative overflow-hidden flex flex-col items-center justify-center">
-        {/* Glow effect specific to Prizepool */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-yellow-500/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
-        
-        <div className="relative z-10 text-center px-6">
-          <p className="text-sm font-medium tracking-[0.2em] text-yellow-500 uppercase mb-4">
-            Total Prizepool
-          </p>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 text-6xl md:text-8xl lg:text-9xl font-light text-white drop-shadow-[0_0_30px_rgba(234,179,8,0.4)]">
-            <span className="text-4xl md:text-6xl text-yellow-500">Rp</span>
-            <NumberTicker value={20000000} delay={0.5} />
-            <span className="text-4xl md:text-6xl text-yellow-500">+</span>
-          </div>
-          <p className="text-gray-400 mt-8 font-light max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-            Compete, innovate, and win your share of the massive prize pool along with exclusive opportunities from our industry partners.
-          </p>
-        </div>
-      </section>
-
-      {/* --- FAQ SECTION --- */}
-      <FAQ />
-
-      {/* --- NEW: SPONSORS & PARTNERS SECTION --- */}
-      <section className="border-t border-white/5 py-24 relative overflow-hidden">
-        {/* Subtle background glow */}
-        <div className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
-        
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="mb-16 flex flex-col items-center text-center gap-6">
-            <h2 className="text-2xl md:text-3xl font-light tracking-widest text-gray-300 uppercase flex items-center justify-center gap-3">
-              <TextReveal text="Sponsored by" />
-            </h2>
-            <Link href="/sponsorship" className="px-6 py-2.5 rounded-full border border-white/10 bg-white/[0.02] text-sm font-light text-gray-300 hover:bg-white/10 hover:border-blue-500/50 hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.02)] hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-              Become a sponsor
-            </Link>
-          </div>
-
-          <div className="flex flex-col gap-6">
-            {/* Case Collaborator / Main Sponsor (Full Width) */}
-            <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-8 md:p-12 flex flex-col xl:flex-row items-center justify-between gap-8 md:gap-12 hover:bg-white/[0.04] transition-all duration-500 group relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-duration-700"></div>
-              
-              <div className="flex flex-col items-center xl:items-start text-center xl:text-left z-10 w-full xl:w-1/3">
-                <span className="text-xs font-medium tracking-[0.2em] text-blue-400 uppercase mb-4">Case Collaborator</span>
-                <span className="text-4xl md:text-5xl lg:text-6xl font-normal tracking-tight text-white group-hover:text-blue-400 transition-colors duration-500 mb-2">Coming Soon</span>
-                <span className="text-sm text-gray-400 font-light">The grand reveal of our main case collaborator will unlock on May 1st, 2026.</span>
-              </div>
-              
-              <div className="z-10 flex items-center justify-center bg-[#03050a]/50 p-6 md:p-8 py-8 md:py-10 border border-white/5 rounded-3xl shadow-inner w-full xl:w-auto overflow-x-auto">
-                <Countdown targetDate="2026-05-01T00:00:00" />
-              </div>
             </div>
+          </section>
 
-            {/* Grid Style for Tiered Sponsors */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-4">
-              {/* Sponsor 2 */}
-              <div className="bg-white/[0.02] border border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-white/[0.04] transition-all duration-300 group hover:border-white/20">
-                <div className="flex items-center gap-4 text-gray-400 group-hover:text-white transition-colors">
-                  {/* <img src="/g.webp" alt="Google" className="w-8 h-8 md:w-10 md:h-10" /> */}
-                  <span className="text-2xl md:text-3xl font-medium tracking-tight">Coming Soon</span>
-                </div>
+          {/* --- NEW TIMELINE SECTION --- */}
+          <section className="py-24 relative overflow-hidden">
+            {/* Glow background effect */}
+            <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+            <div className="max-w-4xl mx-auto px-6 relative z-10">
+              <div className="text-center mb-16">
+                <h2 className="text-2xl font-light tracking-widest text-gray-300 uppercase flex items-center justify-center gap-3">
+                  Event Journey
+                </h2>
+                <p className="text-gray-500 font-light mt-4">Mark your calendar for these important dates.</p>
               </div>
 
-              {/* Sponsor 3 */}
-              <div className="bg-white/[0.02] border border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-white/[0.04] transition-all duration-300 group hover:border-white/20">
-                <div className="flex items-center gap-4 text-gray-400 group-hover:text-white transition-colors">
-                  {/* <Train className="w-8 h-8 md:w-10 md:h-10" /> */}
-                  <span className="text-2xl md:text-3xl font-medium tracking-tight">Coming Soon</span>
-                </div>
-              </div>
-
-              {/* Sponsor 4 */}
-              <div className="bg-white/[0.02] border border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-white/[0.04] transition-all duration-300 group hover:border-white/20">
-                <div className="flex items-center gap-4 text-gray-400 group-hover:text-white transition-colors">
-                  {/* <Utensils className="w-8 h-8 md:w-10 md:h-10" /> */}
-                  <span className="text-2xl md:text-3xl font-medium tracking-tight">Coming Soon</span>
-                </div>
-              </div>
+              <MagicTimeline events={serializedTimelineEvents} glowColor="59, 130, 246" />
             </div>
-          </div>
+          </section>
 
-        </div>
-      </section>
+          {/* --- TOTAL PRIZEPOOL SECTION --- */}
+          <section className="border-t border-white/5 py-32 relative overflow-hidden flex flex-col items-center justify-center">
+            {/* Glow effect specific to Prizepool */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-yellow-500/5 blur-[60px] rounded-full pointer-events-none z-0"></div>
 
-      {/* --- FOOTER --- */}
-      <Footer />
+            <div className="relative z-10 text-center px-6">
+              <p className="text-sm font-medium tracking-[0.2em] text-yellow-500 uppercase mb-4">
+                Total Prizepool
+              </p>
+              <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 text-6xl md:text-8xl lg:text-9xl font-light text-white drop-shadow-[0_0_20px_rgba(234,179,8,0.4)]">
+                <span className="text-4xl md:text-6xl text-yellow-500">Rp</span>
+                <NumberTicker value={20000000} delay={0.5} />
+                <span className="text-4xl md:text-6xl text-yellow-500">+</span>
+              </div>
+              <p className="text-gray-400 mt-8 font-light max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+                Compete, innovate, and win your share of the massive prize pool along with exclusive opportunities from our industry partners.
+              </p>
+            </div>
+          </section>
+
+          {/* --- FAQ SECTION --- */}
+          <FAQ />
+
+          {/* --- NEW: SPONSORS & PARTNERS SECTION --- */}
+          <section className="border-t border-white/5 py-24 relative overflow-hidden">
+            {/* Subtle background glow */}
+            <div className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
+              <div className="mb-16 flex flex-col items-center text-center gap-6">
+                <h2 className="text-2xl md:text-3xl font-light tracking-widest text-gray-300 uppercase flex items-center justify-center gap-3">
+                  <TextReveal text="Sponsored by" />
+                </h2>
+                <Link href="/sponsorship" className="px-6 py-2.5 rounded-full border border-white/10 bg-white/[0.02] text-sm font-light text-gray-300 hover:bg-white/10 hover:border-blue-500/50 hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.02)] hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                  Become a sponsor
+                </Link>
+              </div>
+
+              <div className="flex flex-col gap-6">
+                {/* Case Collaborator / Main Sponsor (Full Width) */}
+                <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-8 md:p-12 flex flex-col xl:flex-row items-center justify-between gap-8 md:gap-12 hover:bg-white/[0.04] transition-all duration-500 group relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-duration-700"></div>
+
+                  <div className="flex flex-col items-center xl:items-start text-center xl:text-left z-10 w-full xl:w-1/3">
+                    <span className="text-xs font-medium tracking-[0.2em] text-blue-400 uppercase mb-4">Case Collaborator</span>
+                    <span className="text-4xl md:text-5xl lg:text-6xl font-normal tracking-tight text-white group-hover:text-blue-400 transition-colors duration-500 mb-2">Coming Soon</span>
+                    <span className="text-sm text-gray-400 font-light">The grand reveal of our main case collaborator will unlock on May 1st, 2026.</span>
+                  </div>
+
+                  <div className="z-10 flex items-center justify-center bg-[#03050a]/50 p-6 md:p-8 py-8 md:py-10 border border-white/5 rounded-3xl shadow-inner w-full xl:w-auto overflow-x-auto">
+                    <Countdown targetDate="2026-05-01T00:00:00" />
+                  </div>
+                </div>
+
+                {/* Grid Style for Tiered Sponsors */}
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-4">
+                  {/* Sponsor 2 */}
+                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-white/[0.04] transition-all duration-300 group hover:border-white/20">
+                    <div className="flex items-center gap-4 text-gray-400 group-hover:text-white transition-colors">
+                      {/* <img src="/g.webp" alt="Google" className="w-8 h-8 md:w-10 md:h-10" /> */}
+                      <span className="text-2xl md:text-3xl font-medium tracking-tight">Coming Soon</span>
+                    </div>
+                  </div>
+
+                  {/* Sponsor 3 */}
+                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-white/[0.04] transition-all duration-300 group hover:border-white/20">
+                    <div className="flex items-center gap-4 text-gray-400 group-hover:text-white transition-colors">
+                      {/* <Train className="w-8 h-8 md:w-10 md:h-10" /> */}
+                      <span className="text-2xl md:text-3xl font-medium tracking-tight">Coming Soon</span>
+                    </div>
+                  </div>
+
+                  {/* Sponsor 4 */}
+                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-white/[0.04] transition-all duration-300 group hover:border-white/20">
+                    <div className="flex items-center gap-4 text-gray-400 group-hover:text-white transition-colors">
+                      {/* <Utensils className="w-8 h-8 md:w-10 md:h-10" /> */}
+                      <span className="text-2xl md:text-3xl font-medium tracking-tight">Coming Soon</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          {/* --- FOOTER --- */}
+          <Footer />
 
         </div>
       </div>
