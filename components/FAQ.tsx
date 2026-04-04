@@ -11,24 +11,24 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: "Apa itu 3IN1 Tech Sprint?",
-    answer: "3IN1 Tech Sprint adalah kompetisi inovasi interaktif selama 2 hari yang fokus pada pengembangan solusi teknologi berkelanjutan untuk masalah nyata. Kami memiliki tiga track utama: UI/UX, Data Automation, dan System Analyst.",
+    question: "What is 3IN1 Tech Sprint?",
+    answer: "3IN1 Tech Sprint is an intensive 2-day innovation competition focused on developing sustainable technological solutions for real-world problems. We feature three main tracks: UI/UX, Data Automation, and System Analyst.",
   },
   {
-    question: "Siapa saja yang bisa mengikuti acara ini?",
-    answer: "Acara ini terbuka untuk mahasiswa aktif maupun pelajar yang memiliki ketertarikan di bidang teknologi, desain, analisis sistem, dan otomasi data. Kamu bisa mendaftar secara tim dengan anggota 3 orang.",
+    question: "Who can participate in this event?",
+    answer: "This event is open to active university and high school students with an interest in technology, design, system analysis, and data automation. You can register as a team of 3 members.",
   },
   {
-    question: "Apakah ada biaya pendaftaran?",
-    answer: "Terdapat periode pendaftaran tertentu. Silakan pantau terus informasi pendaftaran kami untuk mengetahui tentang periode early bird dan harga khusus untuk tim yang mendaftar lebih awal.",
+    question: "Is there a registration fee?",
+    answer: "There are specific registration periods. Please stay tuned to our registration announcements to learn about early bird periods and special pricing for early registrations.",
   },
   {
-    question: "Bagaimana cara mendaftar menjadi peserta?",
-    answer: "Kamu bisa mendaftar melalui tombol 'Register' yang ada di halaman utama website ini. Pastikan kamu sudah menyiapkan data diri dan anggota tim sebelum mengisi formulir.",
+    question: "How do I register as a participant?",
+    answer: "You can register via the 'Register' button on the homepage of this website. Ensure you have prepared your personal and team member details before filling out the form.",
   },
   {
-    question: "Apakah peserta harus memiliki pengalaman IT sebelumnya?",
-    answer: "Tidak wajib, tetapi pengalaman dasar akan sangat membantu. Kompetisi ini juga menjadi tempat yang baik untuk belajar dan mengasah kemampuan kamu secara langsung (hands-on) bersama teman satu tim.",
+    question: "Do participants need prior IT experience?",
+    answer: "It is not mandatory, but basic experience will be very helpful. This competition is also a great place to learn and hone your skills hands-on with your teammates.",
   }
 ];
 
@@ -50,7 +50,7 @@ export default function FAQ() {
             <TextReveal text="FAQ" />
           </h2>
           <p className="text-gray-400 font-light mt-4">
-            Temukan jawaban untuk pertanyaan yang sering diajukan.
+            Find answers to frequently asked questions.
           </p>
         </div>
 
