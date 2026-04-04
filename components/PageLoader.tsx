@@ -11,7 +11,7 @@ export default function PageLoader() {
     document.body.style.overflow = "hidden";
     
     const isMobileView = window.innerWidth < 768;
-    const timeoutDuration = isMobileView ? 0 : 2500; // Skip loader on mobile to fix LCP
+    const timeoutDuration = isMobileView ? 0 : 800; // Skip loader on mobile to fix LCP
     
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -32,25 +32,25 @@ export default function PageLoader() {
           key="loader"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.05, filter: "blur(5px)" }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
           className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#050814] overflow-hidden"
         >
           {/* Subtle background glow */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/20 blur-[100px] rounded-full pointer-events-none"
           />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             className="relative z-10 flex flex-col items-center gap-10"
           >
             <img 
-              src="/logo-techsprint-2026.png" 
+              src="/logo-techsprint-2026.webp" 
               alt="3IN1 Tech Sprint" 
               className="w-48 md:w-64 object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]" 
             />
@@ -77,7 +77,7 @@ export default function PageLoader() {
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
                 className="text-gray-400 font-light tracking-[0.3em] uppercase text-[10px] md:text-xs"
               >
                 Initializing System

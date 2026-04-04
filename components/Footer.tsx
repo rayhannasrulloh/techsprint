@@ -12,7 +12,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <div className="text-2xl font-light tracking-widest text-gray-200 mb-4">
-              <img src="/text-only-center.png" alt="3IN1 Tech Sprint 2026" className="w-40 md:w-30 lg:w-20 ml-auto mr-auto" />
+              <img src="/text-only-center.webp" alt="Tech Sprint 3IN1 2026" className="w-40 md:w-30 lg:w-20 ml-auto mr-auto" />
             </div>
             <p className="text-gray-400 font-light text-sm leading-relaxed mb-6">
               Empowering the next generation of tech leaders through intense innovation, collaboration, and 24-hour sprints.

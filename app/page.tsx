@@ -156,7 +156,7 @@ export default function LandingPage() {
 
             <div className="flex-1 flex items-center justify-start">
               <Link href="/">
-                <img src="/logo-only.png" alt="3IN1 Tech Sprint 2026" className="h-18 md:h-18 w-auto object-contain mix-blend-screen" />
+                <img src="/logo-only.webp" alt="3IN1 Tech Sprint 2026" className="h-18 md:h-18 w-auto object-contain mix-blend-screen" />
               </Link>
             </div>
 
@@ -258,7 +258,7 @@ export default function LandingPage() {
                 }
               `}} />
               <img
-                src="/logo-techsprint-2026.png"
+                src="/logo-techsprint-2026.webp"
                 alt="3IN1 Tech Sprint 2026"
                 className="w-full h-auto object-contain mix-blend-screen glitch-logo drop-shadow-[0_0_40px_rgba(59,130,246,0.2)]"
               />
