@@ -16,7 +16,6 @@ import PageLoader from "../components/PageLoader";
 import {
   ArrowUpRight, MonitorSmartphone, DatabaseZap, Cpu, Calendar,
   UserPlus, Timer, MonitorPlay, Rocket,
-  Search, Train, Cloud, Utensils,
   Mail, MapPin, MessageSquare, Instagram, Twitter, Linkedin
 } from "lucide-react";
 
@@ -37,6 +36,7 @@ export default function LandingPage() {
       }
     };
     checkUser();
+
     window.addEventListener("resize", checkIsMobile);
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
@@ -72,7 +72,7 @@ export default function LandingPage() {
   const timelineEvents = [
     {
       date: "6 - 12 April 2026",
-      title: "Batch 1 Registration",
+      title: "Early Bird",
       desc: "Open registration for early birds. Gather your team of 3 and secure your spot early.",
       icon: UserPlus,
       color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
@@ -154,14 +154,21 @@ export default function LandingPage() {
           {/* Navigation */}
           <nav className="border-white/5 p-6 flex justify-between items-center max-w-7xl mx-auto w-full pointer-events-auto">
 
-            <div className="flex items-center">
+            <div className="flex-1 flex items-center justify-start">
               <Link href="/">
                 <img src="/logo-only.png" alt="3IN1 Tech Sprint 2026" className="h-18 md:h-18 w-auto object-contain mix-blend-screen" />
               </Link>
             </div>
 
-            <div className="space-x-6 flex items-center">
-              {/* Reference Button Style: Small */}
+            <div className="hidden md:flex flex-1 items-center justify-center gap-8">
+              <Link href="/track/ui-ux" className="text-sm font-light text-gray-300 hover:text-white transition-colors tracking-wide">UI/UX Design</Link>
+              <Link href="/track/data-automation" className="text-sm font-light text-gray-300 hover:text-white transition-colors tracking-wide">Data Automation</Link>
+              <Link href="/track/system-analyst" className="text-sm font-light text-gray-300 hover:text-white transition-colors tracking-wide">System Analyst</Link>
+            </div>
+
+            <div className="flex-1 flex justify-end space-x-2 md:space-x-6 items-center">
+
+              {/* Authentication Info / App Entry */}
               {isAuthenticated ? (
                 <div className="flex items-center gap-4">
                   <a href="https://www.instagram.com/techsprint26/" target="_blank" rel="noopener noreferrer" className="text-sm font-light text-gray-300 hover:text-white transition-colors">
