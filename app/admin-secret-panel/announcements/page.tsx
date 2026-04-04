@@ -110,45 +110,43 @@ export default function AnnouncementsPage() {
   };
 
   return (
-    <div className="p-8 max-w-5xl mx-auto animate-in fade-in duration-500">
+    <div className="p-6 md:p-8 max-w-7xl mx-auto animate-in fade-in duration-500">
       
       {/* HEADER */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-light flex items-center gap-3"><Megaphone className="text-purple-500" /> Announcements</h1>
-        <p className="text-gray-400 text-sm mt-1">Manage global updates sent to all participant dashboards.</p>
+      <div className="mb-6 flex flex-col gap-1">
+        <h1 className="text-2xl font-medium tracking-wide flex items-center gap-2">Announcements</h1>
+        <p className="text-gray-400 text-sm">Manage global updates sent to all participant dashboards.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         
         {/* --- KIRI: FORM CREATE/EDIT --- */}
         <div className="lg:col-span-2">
-          <div className={`bg-[#0c122b] border ${editId ? 'border-yellow-500/50 shadow-[0_0_30px_rgba(234,179,8,0.1)]' : 'border-white/10 shadow-2xl'} rounded-3xl p-6 relative overflow-hidden transition-all duration-300`}>
+          <div className={`bg-[#1c1c1c] border ${editId ? 'border-yellow-500/50 shadow-sm' : 'border-white/10 shadow-sm'} rounded-xl p-6 relative overflow-hidden transition-all duration-300`}>
             {editId ? (
               <div className="mb-6 flex items-center justify-between border-b border-yellow-500/20 pb-4">
                 <h3 className="text-yellow-400 font-medium flex items-center gap-2"><Edit2 className="w-4 h-4"/> Edit Mode</h3>
                 <button onClick={handleCancelEdit} className="text-gray-400 hover:text-white p-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors"><X className="w-4 h-4"/></button>
               </div>
-            ) : (
-              <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl -mr-20 -mt-20"></div>
-            )}
+            ) : null}
             
-            <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
+            <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
               <div>
-                <label className="block text-xs uppercase tracking-widest text-gray-400 mb-2">Announcement Title</label>
-                <input required type="text" value={broadcastTitle} onChange={(e) => setBroadcastTitle(e.target.value)} placeholder="e.g. Checkpoint 2 is now open!" className="w-full bg-[#050814] border border-white/10 rounded-xl p-3.5 text-sm text-white focus:border-purple-500 focus:outline-none" />
+                <label className="block text-xs font-medium text-gray-300 mb-1.5">Announcement Title</label>
+                <input required type="text" value={broadcastTitle} onChange={(e) => setBroadcastTitle(e.target.value)} placeholder="e.g. Checkpoint 2 is now open!" className="w-full bg-[#121212] border border-white/10 rounded-md p-3 text-sm text-white focus:border-emerald-500 focus:outline-none transition-colors" />
               </div>
               
               <div>
-                <label className="block text-xs uppercase tracking-widest text-gray-400 mb-2">Message Content</label>
-                <textarea required rows={6} value={broadcastContent} onChange={(e) => setBroadcastContent(e.target.value)} placeholder="Type your message here..." className="w-full bg-[#050814] border border-white/10 rounded-xl p-3.5 text-sm text-white focus:border-purple-500 focus:outline-none resize-none"></textarea>
+                <label className="block text-xs font-medium text-gray-300 mb-1.5">Message Content</label>
+                <textarea required rows={6} value={broadcastContent} onChange={(e) => setBroadcastContent(e.target.value)} placeholder="Type your message here..." className="w-full bg-[#121212] border border-white/10 rounded-md p-3 text-sm text-white focus:border-emerald-500 focus:outline-none resize-none transition-colors"></textarea>
               </div>
 
-              <div className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5 cursor-pointer" onClick={() => setIsPinned(!isPinned)}>
-                <input type="checkbox" checked={isPinned} onChange={() => {}} className="w-4 h-4 accent-purple-500 bg-gray-800 border-gray-700 rounded cursor-pointer pointer-events-none" />
-                <label className="text-xs font-medium text-gray-300 cursor-pointer select-none">Pin to top of feed</label>
+              <div className="flex items-center gap-3 py-2 cursor-pointer" onClick={() => setIsPinned(!isPinned)}>
+                <input type="checkbox" checked={isPinned} onChange={() => {}} className="w-4 h-4 accent-emerald-500 border-white/10 rounded cursor-pointer pointer-events-none" />
+                <label className="text-sm font-medium text-gray-300 cursor-pointer select-none">Pin to top of feed</label>
               </div>
 
-              <button type="submit" disabled={isBroadcasting} className={`w-full flex items-center justify-center gap-2 px-6 py-3.5 text-white rounded-xl text-sm font-medium transition-all disabled:opacity-50 ${editId ? 'bg-yellow-600 hover:bg-yellow-700 shadow-[0_0_15px_rgba(202,138,4,0.3)]' : 'bg-purple-600 hover:bg-purple-700 shadow-[0_0_15px_rgba(147,51,234,0.3)]'}`}>
+              <button type="submit" disabled={isBroadcasting} className={`w-full flex items-center justify-center gap-2 px-6 py-2.5 text-white rounded-md text-sm font-medium transition-all disabled:opacity-50 mt-4 shadow-sm ${editId ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-emerald-600 hover:bg-emerald-700'}`}>
                 {isBroadcasting ? "Processing..." : editId ? "Update Announcement" : "Publish Announcement"} {!isBroadcasting && <Send className="w-4 h-4" />}
               </button>
             </form>
@@ -157,23 +155,23 @@ export default function AnnouncementsPage() {
 
         {/* --- KANAN: DAFTAR PENGUMUMAN --- */}
         <div className="lg:col-span-3 space-y-4">
-          <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-4">Published Announcements</h3>
+          <h3 className="font-medium">Published Announcements</h3>
           
           {isLoadingList ? (
-            <div className="flex justify-center py-12"><div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div></div>
+            <div className="flex justify-center py-12"><div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div></div>
           ) : announcements.length === 0 ? (
-            <div className="bg-[#0c122b]/50 border border-white/5 border-dashed rounded-3xl p-12 text-center text-gray-500">No announcements published yet.</div>
+            <div className="bg-[#1c1c1c]/50 border border-white/10 border-dashed rounded-xl p-12 text-center text-gray-500 shadow-sm">No announcements published yet.</div>
           ) : (
             announcements.map((ann) => (
-              <div key={ann.id} className={`bg-[#0c122b] border rounded-2xl p-5 transition-all ${ann.is_pinned ? 'border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.1)]' : 'border-white/5'}`}>
+              <div key={ann.id} className={`bg-[#1c1c1c] border rounded-xl p-5 shadow-sm transition-all ${ann.is_pinned ? 'border-emerald-500/30' : 'border-white/10'}`}>
                 
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex gap-3 items-start">
-                    <div className="mt-1">{ann.is_pinned ? <Pin className="w-4 h-4 text-purple-400" /> : <Megaphone className="w-4 h-4 text-gray-500" />}</div>
+                    <div className="mt-1">{ann.is_pinned ? <Pin className="w-4 h-4 text-white" /> : <Megaphone className="w-4 h-4 text-emerald-500" />}</div>
                     <div>
                       <h4 className="font-medium text-gray-100 flex items-center gap-2">
                         {ann.title}
-                        {ann.is_pinned && <span className="text-[9px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded-full uppercase tracking-wider">Pinned</span>}
+                        {ann.is_pinned && <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2.5 py-0.5 rounded-md font-medium">Pinned</span>}
                       </h4>
                       <p className="text-xs text-gray-500 mt-1">{new Date(ann.created_at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
                     </div>
@@ -181,17 +179,17 @@ export default function AnnouncementsPage() {
                   
                   {/* Action Buttons (Edit & Delete) */}
                   <div className="flex items-center gap-1">
-                    <button onClick={() => handleEditClick(ann)} className="p-2 text-gray-400 hover:text-blue-400 hover:bg-blue-400/10 rounded-lg transition-colors" title="Edit">
+                    <button onClick={() => handleEditClick(ann)} className="p-2 text-gray-400 hover:text-blue-400 hover:bg-blue-400/10 rounded-md transition-colors" title="Edit">
                       <Edit2 className="w-4 h-4" />
                     </button>
-                    <button onClick={() => handleDelete(ann.id, ann.title)} className="p-2 text-gray-400 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors" title="Delete">
+                    <button onClick={() => handleDelete(ann.id, ann.title)} className="p-2 text-gray-400 hover:text-red-400 hover:bg-red-400/10 rounded-md transition-colors" title="Delete">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
 
                 <div className="pl-7">
-                  <p className="text-sm text-gray-400 font-light leading-relaxed whitespace-pre-wrap">{ann.content}</p>
+                  <p className="text-sm text-gray-300 font-normal leading-relaxed whitespace-pre-wrap">{ann.content}</p>
                 </div>
 
               </div>

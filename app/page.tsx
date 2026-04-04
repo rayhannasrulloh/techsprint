@@ -43,6 +43,7 @@ export default function LandingPage() {
 
   const trackCards = [
     {
+      href: '/track/ui-ux',
       title: 'UI/UX Design',
       description: 'Design intuitive interfaces. Focus on user journey, wireframing, and interactive prototypes.',
       icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><MonitorSmartphone className="text-white w-7 h-7 stroke-[1.5]" /></div>,
@@ -50,6 +51,7 @@ export default function LandingPage() {
       color: 'rgba(255,255,255,0.02)'
     },
     {
+      href: '/track/data-automation',
       title: 'Data Automation',
       description: 'Build scripts to process and automate pipelines. Show skills in Python, Node, and data efficiency.',
       icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><DatabaseZap className="text-white w-7 h-7 stroke-[1.5]" /></div>,
@@ -57,6 +59,7 @@ export default function LandingPage() {
       color: 'rgba(255,255,255,0.02)'
     },
     {
+      href: '/track/system-analyst',
       title: 'System Analyst',
       description: 'Architect robust systems. Create BRD, SRS, and comprehensive system architecture diagrams.',
       icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><Cpu className="text-white w-7 h-7 stroke-[1.5]" /></div>,

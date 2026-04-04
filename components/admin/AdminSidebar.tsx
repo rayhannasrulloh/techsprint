@@ -31,18 +31,18 @@ export default function AdminSidebar() {
   return (
     <>
       {/* --- MOBILE HEADER (Hanya Muncul di Layar HP) --- */}
-      <div className="md:hidden flex items-center justify-between p-4 bg-[#080c1f] border-b border-white/5 sticky top-0 z-40 shadow-xl">
+      <div className="md:hidden flex items-center justify-between p-4 bg-[#1c1c1c] border-b border-white/10 sticky top-0 z-40 shadow-sm">
         <div className="flex items-center gap-2">
-          <ShieldAlert className="w-6 h-6 text-blue-500" />
+          <ShieldAlert className="w-5 h-5 text-emerald-500" />
           <div>
-            <h2 className="text-sm font-semibold text-white tracking-wider">COMMAND CENTER</h2>
+            <h2 className="text-sm font-semibold text-white tracking-wide">Admin Panel</h2>
           </div>
         </div>
         <button 
           onClick={() => setIsOpen(true)} 
-          className="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors"
+          className="p-1.5 text-gray-400 hover:text-white rounded-md hover:bg-white/5 transition-colors"
         >
-          <Menu className="w-6 h-6" />
+          <Menu className="w-5 h-5" />
         </button>
       </div>
 
@@ -58,50 +58,48 @@ export default function AdminSidebar() {
       {/* Di Desktop (md:): Selalu muncul (translate-x-0), posisi relative
         Di Mobile: Posisi fixed, melayang dari kiri, bisa di toggle buka-tutup 
       */}
-      <div className={`fixed inset-y-0 left-0 z-[70] w-64 bg-[#080c1f] border-r border-white/5 flex flex-col transition-transform duration-300 md:relative md:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <div className={`fixed inset-y-0 left-0 z-[70] w-64 bg-[#1c1c1c] border-r border-white/10 flex flex-col transition-transform duration-300 md:relative md:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
         
         {/* Header Sidebar */}
-        <div className="p-6 border-b border-white/5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <ShieldAlert className="w-8 h-8 text-blue-500" />
+        <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between">
+          <div className="flex items-center gap-2">
             <div>
-              <h2 className="text-lg font-semibold text-white tracking-wider">COMMAND</h2>
-              <p className="text-[10px] text-gray-400 uppercase tracking-widest">Center</p>
+              <h2 className="text-sm font-medium text-gray-200">Admin Panel</h2>
             </div>
           </div>
           
           {/* Tombol Close "X" (Hanya muncul di Mobile saat menu terbuka) */}
-          <button onClick={() => setIsOpen(false)} className="md:hidden text-gray-400 hover:text-white rounded-lg hover:bg-white/5 p-1 transition-colors">
-            <X className="w-5 h-5" />
+          <button onClick={() => setIsOpen(false)} className="md:hidden text-gray-400 hover:text-white rounded-md hover:bg-white/5 p-1 transition-colors">
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Menu Navigasi */}
-        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           {navItems.map((item) => {
             const isActive = pathname === item.path;
             return (
               <Link 
                 key={item.name} 
                 href={item.path}
-                onClick={() => setIsOpen(false)} // Otomatis menutup sidebar di HP kalau menu diklik
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium ${
-                  isActive ? "bg-blue-600/20 text-blue-400 border border-blue-500/30" : "text-gray-400 hover:bg-white/5 hover:text-gray-200"
+                onClick={() => setIsOpen(false)} 
+                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all text-sm font-normal ${
+                  isActive ? "bg-white/10 text-white" : "text-gray-400 hover:text-gray-200"
                 }`}
               >
-                <item.icon className="w-5 h-5" /> {item.name}
+                <item.icon className="w-4 h-4" /> {item.name}
               </Link>
             );
           })}
         </nav>
 
         {/* Tombol Logout */}
-        <div className="p-4 border-t border-white/5">
+        <div className="p-4 border-t border-white/10">
           <button 
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-red-400 hover:bg-red-500/10 transition-colors text-sm font-medium"
+            className="flex items-center gap-3 px-3 py-2 w-full rounded-md text-gray-400 hover:text-white hover:bg-white/5 transition-colors text-sm font-normal"
           >
-            <LogOut className="w-5 h-5" /> Sign Out
+            <LogOut className="w-4 h-4" /> Sign Out
           </button>
         </div>
 

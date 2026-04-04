@@ -41,13 +41,13 @@ export default function AdminDashboardOverview() {
   const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-  let currentPhase = "Pre-Event"; let lockStatus = "LOCKED"; let lockColor = "text-red-400 bg-red-400/10";
-  if (isEnded) { currentPhase = "Event Ended"; lockStatus = "ALL LOCKED"; } 
+  let currentPhase = "Pre-Event"; let lockStatus = "Locked"; let lockColor = " text-white";
+  if (isEnded) { currentPhase = "Event Ended"; lockStatus = "All Locked"; } 
   else if (isStarted) {
-    if (now < CP_DEADLINES[1]) { currentPhase = "Phase 1 (Towards CP1)"; lockStatus = "OPEN: CP 1"; lockColor = "text-emerald-400 bg-emerald-400/10"; }
-    else if (now < CP_DEADLINES[2]) { currentPhase = "Phase 2 (Towards CP2)"; lockStatus = "OPEN: CP 2"; lockColor = "text-emerald-400 bg-emerald-400/10"; }
-    else if (now < CP_DEADLINES[3]) { currentPhase = "Phase 3 (Towards CP3)"; lockStatus = "OPEN: CP 3"; lockColor = "text-emerald-400 bg-emerald-400/10"; }
-    else { currentPhase = "Final Sprint (Towards Final)"; lockStatus = "OPEN: FINAL"; lockColor = "text-emerald-400 bg-emerald-400/10"; }
+    if (now < CP_DEADLINES[1]) { currentPhase = "Phase 1 (Towards CP1)"; lockStatus = "Open: CP 1"; lockColor = "text-white"; }
+    else if (now < CP_DEADLINES[2]) { currentPhase = "Phase 2 (Towards CP2)"; lockStatus = "Open: CP 2"; lockColor = "text-white"; }
+    else if (now < CP_DEADLINES[3]) { currentPhase = "Phase 3 (Towards CP3)"; lockStatus = "Open: CP 3"; lockColor = "text-white"; }
+    else { currentPhase = "Final Sprint (Towards Final)"; lockStatus = "Open: Final"; lockColor = "text-white"; }
   }
   const progressPct = isEnded ? 100 : isStarted ? ((now - START_TIME) / (END_TIME - START_TIME)) * 100 : 0;
 
@@ -61,19 +61,18 @@ export default function AdminDashboardOverview() {
   const saCount = teamsData.filter(t => t.track === 'System Analyst').length;
 
   return (
-    <div className="p-8 max-w-7xl mx-auto animate-in fade-in duration-500">
-      <div className="mb-8">
-        <h1 className="text-3xl font-light flex items-center gap-3"><Database className="text-blue-500" /> Dashboard Overview</h1>
-        <p className="text-gray-400 text-sm mt-1">Real-time statistics for 3IN1 Tech Sprint 2026</p>
+    <div className="p-6 md:p-8 max-w-7xl mx-auto animate-in fade-in duration-500">
+      <div className="mb-6 flex flex-col gap-1">
+        <h1 className="text-2xl font-medium tracking-wide flex items-center gap-2">Dashboard Overview</h1>
+        <p className="text-gray-400 text-sm">Here is the real-time statistics of the competition</p>
       </div>
 
       {/* GLOBAL TIMELINE & COUNTDOWN */}
-      <div className="bg-[#0c122b] border border-white/5 rounded-3xl p-8 mb-8 relative overflow-hidden shadow-2xl">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-32 bg-blue-600/10 blur-[100px] rounded-full"></div>
+      <div className="border border-white/10 rounded-xl p-6 md:p-8 mb-6 relative shadow-sm">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative z-10">
           <div className="text-center lg:text-left">
             <p className="text-sm text-gray-400 font-light mb-2 flex items-center justify-center lg:justify-start gap-2">
-              <Timer className="w-4 h-4 text-blue-400" /> {isEnded ? "Hackathon Completed" : isStarted ? "Time Remaining" : "Event Starts In"}
+              <Timer className="w-4 h-4 text-white" /> {isEnded ? "Competition Completed" : isStarted ? "Time Remaining" : "Competition Starts In"}
             </p>
             <div className="text-5xl md:text-6xl font-light tracking-wider text-white">
               {String(h).padStart(2, '0')}:{String(m).padStart(2, '0')}:{String(s).padStart(2, '0')}
@@ -87,7 +86,7 @@ export default function AdminDashboardOverview() {
               <span className="text-center">CP3<br/><span className="font-light text-gray-600">10 May 06:00</span></span>
               <span className="text-right">Final<br/><span className="font-light text-gray-600">10 May 12:00</span></span>
             </div>
-            <div className="relative w-full h-3 bg-gray-900 rounded-full overflow-hidden border border-white/5">
+            <div className="relative w-full h-3 rounded-full overflow-hidden border border-white/5">
               <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-600 to-cyan-400 transition-all duration-1000 ease-linear" style={{ width: `${progressPct}%` }}></div>
             </div>
             <div className="flex justify-between items-center mt-4">
@@ -95,8 +94,8 @@ export default function AdminDashboardOverview() {
                 <Activity className="w-4 h-4 text-gray-400" />
                 <span className="text-sm font-light text-gray-300">Phase: <strong className="text-white font-medium">{currentPhase}</strong></span>
               </div>
-              <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wider border border-white/5 ${lockColor}`}>
-                {lockStatus.includes("OPEN") ? <Unlock className="w-3 h-3" /> : <Lock className="w-3 h-3" />} {lockStatus}
+              <div className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium tracking-wider border border-white/20 ${lockColor}`}>
+                {lockStatus.includes("OPEN") ? <Unlock className="w-4 h-4" /> : <Lock className="w-4 h-4" />} {lockStatus}
               </div>
             </div>
           </div>
@@ -105,22 +104,22 @@ export default function AdminDashboardOverview() {
 
       {/* STATISTIC DASHBOARD */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-[#0c122b] border border-white/5 rounded-2xl p-5 relative overflow-hidden">
-          <p className="text-sm font-light text-gray-400 mb-1">Total Teams Registered</p>
-          <h3 className="text-4xl font-normal text-white">{totalTeams}</h3>
+        <div className="border border-white/10 rounded-xl p-5 shadow-sm">
+          <p className="text-xs font-medium text-gray-400 tracking-wider mb-2">Total Teams Registered</p>
+          <h3 className="text-3xl font-medium text-white">{totalTeams}</h3>
         </div>
-        <div className="bg-[#0c122b] border border-white/5 rounded-2xl p-5">
-          <p className="text-sm font-light text-gray-400 mb-3">Verification Status</p>
+        <div className="border border-white/10 rounded-xl p-5 shadow-sm">
+          <p className="text-xs font-medium text-gray-400 tracking-wider mb-4">Verification Status</p>
           <div className="flex justify-between items-center mb-1"><span className="text-xs text-gray-300 flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400"/> Approved</span><span className="font-medium text-emerald-400">{approvedTeams}</span></div>
           <div className="flex justify-between items-center mb-1"><span className="text-xs text-gray-300 flex items-center gap-1"><AlertTriangle className="w-3 h-3 text-yellow-400"/> Pending</span><span className="font-medium text-yellow-400">{pendingTeams}</span></div>
           <div className="flex justify-between items-center"><span className="text-xs text-gray-300 flex items-center gap-1"><XCircle className="w-3 h-3 text-red-400"/> Rejected</span><span className="font-medium text-red-400">{rejectedTeams}</span></div>
         </div>
-        <div className="bg-[#0c122b] border border-white/5 rounded-2xl p-5 lg:col-span-2">
-          <p className="text-sm font-light text-gray-400 mb-3">Registrations by Track Category</p>
+        <div className="border border-white/10 rounded-xl p-5 shadow-sm lg:col-span-2">
+          <p className="text-xs font-medium text-gray-400 tracking-wider mb-4">Registrations by Track Category</p>
           <div className="grid grid-cols-3 gap-4">
-            <div className="bg-white/[0.02] border border-white/5 p-3 rounded-xl text-center"><p className="text-2xl font-normal text-white">{uiuxCount}</p><p className="text-[10px] text-gray-500 uppercase mt-1">UI/UX Design</p></div>
-            <div className="bg-white/[0.02] border border-white/5 p-3 rounded-xl text-center"><p className="text-2xl font-normal text-white">{dataCount}</p><p className="text-[10px] text-gray-500 uppercase mt-1">Data Auto</p></div>
-            <div className="bg-white/[0.02] border border-white/5 p-3 rounded-xl text-center"><p className="text-2xl font-normal text-white">{saCount}</p><p className="text-[10px] text-gray-500 uppercase mt-1">Sys Analyst</p></div>
+            <div className="border border-white/10 py-3 rounded-lg text-center"><p className="text-2xl font-medium text-white">{uiuxCount}</p><p className="text-[10px] text-gray-500 font-semibold tracking-wider uppercase mt-1">UI/UX Design</p></div>
+            <div className="border border-white/10 py-3 rounded-lg text-center"><p className="text-2xl font-medium text-white">{dataCount}</p><p className="text-[10px] text-gray-500 font-semibold tracking-wider uppercase mt-1">Data Auto</p></div>
+            <div className="border border-white/10 py-3 rounded-lg text-center"><p className="text-2xl font-medium text-white">{saCount}</p><p className="text-[10px] text-gray-500 font-semibold tracking-wider uppercase mt-1">Sys Analyst</p></div>
           </div>
         </div>
       </div>

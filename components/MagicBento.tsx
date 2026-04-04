@@ -2,8 +2,10 @@
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
+import Link from 'next/link';
 
 export interface BentoCardProps {
+  href?: string;
   color?: string;
   title?: string;
   description?: string;
@@ -617,6 +619,7 @@ const MagicBento: React.FC<BentoProps> = ({
 
             const content = (
               <>
+                {card.href && <Link href={card.href} className="absolute inset-0 z-20" />}
                 <div className="mb-6 z-10">
                   {card.icon}
                 </div>

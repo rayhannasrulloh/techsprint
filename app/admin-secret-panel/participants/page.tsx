@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase";
 import {
   Search, Database, CheckCircle2, XCircle,
   Trash2, UserCheck, UserX, AlertTriangle, Download, ExternalLink, User,
-  Clock, Eye, CircleDashed, Receipt, Phone, Instagram, Image, MessageSquare
+  Clock, Eye, CircleDashed, Receipt, Phone, Instagram, Image, MessageSquare, Mail
 } from "lucide-react";
 
 // Import Modal
@@ -140,7 +140,7 @@ export default function ParticipantsPage() {
   );
 
   return (
-    <div className="p-8 max-w-[90rem] mx-auto animate-in fade-in duration-500">
+    <div className="max-w-[90rem] mx-auto animate-in fade-in duration-500">
 
       {/* Panggil Modal Checkpoint */}
       <CheckpointModal
@@ -151,10 +151,9 @@ export default function ParticipantsPage() {
       />
 
       {/* HEADER CONTROLS */}
-      <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-center border-b border-white/10 p-6 gap-4">
         <div>
-          <h1 className="text-3xl font-light flex items-center gap-3"><Database className="text-blue-500" /> Participants Data</h1>
-          <p className="text-gray-400 text-sm mt-1">Manage, verify, and monitor all registered teams.</p>
+          <h1 className="text-3xl font-medium tracking-wider flex items-center gap-3">Participants Data</h1>
         </div>
 
         <div className="flex items-center gap-3 w-full md:w-auto">
@@ -165,91 +164,92 @@ export default function ParticipantsPage() {
               placeholder="Search team or email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#0c122b] border border-white/10 rounded-full py-2 pl-9 pr-4 text-sm focus:outline-none focus:border-blue-500"
+              className="w-full bg-[#1c1c1c] border border-white/10 rounded-md py-2 pl-9 pr-4 text-sm focus:outline-none focus:border-emerald-500 transition-colors text-white"
             />
           </div>
           <button
             onClick={handleExportCSV}
-            className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 rounded-full hover:bg-emerald-600/40 transition-colors text-sm font-medium"
+            className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors text-sm font-medium shadow-sm"
           >
             <Download className="w-4 h-4" /> Export CSV
           </button>
         </div>
       </div>
 
-      {/* DUAL FILTERS: TRACK & STATUS */}
-      <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4 mb-6 pb-4 border-b border-white/10">
+      {/* TRACK TABS */}
+      <div className="flex gap-1.5 bg-[#1c1c1c] p-1.5 border-b border-white/10 rounded-md">
+        {["All", "UI/UX", "Data Automation", "System Analyst"].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTrackTab(tab)}
+            className={`px-4 py-1.5 text-sm font-medium transition-all rounded-md ${activeTrackTab === tab ? "bg-[#2e2e2e] text-white border border-[#3e3e3e] shadow-sm" : "text-gray-400 hover:text-gray-200 border border-transparent"}`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
 
-        {/* TRACK TABS */}
-        <div className="flex gap-2 overflow-x-auto">
-          {["All", "UI/UX", "Data Automation", "System Analyst"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTrackTab(tab)}
-              className={`px-6 py-2.5 rounded-lg text-sm font-light transition-all ${activeTrackTab === tab ? "bg-blue-600/20 text-blue-400 border border-blue-500/50" : "text-gray-400 hover:bg-white/5 border border-transparent"}`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-
-        {/* STATUS TABS */}
-        <div className="flex gap-2 bg-[#0c122b] p-1.5 rounded-xl border border-white/5">
-          {["Approved", "Pending", "Rejected", "All"].map(tab => (
-            <button
-              key={tab}
-              onClick={() => setActiveStatusTab(tab)}
-              className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${activeStatusTab === tab ? "bg-white/10 text-white shadow-sm" : "text-gray-500 hover:text-gray-300"}`}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+      {/* STATUS TABS */}
+      <div className="flex gap-1.5 bg-[#1c1c1c] p-1.5 border-b border-white/10">
+        {["All", "Approved", "Pending", "Rejected"].map(tab => (
+          <button
+            key={tab}
+            onClick={() => setActiveStatusTab(tab)}
+            className={`px-4 py-1.5 text-sm font-medium transition-all rounded-md ${activeStatusTab === tab ? "bg-[#2e2e2e] text-white border border-[#3e3e3e] shadow-sm" : "text-gray-400 hover:text-gray-200 border border-transparent"}`}
+          >
+            {tab}
+          </button>
+        ))}
       </div>
 
       {/* TABEL DATA */}
-      <div className="bg-[#0c122b] border border-white/10 rounded-2xl overflow-hidden shadow-2xl overflow-x-auto relative min-h-[400px]">
+      <div className="bg-[#1c1c1c] border border-white/10 overflow-hidden shadow-sm overflow-x-auto relative min-h-[400px]">
 
         {isLoading ? (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0c122b]/80 z-10 backdrop-blur-sm">
-            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p className="text-blue-400 text-sm animate-pulse">Loading participants data...</p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#1c1c1c]/80 z-10 backdrop-blur-sm">
+            <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+            <p className="text-emerald-400 text-sm animate-pulse">Loading participants data...</p>
           </div>
         ) : null}
 
-        <table className="w-full text-left border-collapse whitespace-nowrap">
+        <table className="w-full text-left whitespace-nowrap">
           <thead>
-            <tr className="bg-white/5 text-xs uppercase tracking-widest text-gray-400 border-b border-white/10">
-              <th className="p-5 font-semibold">Team Info</th>
-              <th className="p-5 font-semibold">Status & Payment</th>
-              <th className="p-5 font-semibold">Checkpoints</th>
-              <th className="p-5 font-semibold">Final Submission</th>
-              <th className="p-5 font-semibold text-right">Actions</th>
+            <tr className="bg-white/5 text-center tracking-widest text-gray-400 border-b border-white/10">
+              <th className="p-5 font-medium w-12">No.</th>
+              <th className="p-5 font-medium">Team Info</th>
+              <th className="p-5 font-medium">Status & Payment</th>
+              <th className="p-5 font-medium">Checkpoints</th>
+              <th className="p-5 font-medium">Final Submission</th>
+              <th className="p-5 font-medium">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
             {filteredTeams.length > 0 ? (
-              filteredTeams.map((team) => {
+              filteredTeams.map((team, index) => {
                 const finalSub = team.submissions && team.submissions.length > 0 ? team.submissions[0] : null;
 
                 return (
                   <tr key={team.id} className="hover:bg-white/[0.02] transition-colors">
-                    <td className="p-5">
+                    <td className="p-4 border-r border-white/10 text-center text-gray-400 font-medium">
+                      {index + 1}
+                    </td>
+                    <td className="border-r border-white/10">
                       <div className="flex flex-col gap-1">
-                        <div className="flex items-center gap-2">
-                          <p className="font-medium text-lg text-blue-100">{team.team_name}</p>
-                          <span className="text-[10px] px-2 py-0.5 bg-gray-800 text-gray-300 rounded-md">{team.track}</span>
+                        <div className="p-1 px-2 text-lg border-b border-white/5 flex items-center gap-2">
+                          <p className="font-medium">{team.team_name}</p>
                         </div>
-                        <div className="text-xs font-medium text-purple-400 mt-1">{team.institution}</div>
-                        <div className="text-sm text-gray-400 mt-1 flex items-center gap-1"><User className="w-3 h-3" /> {team.leader_name} <span className="text-gray-600">({team.leader_nim})</span></div>
-                        <div className="text-sm text-gray-500 flex items-center gap-1"><Phone className="w-3 h-3" /> {team.leader_phone || <span className="italic">No phone</span>}</div>
+                        <div className="p-1 px-2 text-xs border-b border-white/5">{team.track}</div>
+                        <div className="p-1 px-2 text-xs border-b border-white/5 font-medium mt-1">{team.institution}</div>
+                        <div className="p-1 px-2 text-sm border-b border-white/5 text-gray-400 mt-1 flex items-center gap-1"><User className="w-3 h-3" /> {team.leader_name} <span className="text-gray-600">({team.leader_nim})</span></div>
+                        <div className="p-1 px-2 text-sm border-b border-white/5 text-gray-500 flex items-center gap-1"><Mail className="w-3 h-3" /> {team.leader_email || <span className="italic">No email</span>}</div>
+                        <div className="p-1 px-2 text-sm border-b border-white/5 text-gray-500 flex items-center gap-1"><Phone className="w-3 h-3" /> {team.leader_phone || <span className="italic">No phone</span>}</div>
                       </div>
                     </td>
 
-                    <td className="p-5">
+                    <td className="p-5 border-r border-white/10">
                       <div className="flex flex-col gap-2 items-start">
                         {/* Status Label */}
-                        <span className={`text-xs px-3 py-1.5 rounded-full ${team.status === 'approved' ? 'text-emerald-400 bg-emerald-400/10' : team.status === 'pending' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-400 bg-red-400/10'}`}>
+                        <span className={`flex items-center text-xs w-full py-1 rounded-md border border-white/10 justify-center ${team.status === 'approved' ? 'text-emerald-400 bg-emerald-400/10' : team.status === 'pending' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-400 bg-red-400/10'}`}>
                           {team.status.toUpperCase()}
                         </span>
 
@@ -281,8 +281,8 @@ export default function ParticipantsPage() {
                       </div>
                     </td>
 
-                    <td className="p-5">
-                      <div className="flex gap-4">
+                    <td className="p-5 border-r border-white/10">
+                      <div className="flex gap-4 items-center justify-center">
                         {[1, 2, 3].map((cpNum) => {
                           const cp = team.checkpoints?.find((c: any) => c.checkpoint_number === cpNum);
                           let statusColor = ""; let Icon = null;
@@ -313,7 +313,7 @@ export default function ParticipantsPage() {
                       </div>
                     </td>
 
-                    <td className="p-5">
+                    <td className="p-5 border-r border-white/10">
                       {finalSub ? (
                         <div className="flex flex-col gap-2">
                           <a href={finalSub.final_repo_link} target="_blank" rel="noreferrer" className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1">
@@ -328,8 +328,8 @@ export default function ParticipantsPage() {
                       )}
                     </td>
 
-                    <td className="p-5 text-right">
-                      <div className="flex justify-end gap-2">
+                    <td className="p-5">
+                      <div className="flex justify-start gap-2">
                         {team.status !== 'approved' && <button onClick={() => handleUpdateStatus(team.id, 'approved')} className="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg hover:bg-emerald-500/20"><UserCheck className="w-5 h-5" /></button>}
                         {team.status !== 'rejected' && <button onClick={() => handleUpdateStatus(team.id, 'rejected')} className="p-2 bg-orange-500/10 text-orange-400 rounded-lg hover:bg-orange-500/20"><UserX className="w-5 h-5" /></button>}
                         <button onClick={() => handleDeleteTeam(team.id, team.team_name)} className="p-2 bg-red-500/10 text-red-500 rounded-lg ml-2 hover:bg-red-500/20"><Trash2 className="w-5 h-5" /></button>
@@ -340,7 +340,7 @@ export default function ParticipantsPage() {
               })
             ) : (
               <tr>
-                <td colSpan={5} className="p-16 text-center text-gray-500">
+                <td colSpan={6} className="p-16 text-center text-gray-500">
                   <Database className="w-12 h-12 mx-auto mb-4 opacity-20" />
                   <p className="text-lg">No Teams Found</p>
                   <p className="text-sm mt-1 font-light">
