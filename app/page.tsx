@@ -345,9 +345,9 @@ export default function LandingPage() {
           </section>
 
           {/* --- TOTAL PRIZEPOOL SECTION --- */}
-          <section className="py-32 relative overflow-hidden flex flex-col items-center justify-center">
+          {/* <section className="py-32 relative overflow-hidden flex flex-col items-center justify-center"> */}
             {/* Glow effect specific to Prizepool */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[250px] bg-yellow-500/10 blur-[60px] rounded-full pointer-events-none z-0"></div>
+            {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[250px] bg-yellow-500/10 blur-[60px] rounded-full pointer-events-none z-0"></div>
 
             <div className="relative z-10 text-center px-6">
               <p className="text-sm font-medium tracking-[0.2em] text-yellow-500 uppercase mb-4">
@@ -362,14 +362,14 @@ export default function LandingPage() {
                 Compete, innovate, and win your share of the massive prize pool along with exclusive opportunities from our industry partners.
               </p>
             </div>
-          </section>
+          </section> */}
 
           {/* --- FAQ SECTION --- */}
           <FAQ />
 
-          {/* --- NEW: SPONSORS & PARTNERS SECTION --- */}
+          {/* --- SPONSORS & PARTNERS SECTION --- */}
           <section className="py-24 relative overflow-hidden">
-            {/* Subtle background glow */}
+            {/* subtle background glow */}
             <div className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">

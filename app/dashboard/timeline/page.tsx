@@ -47,10 +47,10 @@ export default function TimelinePage() {
 
   return (
     <div className="animate-in fade-in duration-500">
-      
+
       <div className="mb-10">
         <h1 className="text-3xl font-light tracking-wide mb-1 text-gray-100 flex items-center gap-3">
-          <Map className="text-blue-500 w-8 h-8" /> Event Timeline
+          Event Timeline
         </h1>
         <p className="text-gray-400 font-light text-sm">Track your sprint progress and upcoming deadlines.</p>
       </div>
@@ -62,30 +62,30 @@ export default function TimelinePage() {
         <div className="flex items-center gap-2 mb-12 relative z-10">
           <h3 className="text-sm font text-gray-300 tracking-widest">24-Hour Roadmap</h3>
         </div>
-        
+
         {/* Horizontal Roadmap (Adapted for full page width) */}
         <div className="relative w-full flex justify-between items-center px-4 pb-12 overflow-x-auto min-w-[700px] z-10">
-          
+
           {/* Garis Dasar (Background) */}
           <div className="absolute left-10 right-10 top-5 h-1.5 bg-gray-800 rounded-full"></div>
-          
+
           {/* Garis Progress Aktif */}
-          <div 
-            className="absolute left-10 top-5 h-1.5 bg-gradient-to-r from-emerald-700 to-blue-400 transition-all duration-1000 rounded-full" 
+          <div
+            className="absolute left-10 top-5 h-1.5 bg-gradient-to-r from-emerald-700 to-blue-400 transition-all duration-1000 rounded-full"
             style={{ width: `${Math.min((currentPhaseIndex / 4) * 100, 100)}%` }}
           ></div>
 
           {roadmapSteps.map((step) => {
             const isPast = currentPhaseIndex > step.idx;
             const isCurrent = currentPhaseIndex === step.idx;
-            
+
             return (
               <div key={step.idx} className="relative z-10 flex flex-col items-center gap-4 w-32 group">
                 {/* Node Status Indicator */}
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-500 ${isPast ? 'bg-[#0c122b] border-emerald-700 text-white' : isCurrent ? 'bg-[#0c122b] border-blue-400 text-blue-400' : 'bg-[#050814] border-gray-700 text-gray-600'}`}>
                   {isPast ? <CheckCircle2 className="w-6 h-6 text-emerald-700" /> : isCurrent ? <Clock className="w-5 h-5 animate-pulse" /> : <span className="text-sm font-bold">{step.idx === 4 ? 'E' : step.idx}</span>}
                 </div>
-                
+
                 {/* Text Details */}
                 <div className="text-center mt-2">
                   <p className={`text-sm tracking-wide mb-1 ${isCurrent ? 'text-blue-400' : isPast ? 'text-emerald-700' : 'text-gray-400'}`}>{step.title}</p>

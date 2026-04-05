@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { 
-  Bell, 
-  Map, 
-  Flag, 
-  UploadCloud, 
-  LogOut, 
+import {
+  Bell,
+  Map,
+  Flag,
+  UploadCloud,
+  LogOut,
   Menu,
   ChevronLeft,
   ChevronRight,
@@ -19,10 +19,11 @@ import {
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // For Mobile
   const [isCollapsed, setIsCollapsed] = useState(false); // For Desktop
+  const [teamData, setTeamData] = useState<{ team_name: string } | null>(null);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -31,6 +32,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         router.push("/login");
       } else {
         setIsAuthenticated(true);
+        const { data: teamRes } = await supabase.from('teams').select('team_name').eq('id', session.user.id).single();
+        if (teamRes) setTeamData(teamRes);
       }
     };
     checkUser();
@@ -38,7 +41,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const handleLogout = async () => {
     const isConfirmed = window.confirm("Are you sure you want to sign out?");
-    
+
     if (!isConfirmed) return;
 
     await supabase.auth.signOut();
@@ -56,17 +59,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="mx-auto min-h-screen bg-[#050814] text-white font-sans flex overflow-hidden">
-      
+
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 lg:hidden" 
+        <div
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside 
+      <aside
         className={`fixed lg:static top-0 left-0 h-full bg-[#080c1f] border-r border-white/5 z-50 transition-all duration-300 flex flex-col
           ${isSidebarOpen ? "translate-x-0 w-64" : "-translate-x-full lg:translate-x-0"}
           ${isCollapsed ? "lg:w-20" : "lg:w-64"}
@@ -76,11 +79,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="h-20 flex items-center justify-between px-6 border-b border-white/5">
           {!isCollapsed ? (
             <div className="text-xl font-light tracking-widest text-gray-200 whitespace-nowrap overflow-hidden">
-              <img src="/logo-only.png" alt="Logo" className="w-10" />
+              <img src="/logo-only.webp" alt="Logo" className="w-10" />
             </div>
           ) : (
             <div className="text-xl font-medium text-blue-500 w-full text-center">
-              <img src="/logo-only.png" alt="Logo" className="w-10" />
+              <img src="/logo-only.webp" alt="Logo" className="w-10" />
             </div>
           )}
         </div>
@@ -93,15 +96,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               const isActive = pathname === item.path;
               const Icon = item.icon;
               return (
-                <Link 
-                  key={item.name} 
+                <Link
+                  key={item.name}
                   href={item.path}
                   onClick={() => setIsSidebarOpen(false)}
                   title={isCollapsed ? item.name : ""}
                   className={`flex items-center rounded-xl transition-all duration-300 font-light text-sm
                     ${isCollapsed ? "justify-center p-3" : "px-4 py-3 gap-3"}
-                    ${isActive 
-                      ? "bg-gradient-to-r from-blue-600/20 to-transparent text-blue-400 border-l-2 border-blue-500" 
+                    ${isActive
+                      ? "bg-gradient-to-r from-blue-600/20 to-transparent text-blue-400 border-l-2 border-blue-500"
                       : "text-gray-400 hover:bg-white/5 hover:text-gray-200 border-l-2 border-transparent"}
                   `}
                 >
@@ -115,7 +118,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* Collapse Button & Logout */}
         <div className="p-4 border-t border-white/5 space-y-2">
-          <button 
+          <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className={`hidden lg:flex items-center text-gray-400 hover:text-white hover:bg-white/5 rounded-xl transition-colors
               ${isCollapsed ? "justify-center p-3" : "px-4 py-3 gap-3 w-full"}
@@ -125,7 +128,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {!isCollapsed && <span className="text-sm font-light">Collapse</span>}
           </button>
 
-          <button 
+          <button
             onClick={handleLogout}
             className={`flex items-center text-red-400/80 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-colors
               ${isCollapsed ? "justify-center p-3" : "px-4 py-3 gap-3 w-full"}
@@ -139,7 +142,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Main Content Area */}
       <main className="flex-1 h-screen overflow-y-auto bg-gradient-to-br from-[#050814] via-[#0a0f24] to-black">
-        
+
         {/* Top header */}
         <header className="h-20 px-8 flex items-center justify-between border-b border-white/5 bg-[#050814]/50 backdrop-blur-md sticky top-0 z-30">
           <div className="flex items-center gap-4">
@@ -150,14 +153,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               Pages / <span className="text-gray-100 capitalize">{pathname === '/dashboard' ? 'Overview' : pathname.split('/').pop()}</span>
             </div>
           </div>
-          
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-b from-blue-600/20 to-transparent flex items-center justify-center">
+
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-medium text-gray-200 hidden sm:block">
+              {teamData?.team_name || "Team"}
+            </span>
+            <div className="w-10 h-10 rounded-full bg-gradient-to-b from-blue-600/20 to-blue-900/20 flex items-center justify-center">
               <User className="w-5 h-5 text-white" />
             </div>
           </div>
         </header>
-        
+
         {/* Page Content */}
         <div className="p-8 max-w-7xl mx-auto">
           {children}

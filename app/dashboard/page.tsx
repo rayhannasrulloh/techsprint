@@ -134,7 +134,7 @@ export default function DashboardPage() {
       </div>
 
       {/* --- ANNOUNCEMENTS --- */}
-      <h2 className="text-lg font-light text-gray-300 mb-4 flex items-center gap-2"><Megaphone className="w-5 h-5 text-blue-500" /> Recent Activity</h2>
+      <h2 className="text-lg font-light text-gray-300 mb-4 flex items-center gap-2"><Megaphone className="w-5 h-5 text-white/80" /> Recent Activity</h2>
       <div className="space-y-4">
         {announcements.length === 0 ? (
           <div className="text-gray-500 font-light text-sm italic p-6 bg-white/[0.02] border border-white/5 rounded-2xl text-center">No announcements yet.</div>
