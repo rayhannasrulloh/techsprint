@@ -1,7 +1,7 @@
 // File: src/app/register/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, Mail, Lock, Users, Zap, User, UserPlus, Building, CreditCard, Link as LinkIcon, Upload, MessageSquare, Phone, AlertTriangle, CheckCircle2, X, Eye, EyeOff, ChevronDown } from "lucide-react";
 import { supabase } from "@/lib/supabase";
@@ -10,6 +10,16 @@ import toast from "react-hot-toast";
 
 export default function RegisterPage() {
   const router = useRouter();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        router.push("/dashboard");
+      }
+    };
+    checkSession();
+  }, [router]);
 
   // Data State
   const [email, setEmail] = useState("");
