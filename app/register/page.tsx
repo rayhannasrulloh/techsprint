@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 
 export default function RegisterPage() {
   const router = useRouter();
-  
+
   // Data State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,13 +31,42 @@ export default function RegisterPage() {
   const [igFollowFile, setIgFollowFile] = useState<File | null>(null);
   const [twibbonFile, setTwibbonFile] = useState<File | null>(null);
   const [igStoryFile, setIgStoryFile] = useState<File | null>(null);
-  
-// UI State
+
+  // UI State
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // <-- STATE MATA PASSWORD
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [message, setMessage] = useState("");
+
+  // --- MAINTENANCE MODE TOGGLE ---
+  const isMaintenanceMode = true;
+
+  if (isMaintenanceMode) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#0a0f24] via-[#050814] to-black flex flex-col items-center justify-center p-6 text-white font-sans py-20 relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+
+        <Link href="/" className="z-10 -mt-20 mb-10 flex items-center justify-center transition-transform hover:scale-105 duration-300">
+          <img src="/logo-techsprint-2026.png" alt="Logo" className="w-32 h-32 object-contain" />
+        </Link>
+
+        <div className="z-10 max-w-xl w-full bg-gradient-to-b from-gray-900/40 to-gray-800/10 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl backdrop-blur-md flex flex-col items-center text-center">
+          <div className="w-20 h-20 bg-yellow-500/10 rounded-full flex items-center justify-center mb-6 animate-pulse">
+             <AlertTriangle className="w-10 h-10 text-yellow-500 drop-shadow-[0_0_10px_rgba(234,179,8,0.5)]" />
+          </div>
+          <h2 className="text-3xl font-light tracking-wide mb-3 text-white uppercase">Maintenance Mode</h2>
+          <p className="text-gray-400 font-light leading-relaxed mb-8">
+            Our registration service is currently offline for scheduled maintenance and upgrades. Please check back again later.
+          </p>
+          <Link href="/" className="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 text-white transition-all duration-300 text-sm font-medium shadow-[0_0_20px_rgba(37,99,235,0.3)]">
+            Return to Homepage
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   // 1. Tahan submit form dan buka modal konfirmasi
   const handlePreSubmit = (e: React.FormEvent) => {
@@ -81,29 +110,29 @@ export default function RegisterPage() {
           uploadDoc(twibbonFile!, 'twibbon'),
           uploadDoc(igStoryFile!, 'ig_story')
         ]);
-        
+
         toast.loading("Saving team data securely...", { id: toastId });
-        
+
         const { error: dbError } = await supabase.from("teams").insert([{
-            id: authData.user.id,
-            team_name: teamName,
-            track: track,
-            institution: institution,
-            leader_email: email,
-            leader_name: leaderName,
-            leader_nim: leaderNim,
-            leader_phone: leaderPhone,
-            discord_username: discordUsername,
-            member1_name: member2Name, 
-            member2_nim: member2Nim,
-            member2_name: member3Name, 
-            member3_nim: member3Nim,
-            cv_link: cvLink,
-            payment_proof_url: paymentUrl,
-            ig_follow_proof_url: igFollowUrl,   // URL PDF Follow IG
-            twibbon_proof_url: twibbonUrl,      // URL PDF Twibbon
-            ig_story_proof_url: igStoryUrl,     // URL PDF Story & Comment
-            status: 'pending'
+          id: authData.user.id,
+          team_name: teamName,
+          track: track,
+          institution: institution,
+          leader_email: email,
+          leader_name: leaderName,
+          leader_nim: leaderNim,
+          leader_phone: leaderPhone,
+          discord_username: discordUsername,
+          member1_name: member2Name,
+          member2_nim: member2Nim,
+          member2_name: member3Name,
+          member3_nim: member3Nim,
+          cv_link: cvLink,
+          payment_proof_url: paymentUrl,
+          ig_follow_proof_url: igFollowUrl,   // URL PDF Follow IG
+          twibbon_proof_url: twibbonUrl,      // URL PDF Twibbon
+          ig_story_proof_url: igStoryUrl,     // URL PDF Story & Comment
+          status: 'pending'
         }]);
 
         if (dbError) throw dbError;
@@ -118,12 +147,12 @@ export default function RegisterPage() {
     } finally {
       setIsLoading(false);
     }
-  
+
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0f24] via-[#050814] to-black flex flex-col items-center justify-center p-6 text-white font-sans py-20 relative">
-      
+
       {/* --- UX: SUCCESS OVERLAY MODAL --- */}
       {showSuccessModal && (
         <div className="fixed inset-0 z-[100] bg-[#050814] flex flex-col items-center justify-center animate-in fade-in duration-500">
@@ -142,7 +171,7 @@ export default function RegisterPage() {
       {showConfirmModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
           <div className="bg-[#0c122b] border border-white/10 rounded-3xl w-full max-w-md shadow-2xl p-8 text-center relative">
-            <button onClick={() => setShowConfirmModal(false)} className="absolute top-4 right-4 text-gray-400 hover:text-white"><X className="w-5 h-5"/></button>
+            <button onClick={() => setShowConfirmModal(false)} className="absolute top-4 right-4 text-gray-400 hover:text-white"><X className="w-5 h-5" /></button>
             <AlertTriangle className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
             <h3 className="text-xl font-medium text-white mb-2">Verify Your Data</h3>
             <p className="text-sm font-light text-gray-400 mb-6 leading-relaxed">
@@ -173,20 +202,20 @@ export default function RegisterPage() {
                 <div className="relative"><Users className="absolute left-4 top-4 w-5 h-5 text-gray-500" /><input type="text" required value={teamName} onChange={(e) => setTeamName(e.target.value)} placeholder="Team Name" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/5 rounded-xl py-3 pl-12 pr-4 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
                 <div className="relative"><Building className="absolute left-4 top-4 w-5 h-5 text-gray-500" /><input type="text" required value={institution} onChange={(e) => setInstitution(e.target.value)} placeholder="Institution / High School" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
                 <div className="relative"><Mail className="absolute left-4 top-4 w-5 h-5 text-gray-500" /><input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
-                
+
                 <div className="relative">
                   <Lock className="absolute left-4 top-4 w-5 h-5 text-gray-500" />
-                  <input 
-                    type={showPassword ? "text" : "password"} 
-                    required 
-                    value={password} 
-                    onChange={(e) => setPassword(e.target.value)} 
-                    placeholder="Password (Min 6 chars)" 
-                    className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-12 pr-12 text-sm text-gray-200 focus:border-blue-300/50 outline-none" 
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password (Min 6 chars)"
+                    className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-12 pr-12 text-sm text-gray-200 focus:border-blue-300/50 outline-none"
                   />
-                  <button 
-                    type="button" 
-                    onClick={() => setShowPassword(!showPassword)} 
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-4 top-3.5 text-gray-400 hover:text-white transition-colors"
                   >
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -228,19 +257,19 @@ export default function RegisterPage() {
 
             {/* COLUMN 2 */}
             <div className="space-y-6">
-              
+
 
               {/* --- SOCIAL MEDIA REQUIREMENTS --- */}
               <div className="space-y-4">
                 <h3 className="text-sm uppercase tracking-widest border-b border-white/10 pb-2">Social Media Requirements</h3>
                 <p className="text-xs text-gray-400 leading-relaxed mb-4">
-                  Satukan bukti *screenshot* (SS) dari <strong>seluruh anggota tim</strong> (Ketua & Anggota) ke dalam masing-masing <strong>satu file PDF</strong> untuk setiap poin di bawah ini.
+                  Please compile the screenshot submissions from <strong>all team members</strong> (Team Leader & Members) into a <strong>single PDF document</strong> for each of the requirements listed below.
                 </p>
 
                 {/* 1. Follow IG */}
                 <div className="bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl p-4">
-                  <p className="text-sm text-gray-200 mb-1 font-medium">1. Bukti Follow Instagram</p>
-                  <p className="text-xs text-gray-500 mb-3">Wajib follow IG @techsprint26 (Semua anggota tim).</p>
+                  <p className="text-sm text-gray-200 mb-1 font-medium">1. Proof of Instagram Follow</p>
+                  <p className="text-xs text-gray-500 mb-3">All team members must follow our official Instagram account, @techsprint26.</p>
                   <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
                     <span className="text-xs text-gray-300 truncate max-w-[200px]">{igFollowFile ? igFollowFile.name : "Upload File (.pdf)"}</span>
                     <Upload className="w-4 h-4 text-gray-400" />
@@ -250,8 +279,8 @@ export default function RegisterPage() {
 
                 {/* 2. Upload Twibbon */}
                 <div className="bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl p-4">
-                  <p className="text-sm text-gray-200 mb-1 font-medium">2. Bukti Upload Twibbon</p>
-                  <p className="text-xs text-gray-500 mb-3">SS feed/postingan Twibbon di akun IG masing-masing.</p>
+                  <p className="text-sm text-gray-200 mb-1 font-medium">2. Proof of Twibbon Upload</p>
+                  <p className="text-xs text-gray-500 mb-3">Screenshots of the Twibbon posted on each member&apos;s respective Instagram feed.</p>
                   <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
                     <span className="text-xs text-gray-300 truncate max-w-[200px]">{twibbonFile ? twibbonFile.name : "Upload File (.pdf)"}</span>
                     <Upload className="w-4 h-4 text-gray-400" />
@@ -261,8 +290,8 @@ export default function RegisterPage() {
 
                 {/* 3. Story, Comment & Tag */}
                 <div className="bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl p-4">
-                  <p className="text-sm text-gray-200 mb-1 font-medium">3. Bukti Instastory & Comment</p>
-                  <p className="text-xs text-gray-500 mb-3">SS bukti komen + tag 3 teman di feed pendaftaran, dan SS share poster acara ke Instastory.</p>
+                  <p className="text-sm text-gray-200 mb-1 font-medium">3. Proof of Instagram Story</p>
+                  <p className="text-xs text-gray-500 mb-3">Screenshots of sharing the event poster on your Instagram Story.</p>
                   <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
                     <span className="text-xs text-gray-300 truncate max-w-[200px]">{igStoryFile ? igStoryFile.name : "Upload File (.pdf)"}</span>
                     <Upload className="w-4 h-4 text-gray-400" />
@@ -279,9 +308,10 @@ export default function RegisterPage() {
                   <div className="flex items-center gap-3 mb-2 text-green-500">
                     <CreditCard className="w-5 h-5" /> <span className="font-semibold text-sm">Registration Fee</span>
                   </div>
-                  <p className="text-white text-base tracking-widest">Rp. 130.000/Team</p>
-                  <p className="text-xs text-gray-400 mb-3">Please transfer to: <br/><strong className="text-white text-base tracking-widest">BCA 000</strong> a.n Tech Sprint</p>
-                  
+                  <p className="text-white text-base tracking-widest">Rp. 130.000/Team for Early Bird</p>
+                  <p className="text-xs text-gray-400">Please transfer to: <br /><strong className="text-white text-lg tracking-widest">Mandiri 1060023052007</strong></p>
+                  <p className="text-gray-400 mb-3">a.n DARA AZZAHRA</p>
+
                   <label className="flex items-center justify-center gap-2 w-full bg-gradient-to-b from-green-400/10 to-green-950/10 border border-dashed border-white/20 hover:border-green-500/50 hover:bg-green-500/10 rounded-lg p-3 cursor-pointer transition-colors">
                     <Upload className="w-4 h-4 text-gray-400" />
                     <span className="text-xs text-gray-300 truncate max-w-[200px]">{paymentFile ? paymentFile.name : "Upload Payment Receipt"}</span>
@@ -293,7 +323,7 @@ export default function RegisterPage() {
           </div>
 
           <button type="submit" disabled={isLoading} className="w-full flex items-center justify-center mt-8 text-lg bg-gradient-to-t from-blue-600/90 to-[#001188] py-4 rounded-xl font-normal shadow-[0_0_10px_rgba(0,51,255,0.3)] hover:shadow-[0_0_20px_rgba(0,51,255,0.6)] transition-all duration-300 disabled:opacity-50 cursor-pointer">
-            {isLoading ? message : "Register"} 
+            {isLoading ? message : "Register"}
             {!isLoading && <ArrowRight className="ml-2 w-5 h-5" />}
           </button>
         </form>
