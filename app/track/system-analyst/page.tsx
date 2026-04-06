@@ -6,27 +6,41 @@ import PageLoader from "../../../components/PageLoader";
 export default function SystemAnalystTrackPage() {
   const requirements = [
     {
-      title: "Business Reqs & Logic",
-      items: [
-        "Business Requirements Document (BRD)",
-        "System Requirements Specification (SRS)",
-        "Use Case Diagrams & Stories",
+      title: "1. System Architecture Diagram",
+      desc: "Visualization of the system structure showing:",
+      bullets: [
+        "Main system components",
+        "Data flow between components",
+        "Integration between modules (sales, inventory, restock)"
       ]
     },
     {
-      title: "Architecture & Modeling",
-      items: [
-        "Entity-Relationship Diagram (ERD)",
-        "System Architecture Design (Cloud/Monolith)",
-        "Data Flow Diagram (Level 0 & Level 1)",
+      title: "2. End-to-End Workflow",
+      desc: "Workflow presented in the form of a flowchart or flow diagram. The system's operational process flow diagram includes:",
+      bullets: [
+        "Sales transaction process",
+        "Automatic stock updates",
+        "Stock monitoring",
+        "Restocking triggers"
       ]
     },
     {
-      title: "Execution & Pitch",
-      items: [
-        "Pitch Deck (Business impact, Feasibility)",
-        "Security & Scalability Considerations",
-        "Executive Summary Presentation (Max 3 mins)",
+      title: "3. System Logic Explanation",
+      desc: "A narrative explanation of how the system works, including:",
+      bullets: [
+        "Automatic stock reduction mechanism",
+        "Data synchronization",
+        "Low stock detection logic",
+        "Restock trigger mechanism"
+      ]
+    },
+    {
+      title: "4. Trade-Off Analysis",
+      desc: "Participants are expected to justify that the designed solution is appropriate for the conditions of MSMEs. Analysis of system design decisions, such as:",
+      bullets: [
+        "System simplicity vs. complexity",
+        "Implementation cost vs. system capability",
+        "Level of automation vs. ease of use"
       ]
     }
   ];
@@ -48,22 +62,24 @@ export default function SystemAnalystTrackPage() {
 
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-black via-[#050814] to-[#0a0f24] relative pt-40 pb-20 overflow-hidden flex flex-col items-center justify-center min-h-[50vh]">
-        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <div className="mx-auto w-20 h-20 bg-blue-500/10 rounded-3xl flex items-center justify-center mb-8 border border-blue-500/20">
+        <div className="relative z-10 text-center px-6 pt-10 mx-auto">
+          {/* <div className="mx-auto w-20 h-20 bg-blue-500/10 rounded-3xl flex items-center justify-center mb-8">
             <Cpu className="text-blue-400 w-10 h-10" />
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-white mb-6 uppercase">
+          </div> */}
+          <h1 className="text-5xl md:text-[200px] font-bold tracking-[-0.1em] bg-gradient-to-b from-blue-500 to-blue-950/5 bg-clip-text text-transparent mb-6">
             System Analyst
           </h1>
           <p className="text-gray-400 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">
             Architect robust systems. Create BRD, SRS, and comprehensive system architecture diagrams. Design the foundational blueprints that shape how technology serves business needs.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="/register" className="px-8 py-3 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors">
+            <Link href="https://bit.ly/TECHSPRINT-2026-3IN1-EARLYBIRD" className="px-8 py-3 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors">
               Register Track
             </Link>
-            <a href="/guidebook-sa.pdf" target="_blank" rel="noopener noreferrer" className="px-8 py-3 rounded-full border border-white/10 text-gray-300 hover:text-white hover:bg-white/5 transition-colors flex items-center gap-2">
-              <Download className="w-4 h-4" /> Download Rulebook
+            <a href="/SYSTEM-ANALYST-TECH-SPRINT-2026-BOOKLET-PARTICIPANT.pdf" target="_blank" rel="noopener noreferrer" className="relative group p-[2px] rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 transition-all inline-flex">
+              <span className="flex items-center gap-2 px-8 py-3 bg-black text-white font-medium rounded-full w-full h-full group-hover:bg-black/50 transition-colors duration-300">
+                <Download className="w-4 h-4" /> Download Rulebook
+              </span>
             </a>
           </div>
         </div>
@@ -100,22 +116,23 @@ export default function SystemAnalystTrackPage() {
 
       {/* Track Requirements */}
       <section className="py-24 bg-gradient-to-b from-black via-[#050814] to-[#0a0f24]">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-semibold md:text-5xl font-light text-white mb-4">Submission Requirements</h2>
-            <p className="text-gray-400 font-light">Make sure to submit all these deliverables to qualify for the final judging phase.</p>
+            <h2 className="text-3xl font-semibold md:text-5xl font-light text-white mb-4">Output</h2>
+            <p className="text-gray-400 font-light">Participants are required to submit output in the following formats:</p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             {requirements.map((req, idx) => (
-              <div key={idx} className={`relative flex flex-col bg-white/[0.02] border border-blue-500/30 rounded-3xl p-8 hover:-translate-y-2 transition-transform duration-300 group hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]`}>
-                <h3 className={`text-xl font-medium tracking-widest mb-6 text-blue-400 uppercase`}>{req.title}</h3>
+              <div key={idx} className={`relative flex flex-col bg-white/[0.02] rounded-3xl p-8 transition-transform duration-300 group hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] h-full`}>
+                <h3 className={`text-xl font-semibold mb-3 text-blue-400`}>{req.title}</h3>
+                <p className="text-gray-300 font-light text-sm mb-4 leading-relaxed">{req.desc}</p>
                 
-                <div className="flex flex-col gap-4 flex-1">
-                  {req.items.map((item, iIdx) => (
-                    <div key={iIdx} className="flex items-start gap-4 text-sm font-light">
-                      <CheckCircle2 className="w-5 h-5 text-blue-500 shrink-0" />
-                      <span className="text-gray-300 leading-relaxed">{item}</span>
+                <div className="flex flex-col gap-3 flex-1">
+                  {req.bullets.map((bullet, bIdx) => (
+                    <div key={bIdx} className="flex items-start gap-3 text-sm font-light">
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0" />
+                      <span className="text-gray-400 leading-relaxed">{bullet}</span>
                     </div>
                   ))}
                 </div>
