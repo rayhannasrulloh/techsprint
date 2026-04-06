@@ -93,7 +93,7 @@ export default function LandingPage() {
     },
     {
       date: "9 - 10 May 2026",
-      title: "Hackathon Day",
+      title: "Competition Day",
       desc: "The sprint begins! Starts at 12:00 PM and ends the next day at 12:00 PM. Build your solutions and conquer the checkpoints.",
       icon: Rocket,
       color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
@@ -221,8 +221,10 @@ export default function LandingPage() {
 
               <div className="flex flex-col sm:flex-row justify-center md:justify-start items-center gap-6 mt-4">
                 {/* Reference Button Style: Large */}
-                <Link href="/register" className="flex items-center text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] px-8 py-3 rounded-full font-normal shadow-[0_0_20px_rgba(0,51,255,0.4)] hover:shadow-[0_0_35px_rgba(0,51,255,0.7)] hover:-translate-y-1 transition-all duration-300">
-                  Register Now! <ArrowUpRight className="ml-2 w-5 h-5" />
+                <Link
+                  href="https://bit.ly/TECHSPRINT-2026-3IN1-EARLYBIRD" target="_blank" rel="noopener noreferrer"
+                  className="flex items-center text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] px-8 py-3 rounded-full font-normal shadow-[0_0_20px_rgba(0,51,255,0.4)] hover:shadow-[0_0_35px_rgba(0,51,255,0.7)] hover:-translate-y-1 transition-all duration-300">
+                  Register in Google Form <ArrowUpRight className="ml-2 w-5 h-5" />
                 </Link>
                 <button
                   onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
@@ -346,8 +348,8 @@ export default function LandingPage() {
 
           {/* --- TOTAL PRIZEPOOL SECTION --- */}
           {/* <section className="py-32 relative overflow-hidden flex flex-col items-center justify-center"> */}
-            {/* Glow effect specific to Prizepool */}
-            {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[250px] bg-yellow-500/10 blur-[60px] rounded-full pointer-events-none z-0"></div>
+          {/* Glow effect specific to Prizepool */}
+          {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[250px] bg-yellow-500/10 blur-[60px] rounded-full pointer-events-none z-0"></div>
 
             <div className="relative z-10 text-center px-6">
               <p className="text-sm font-medium tracking-[0.2em] text-yellow-500 uppercase mb-4">
