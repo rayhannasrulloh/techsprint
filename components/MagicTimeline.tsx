@@ -70,6 +70,12 @@ const MagicTimeline: React.FC<MagicTimelineProps> = ({
             --glow-y: 50%;
             --glow-intensity: 0;
             --glow-radius: 200px;
+            --glow-color: 59, 130, 246;
+            --border-color: rgba(0, 0, 0, 0.1); 
+            --background-dark: rgba(255, 255, 255, 1);
+            --white: #000000;
+          }
+          .dark .bento-section {
             --glow-color: ${glowColor};
             --border-color: rgba(255, 255, 255, 0.05); /* Techsprint sublte border */
             --background-dark: rgba(255, 255, 255, 0.02);
@@ -94,7 +100,7 @@ const MagicTimeline: React.FC<MagicTimelineProps> = ({
         ref={gridRef}
       >
         {events.map((item, index) => {
-          const baseClassName = `card w-full p-6 md:p-8 rounded-2xl font-light overflow-hidden transition-all duration-500 ease-in-out hover:bg-white/[0.04] ${
+          const baseClassName = `card w-full p-6 md:p-8 rounded-2xl font-light overflow-hidden transition-all duration-500 ease-in-out hover:bg-black/5 dark:hover:bg-white/[0.04] ${
             enableBorderGlow ? 'card--border-glow' : ''
           }`;
 
@@ -113,10 +119,10 @@ const MagicTimeline: React.FC<MagicTimelineProps> = ({
               <span className={`text-xs md:text-sm font-normal tracking-wider uppercase mb-2 block z-10 relative ${item.color}`}>
                 {item.date}
               </span>
-              <h3 className="text-xl md:text-2xl font-normal text-gray-100 mb-3 z-10 relative">
+              <h3 className="text-xl md:text-2xl font-bold dark:font-normal text-black dark:text-gray-100 mb-3 z-10 relative transition-colors">
                 {item.title}
               </h3>
-              <p className="text-gray-400 font-light text-sm md:text-base leading-relaxed z-10 relative">
+              <p className="text-black/70 dark:text-gray-400 font-medium dark:font-light text-sm md:text-base leading-relaxed z-10 relative transition-colors">
                 {item.desc}
               </p>
             </>
@@ -125,7 +131,7 @@ const MagicTimeline: React.FC<MagicTimelineProps> = ({
           return (
             <div key={index} className="relative pl-10 md:pl-16 group flex flex-col justify-center">
               {/* Glowing Node Marker */}
-              <span className="absolute -left-5 md:-left-6 top-1 bg-[#050814] p-2 rounded-full border-2 border-blue-500/30 group-hover:border-blue-500/50 transition-colors duration-300 z-20 pointer-events-none">
+              <span className="absolute -left-5 md:-left-6 top-1 bg-white dark:bg-[#050814] p-2 rounded-full border-2 border-blue-500/30 group-hover:border-blue-500/50 transition-colors duration-300 z-20 pointer-events-none">
                 {item.nodeMarker}
               </span>
 

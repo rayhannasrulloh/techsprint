@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 
 export default function Countdown({ targetDate }: { targetDate: string }) {
   const [timeLeft, setTimeLeft] = useState({
@@ -52,7 +53,7 @@ export default function Countdown({ targetDate }: { targetDate: string }) {
         {['Days', 'Hours', 'Mins', 'Secs'].map((label, i) => (
           <div key={label} className="flex items-start gap-2 md:gap-4">
             <div className="flex flex-col items-center">
-              <span className="text-3xl md:text-5xl font-light text-white w-12 md:w-20 font-mono tracking-tighter">00</span>
+              <span className="text-3xl md:text-5xl font-light text-black dark:text-white w-12 md:w-20 font-mono tracking-tighter">00</span>
               <span className="text-[10px] md:text-xs tracking-[0.2em] text-gray-500 uppercase mt-2">{label}</span>
             </div>
             {i !== 3 && <div className="text-3xl md:text-5xl font-light text-gray-700 animate-pulse mt-[-4px] md:mt-[-2px]">:</div>}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 import { supabase } from "@/lib/supabase";
 import { TextReveal } from "../components/TextReveal";
 import { Typewriter } from "../components/Typewriter";
@@ -23,6 +24,7 @@ export default function LandingPage() {
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -117,11 +119,11 @@ export default function LandingPage() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0a0f24] via-[#050814] to-black text-white font-sans selection:bg-blue-500 selection:text-white overflow-x-hidden relative">
+    <div className="min-h-screen bg-slate-50 dark:bg-transparent dark:bg-gradient-to-b dark:from-[#0a0f24] dark:via-[#050814] dark:to-black text-gray-900 dark:text-white font-sans selection:bg-blue-500 selection:text-white overflow-x-hidden relative transition-colors duration-500">
 
-      {/* Unified Faulty Terminal Background Layer */}
-      <div className="fixed inset-0 z-0 mix-blend-screen pointer-events-auto">
-        {mounted && !isMobile && (
+      {/* Unified Faulty Terminal Background Layer (Dark Mode Only) */}
+      {mounted && resolvedTheme === 'dark' && !isMobile && (
+        <div className="fixed inset-0 z-0 pointer-events-auto mix-blend-screen transition-all">
           <FaultyTerminal
             scale={1.5}
             gridMul={[2, 1]}
@@ -141,8 +143,8 @@ export default function LandingPage() {
             pageLoadAnimation={true}
             brightness={0.1}
           />
-        )}
-      </div>
+        </div>
+      )}
 
       <PageLoader />
 
@@ -152,18 +154,18 @@ export default function LandingPage() {
         {/* Foreground Layer (Nav + Hero) */}
         <div className="relative z-10 flex-1 flex flex-col pointer-events-none">
           {/* Navigation */}
-          <nav className="border-white/5 p-6 flex justify-between items-center max-w-7xl mx-auto w-full pointer-events-auto">
+          <nav className="border-black/5 dark:border-white/5 p-6 flex justify-between items-center max-w-7xl mx-auto w-full pointer-events-auto transition-colors">
 
             <div className="flex-1 flex items-center justify-start">
               <Link href="/">
-                <img src="/logo-only.webp" alt="3IN1 Tech Sprint 2026" className="h-18 md:h-18 w-auto object-contain mix-blend-screen" />
+                <img src="/logo-only.webp" alt="3IN1 Tech Sprint 2026" className="h-18 md:h-18 w-auto object-contain dark:mix-blend-screen transition-all" />
               </Link>
             </div>
 
             <div className="hidden md:flex flex-1 items-center justify-center gap-8">
-              <Link href="/track/ui-ux" className="text-sm font-light text-gray-300 hover:text-white transition-colors tracking-wide">UI/UX Design</Link>
-              <Link href="/track/data-automation" className="text-sm font-light text-gray-300 hover:text-white transition-colors tracking-wide">Data Automation</Link>
-              <Link href="/track/system-analyst" className="text-sm font-light text-gray-300 hover:text-white transition-colors tracking-wide">System Analyst</Link>
+              <Link href="/track/ui-ux" className="text-sm font-medium text-black hover:text-blue-600 dark:font-light dark:text-gray-300 dark:hover:text-white transition-colors tracking-wide">UI/UX Design</Link>
+              <Link href="/track/data-automation" className="text-sm font-medium text-black hover:text-blue-600 dark:font-light dark:text-gray-300 dark:hover:text-white transition-colors tracking-wide">Data Automation</Link>
+              <Link href="/track/system-analyst" className="text-sm font-medium text-black hover:text-blue-600 dark:font-light dark:text-gray-300 dark:hover:text-white transition-colors tracking-wide">System Analyst</Link>
             </div>
 
             <div className="flex-1 flex justify-end space-x-2 md:space-x-6 items-center">
@@ -171,19 +173,19 @@ export default function LandingPage() {
               {/* Authentication Info / App Entry */}
               {isAuthenticated ? (
                 <div className="flex items-center gap-4">
-                  <a href="https://www.instagram.com/techsprint26/" target="_blank" rel="noopener noreferrer" className="text-sm font-light text-gray-300 hover:text-white transition-colors">
+                  <a href="https://www.instagram.com/techsprint26/" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-black hover:text-blue-600 dark:font-light dark:text-gray-300 dark:hover:text-white transition-colors">
                     <Instagram className="w-5 h-5" />
                   </a>
-                  <Link href="/dashboard" aria-describedby="Masuk ke Dashboard anda" className="flex items-center text-sm bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-2 rounded-full font-normal shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
+                  <Link href="/dashboard" aria-describedby="Masuk ke Dashboard anda" className="flex items-center text-sm bg-blue-600 text-white px-5 py-2 rounded-full font-medium shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
                     Dashboard
                   </Link>
                 </div>
               ) : (
                 <div className="flex items-center gap-4">
-                  <Link href="/login" className="text-sm font-light text-gray-300 hover:text-white transition-colors">
+                  <Link href="/login" className="text-sm font-medium text-black hover:text-blue-600 dark:font-light dark:text-gray-300 dark:hover:text-white transition-colors">
                     Login
                   </Link>
-                  <Link href="/register" className="flex items-center text-sm bg-gradient-to-r from-blue-600 to-blue-800 px-5 py-2 rounded-full font-normal shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
+                  <Link href="/register" className="flex items-center text-sm bg-blue-600 text-white px-5 py-2 rounded-full font-medium dark:hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] dark:hover:scale-105 transition-all duration-300">
                     Register <ArrowUpRight className="ml-1 w-4 h-4" />
                   </Link>
                 </div>
@@ -199,14 +201,15 @@ export default function LandingPage() {
 
               {/* Countdown Timer */}
               <div
-                className="flex flex-col items-center md:items-start text-4xl md:text-12xl font-normal tracking-wide text-white mb-10 leading-tight"
-                style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
+                className="flex flex-col items-center md:items-start text-4xl md:text-12xl font-bold dark:font-normal tracking-wide text-black dark:text-white mb-10 leading-tight transition-colors"
+                style={{ textShadow: mounted && resolvedTheme !== 'dark' ? "none" : "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
               >
                 {mounted && !isMobile ? (
                   <Typewriter
                     text={[
-                      "Countdown to 1st Batch Registration Deadline",
-                      "Early bird spots are limited. Register now!"
+                      "Countdown to Early Bird Registration Deadline",
+                      "Early bird spots are limited. Register now!",
+                      "Early Bird ends soon. Limited to the first 5 teams."
                     ]}
                     delay={1.8}
                     speed={0.05}
@@ -223,12 +226,12 @@ export default function LandingPage() {
                 {/* Reference Button Style: Large */}
                 <Link
                   href="https://bit.ly/TECHSPRINT-2026-3IN1-EARLYBIRD" target="_blank" rel="noopener noreferrer"
-                  className="flex items-center text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] px-8 py-3 rounded-full font-normal shadow-[0_0_20px_rgba(0,51,255,0.4)] hover:shadow-[0_0_35px_rgba(0,51,255,0.7)] hover:-translate-y-1 transition-all duration-300">
-                  Register in Google Form <ArrowUpRight className="ml-2 w-5 h-5" />
+                  className="flex items-center text-white text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] px-8 py-3 rounded-full font-normal dark:shadow-[0_0_20px_rgba(0,51,255,0.4)] dark:hover:shadow-[0_0_35px_rgba(0,51,255,0.7)] transition-all duration-300">
+                  Register on Google Form <ArrowUpRight className="ml-2 w-5 h-5" />
                 </Link>
                 <button
                   onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="text-gray-400 hover:text-white font-light tracking-wide transition-colors"
+                  className="text-black hover:text-blue-600 font-medium dark:text-gray-400 dark:hover:text-white dark:font-light tracking-wide transition-colors"
                 >
                   Learn More
                 </button>
@@ -262,7 +265,7 @@ export default function LandingPage() {
               <img
                 src="/logo-techsprint-2026.webp"
                 alt="3IN1 Tech Sprint 2026"
-                className="w-full h-auto object-contain mix-blend-screen glitch-logo drop-shadow-[0_0_40px_rgba(59,130,246,0.2)]"
+                className="w-full h-auto object-contain dark:mix-blend-screen glitch-logo drop-shadow-[0_0_40px_rgba(59,130,246,0.3)] invert dark:invert-0 transition-all"
               />
             </div>
 
@@ -280,25 +283,25 @@ export default function LandingPage() {
 
             <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
               <h2
-                className="text-xl md:text-3xl font-normal tracking-wide text-white leading-tight mb-10"
-                style={{ textShadow: "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
+                className="text-xl md:text-3xl font-bold dark:font-normal tracking-wide text-black dark:text-white leading-tight mb-10 transition-colors"
+                style={{ textShadow: mounted && resolvedTheme !== 'dark' ? "none" : "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
               >
                 {mounted && !isMobile ? (
                   <TextReveal
                     text="Ready to Innovate, Create the Future State"
                     delay={0.5}
-                    className="inline-block text-4xl md:text-5xl lg:text-6xl font-bold"
+                    className="inline-block text-4xl md:text-5xl lg:text-6xl font-black dark:font-bold"
                   />
                 ) : (
-                  <span className="inline-block text-4xl md:text-5xl lg:text-6xl font-bold">Ready to Innovate,<br />Create the Future State</span>
+                  <span className="inline-block text-4xl md:text-5xl lg:text-6xl font-black dark:font-bold">Ready to Innovate,<br />Create the Future State</span>
                 )}
               </h2>
-              <div className="space-y-6 text-gray-400 font-light text-base md:text-lg leading-relaxed text-justify md:text-center">
+              <div className="space-y-6 text-black dark:text-gray-400 font-medium dark:font-light text-base md:text-lg leading-relaxed text-justify md:text-center transition-colors">
                 <p>
-                  Tech Sprint 2026 - <span className="text-gray-200">3IN1</span> is the flagship innovation competition organized by the Research and Development (R&D) Division of the President University Major Association of Information Systems (PUMA IS). Building on the prestigious legacy of previous iterations, evolving from CompClub (2021-2023) to the international Golden Code Hackathon in 2025, this year’s event is designed as an intensive 2-day innovation sprint. With a core philosophy of <span className="text-white font-medium">"Tech With Impact,"</span> rooted in the philosophy of <span className="text-white font-medium">THINK, BUILD,</span> and <span className="text-white font-medium">IMPACT</span>, the sprint challenges participants to move from analytical thinking (THINK) to hands-on prototyping (BUILD) to deliver measurable real-world implementation (IMPACT).
+                  Tech Sprint 2026 - <span className="text-blue-600 dark:text-gray-200 font-bold dark:font-normal">3IN1</span> is the flagship innovation competition organized by the Research and Development (R&D) Division of the President University Major Association of Information Systems (PUMA IS). Building on the prestigious legacy of previous iterations, evolving from CompClub (2021-2023) to the international Golden Code Hackathon in 2025, this year’s event is designed as an intensive 2-day innovation sprint. With a core philosophy of <span className="text-black dark:text-white font-bold dark:font-medium">"Tech With Impact,"</span> rooted in the philosophy of <span className="text-black dark:text-white font-bold dark:font-medium">THINK, BUILD,</span> and <span className="text-black dark:text-white font-bold dark:font-medium">IMPACT</span>, the sprint challenges participants to move from analytical thinking (THINK) to hands-on prototyping (BUILD) to deliver measurable real-world implementation (IMPACT).
                 </p>
                 <p>
-                  Carrying the mission to create sustainable tech solutions addressing real campus and student challenges, the event introduces a unique approach across three specialized tracks: <span className="text-gray-200">UI/UX Design, Data Automation, and System Analysis</span>. Each track targets 8 competing teams, bringing together a total of 72 participants across all three tracks. The sprint unfolds in two structured phases: <span className="text-white font-medium">Day 1 (BUILD)</span>, where teams ideate and rapidly prototype their solutions, and <span className="text-white font-medium">Day 2 (TEST + PITCH)</span>, where top teams present their final outputs to a panel of industry judges.
+                  Carrying the mission to create sustainable tech solutions addressing real campus and student challenges, the event introduces a unique approach across three specialized tracks: <span className="text-blue-600 dark:text-gray-200 font-bold dark:font-normal">UI/UX Design, Data Automation, and System Analysis</span>. Each track targets 8 competing teams, bringing together a total of 72 participants across all three tracks. The sprint unfolds in two structured phases: <span className="text-black dark:text-white font-bold dark:font-medium">Day 1 (BUILD)</span>, where teams ideate and rapidly prototype their solutions, and <span className="text-black dark:text-white font-bold dark:font-medium">Day 2 (TEST + PITCH)</span>, where top teams present their final outputs to a panel of industry judges.
                 </p>
               </div>
             </div>
@@ -307,7 +310,7 @@ export default function LandingPage() {
           {/* Tracks Info Section */}
           <section className="py-24">
             <div className="max-w-7xl mx-auto px-6">
-              <h2 className="text-2xl font-light text-center mb-16 tracking-widest text-gray-300 uppercase">
+              <h2 className="text-2xl font-bold dark:font-light text-center mb-16 tracking-widest text-black dark:text-gray-300 uppercase transition-colors">
                 <TextReveal text="Track Categories" />
               </h2>
 
@@ -332,14 +335,14 @@ export default function LandingPage() {
           {/* --- NEW TIMELINE SECTION --- */}
           <section className="py-24 relative overflow-hidden">
             {/* Glow background effect */}
-            <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none"></div>
+            <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-100 dark:bg-blue-900/10 blur-[120px] rounded-full pointer-events-none transition-colors"></div>
 
             <div className="max-w-4xl mx-auto px-6 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-2xl font-light tracking-widest text-gray-300 uppercase flex items-center justify-center gap-3">
+                <h2 className="text-2xl font-bold dark:font-light tracking-widest text-black dark:text-gray-300 uppercase flex items-center justify-center gap-3 transition-colors">
                   Event Journey
                 </h2>
-                <p className="text-gray-500 font-light mt-4">Mark your calendar for these important dates.</p>
+                <p className="text-gray-800 dark:text-gray-500 font-medium dark:font-light mt-4 transition-colors">Mark your calendar for these important dates.</p>
               </div>
 
               <MagicTimeline events={serializedTimelineEvents} glowColor="59, 130, 246" />
@@ -372,30 +375,30 @@ export default function LandingPage() {
           {/* --- SPONSORS & PARTNERS SECTION --- */}
           <section className="py-24 relative overflow-hidden">
             {/* subtle background glow */}
-            <div className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+            <div className="absolute top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-blue-100 dark:bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0 transition-colors"></div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="mb-16 flex flex-col items-center text-center gap-6">
-                <h2 className="text-2xl md:text-3xl font-light tracking-widest text-gray-300 uppercase flex items-center justify-center gap-3">
+                <h2 className="text-2xl md:text-3xl font-bold dark:font-light tracking-widest text-black dark:text-gray-300 uppercase flex items-center justify-center gap-3 transition-colors">
                   <TextReveal text="Sponsored by" />
                 </h2>
-                <Link href="/sponsorship" className="px-6 py-2.5 rounded-full border border-white/10 bg-white/[0.02] text-sm font-light text-gray-300 hover:bg-white/10 hover:border-blue-500/50 hover:text-white transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.02)] hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                <Link href="/sponsorship" className="px-6 py-2.5 rounded-full border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] text-sm font-bold dark:font-light text-black dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 hover:border-blue-500/50 hover:text-blue-600 dark:hover:text-white transition-all duration-300 shadow-none dark:shadow-[0_0_15px_rgba(255,255,255,0.02)] hover:shadow-[0_4px_15px_rgba(0,0,0,0.05)] dark:hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]">
                   Become a sponsor
                 </Link>
               </div>
 
               <div className="flex flex-col gap-6">
                 {/* Case Collaborator / Main Sponsor (Full Width) */}
-                <div className="bg-white/[0.02] border border-white/5 rounded-3xl p-8 md:p-12 flex flex-col xl:flex-row items-center justify-between gap-8 md:gap-12 hover:bg-white/[0.04] transition-all duration-500 group relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-duration-700"></div>
+                <div className="bg-white border border-gray-200 dark:bg-white/[0.02] dark:border-white/5 rounded-3xl p-8 md:p-12 flex flex-col xl:flex-row items-center justify-between gap-8 md:gap-12 hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-500 group relative overflow-hidden shadow-sm dark:shadow-none">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-100 to-blue-500/0 dark:via-blue-500/5 opacity-0 group-hover:opacity-100 transition-duration-700"></div>
 
                   <div className="flex flex-col items-center xl:items-start text-center xl:text-left z-10 w-full xl:w-1/3">
-                    <span className="text-xs font-medium tracking-[0.2em] text-blue-400 uppercase mb-4">Case Collaborator</span>
-                    <span className="text-4xl md:text-5xl lg:text-6xl font-normal tracking-tight text-white group-hover:text-blue-400 transition-colors duration-500 mb-2">Coming Soon</span>
-                    <span className="text-sm text-gray-400 font-light">The grand reveal of our main case collaborator will unlock on May 1st, 2026.</span>
+                    <span className="text-xs font-bold dark:font-medium tracking-[0.2em] text-blue-600 dark:text-blue-400 uppercase mb-4 transition-colors">Case Collaborator</span>
+                    <span className="text-4xl md:text-5xl lg:text-6xl font-black dark:font-normal tracking-tight text-black dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-500 mb-2">Coming Soon</span>
+                    <span className="text-sm text-gray-800 dark:text-gray-400 font-medium dark:font-light transition-colors">The grand reveal of our main case collaborator will unlock on May 1st, 2026.</span>
                   </div>
 
-                  <div className="z-10 flex items-center justify-center bg-[#03050a]/50 p-6 md:p-8 py-8 md:py-10 border border-white/5 rounded-3xl shadow-inner w-full xl:w-auto overflow-x-auto">
+                  <div className="z-10 flex items-center justify-center bg-gray-100 dark:bg-[#03050a]/50 p-6 md:p-8 py-8 md:py-10 border border-gray-200 dark:border-white/5 rounded-3xl shadow-inner w-full xl:w-auto overflow-x-auto transition-colors">
                     <Countdown targetDate="2026-05-01T00:00:00" />
                   </div>
                 </div>
@@ -403,26 +406,26 @@ export default function LandingPage() {
                 {/* Grid Style for Tiered Sponsors */}
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-4">
                   {/* Sponsor 2 */}
-                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-white/[0.04] transition-all duration-300 group hover:border-white/20">
-                    <div className="flex items-center gap-4 text-gray-400 group-hover:text-white transition-colors">
+                  <div className="bg-white border border-gray-200 dark:bg-white/[0.02] dark:border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
+                    <div className="flex items-center gap-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-white transition-colors">
                       {/* <img src="/g.webp" alt="Google" className="w-8 h-8 md:w-10 md:h-10" /> */}
-                      <span className="text-2xl md:text-3xl font-medium tracking-tight">Coming Soon</span>
+                      <span className="text-2xl md:text-3xl font-bold dark:font-medium tracking-tight">Coming Soon</span>
                     </div>
                   </div>
 
                   {/* Sponsor 3 */}
-                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-white/[0.04] transition-all duration-300 group hover:border-white/20">
-                    <div className="flex items-center gap-4 text-gray-400 group-hover:text-white transition-colors">
+                  <div className="bg-white border border-gray-200 dark:bg-white/[0.02] dark:border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
+                    <div className="flex items-center gap-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-white transition-colors">
                       {/* <Train className="w-8 h-8 md:w-10 md:h-10" /> */}
-                      <span className="text-2xl md:text-3xl font-medium tracking-tight">Coming Soon</span>
+                      <span className="text-2xl md:text-3xl font-bold dark:font-medium tracking-tight">Coming Soon</span>
                     </div>
                   </div>
 
                   {/* Sponsor 4 */}
-                  <div className="bg-white/[0.02] border border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-white/[0.04] transition-all duration-300 group hover:border-white/20">
-                    <div className="flex items-center gap-4 text-gray-400 group-hover:text-white transition-colors">
+                  <div className="bg-white border border-gray-200 dark:bg-white/[0.02] dark:border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
+                    <div className="flex items-center gap-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-white transition-colors">
                       {/* <Utensils className="w-8 h-8 md:w-10 md:h-10" /> */}
-                      <span className="text-2xl md:text-3xl font-medium tracking-tight">Coming Soon</span>
+                      <span className="text-2xl md:text-3xl font-bold dark:font-medium tracking-tight">Coming Soon</span>
                     </div>
                   </div>
                 </div>

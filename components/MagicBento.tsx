@@ -509,6 +509,13 @@ const MagicBento: React.FC<BentoProps> = ({
             --glow-y: 50%;
             --glow-intensity: 0;
             --glow-radius: 200px;
+            --glow-color: 59, 130, 246; /* Blue glow for light mode */
+            --border-color: rgba(0, 0, 0, 0.1); 
+            --background-dark: rgba(255, 255, 255, 1);
+            --white: #000000;
+          }
+          
+          .dark .bento-section {
             --glow-color: ${glowColor};
             --border-color: rgba(255, 255, 255, 0.05); /* Techsprint sublte border */
             --background-dark: rgba(255, 255, 255, 0.02);
@@ -603,7 +610,7 @@ const MagicBento: React.FC<BentoProps> = ({
       <BentoCardGrid gridRef={gridRef}>
         <div className="card-responsive grid gap-8 w-full">
           {cards.map((card, index) => {
-            const baseClassName = `card flex flex-col justify-start relative w-full h-full p-8 rounded-3xl border border-solid font-light overflow-hidden transition-all duration-500 ease-in-out hover:bg-white/[0.04] ${
+            const baseClassName = `card flex flex-col justify-start relative w-full h-full p-8 rounded-3xl border border-solid font-light overflow-hidden transition-all duration-500 ease-in-out hover:bg-black/5 dark:hover:bg-white/[0.04] ${
               enableBorderGlow ? 'card--border-glow' : ''
             } ${card.className || ''}`;
 
@@ -629,10 +636,10 @@ const MagicBento: React.FC<BentoProps> = ({
                       {card.label}
                     </div>
                   )}
-                  <h3 className={`card__title text-xl font-normal mb-3 text-gray-100 ${textAutoHide ? 'text-clamp-1' : ''}`}>
+                  <h3 className={`card__title text-xl font-bold dark:font-normal mb-3 text-black dark:text-gray-100 ${textAutoHide ? 'text-clamp-1' : ''}`}>
                     {card.title}
                   </h3>
-                  <p className={`card__description text-gray-400 leading-relaxed font-light text-sm ${textAutoHide ? 'text-clamp-3' : ''}`}>
+                  <p className={`card__description text-black/70 dark:text-gray-400 leading-relaxed font-medium dark:font-light text-sm ${textAutoHide ? 'text-clamp-3' : ''}`}>
                     {card.description}
                   </p>
                 </div>

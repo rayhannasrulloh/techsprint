@@ -42,14 +42,14 @@ export default function FAQ() {
   return (
     <section className="py-24 relative overflow-hidden">
       {/* Background glow for FAQ */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-blue-500/10 dark:bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0 transition-colors"></div>
       
       <div className="max-w-4xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16 flex flex-col items-center">
-          <h2 className="text-2xl md:text-3xl font-light tracking-widest text-gray-300 uppercase flex items-center justify-center gap-3">
+          <h2 className="text-2xl md:text-3xl font-bold dark:font-light tracking-widest text-black dark:text-gray-300 uppercase flex items-center justify-center gap-3 transition-colors">
             <TextReveal text="FAQ" />
           </h2>
-          <p className="text-gray-400 font-light mt-4">
+          <p className="text-black/70 dark:text-gray-400 font-medium dark:font-light mt-4 transition-colors">
             Find answers to frequently asked questions.
           </p>
         </div>
@@ -58,24 +58,24 @@ export default function FAQ() {
           {faqs.map((faq, index) => (
             <div 
               key={index}
-              className={`border rounded-2xl transition-all duration-300 ${openIndex === index ? "bg-white/[0.04] border-blue-500/30" : "bg-white/[0.02] border-white/5 hover:bg-white/[0.04] hover:border-white/10"}`}
+              className={`border rounded-2xl transition-all duration-300 ${openIndex === index ? "bg-black/[0.04] dark:bg-white/[0.04] border-blue-500/30" : "bg-black/[0.02] dark:bg-white/[0.02] border-black/5 dark:border-white/5 hover:bg-black/[0.04] dark:hover:bg-white/[0.04] hover:border-black/10 dark:hover:border-white/10"}`}
             >
               <button
                 className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"
                 onClick={() => toggleFAQ(index)}
               >
-                <span className={`pr-4 text-base md:text-lg font-light ${openIndex === index ? "text-white" : "text-gray-300"}`}>
+                <span className={`pr-4 text-base md:text-lg font-bold dark:font-light transition-colors ${openIndex === index ? "text-blue-600 dark:text-white" : "text-black dark:text-gray-300"}`}>
                   {faq.question}
                 </span>
                 <ChevronDown 
-                  className={`w-5 h-5 flex-shrink-0 text-gray-400 transition-transform duration-300 ${openIndex === index ? "rotate-180 text-blue-400" : ""}`} 
+                  className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${openIndex === index ? "rotate-180 text-blue-600 dark:text-blue-400" : "text-black/50 dark:text-gray-400"}`} 
                 />
               </button>
               
               <div 
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
               >
-                <div className="px-6 pb-5 text-gray-400 font-light text-sm md:text-base leading-relaxed">
+                <div className="px-6 pb-5 text-black/70 dark:text-gray-400 font-medium dark:font-light text-sm md:text-base leading-relaxed transition-colors">
                   {faq.answer}
                 </div>
               </div>
