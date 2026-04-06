@@ -15,7 +15,7 @@ export default function Footer() {
               <img src="/logo-techsprint-2026.webp" alt="Tech Sprint 2026 - 3IN1" className="w-40 md:w-30 lg:w-20 ml-auto mr-auto" />
             </div>
             <p className="text-gray-400 font-light text-sm leading-relaxed mb-6">
-              Empowering the next generation of tech leaders through intense innovation, collaboration, and 24-hour sprints.
+              Ready to Innovate, Create the Future State
             </p>
             <div className="mt-6">
               <img src="/logo-pu.png" alt="3IN1 Tech Sprint 2026" className="w-40 ml-auto mr-auto" />
