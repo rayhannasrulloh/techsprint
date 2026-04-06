@@ -131,7 +131,7 @@ const MagicTimeline: React.FC<MagicTimelineProps> = ({
           return (
             <div key={index} className="relative pl-10 md:pl-16 group flex flex-col justify-center">
               {/* Glowing Node Marker */}
-              <span className="absolute -left-5 md:-left-6 top-1 bg-white dark:bg-[#050814] p-2 rounded-full border-2 border-blue-500/30 group-hover:border-blue-500/50 transition-colors duration-300 z-20 pointer-events-none">
+              <span className="absolute -left-5 md:-left-6 top-1 bg-white dark:bg-[#050814] p-2 rounded-full group-hover:border-blue-500/50 transition-colors duration-300 z-20 pointer-events-none">
                 {item.nodeMarker}
               </span>
 

@@ -12,6 +12,7 @@ export interface BentoCardProps {
   label?: React.ReactNode;
   icon?: React.ReactNode;
   className?: string;
+  cta?: React.ReactNode;
   textAutoHide?: boolean;
   disableAnimations?: boolean;
 }
@@ -610,7 +611,7 @@ const MagicBento: React.FC<BentoProps> = ({
       <BentoCardGrid gridRef={gridRef}>
         <div className="card-responsive grid gap-8 w-full">
           {cards.map((card, index) => {
-            const baseClassName = `card flex flex-col justify-start relative w-full h-full p-8 rounded-3xl border border-solid font-light overflow-hidden transition-all duration-500 ease-in-out hover:bg-black/5 dark:hover:bg-white/[0.04] ${
+            const baseClassName = `card flex flex-col justify-start relative w-full h-full p-8 rounded-3xl border-solid font-light overflow-hidden transition-all duration-500 ease-in-out hover:bg-black/5 dark:hover:bg-white/[0.04] ${
               enableBorderGlow ? 'card--border-glow' : ''
             } ${card.className || ''}`;
 
@@ -642,6 +643,11 @@ const MagicBento: React.FC<BentoProps> = ({
                   <p className={`card__description text-black/70 dark:text-gray-400 leading-relaxed font-medium dark:font-light text-sm ${textAutoHide ? 'text-clamp-3' : ''}`}>
                     {card.description}
                   </p>
+                  {card.cta && (
+                    <div className="mt-auto pt-6 flex items-center">
+                      {card.cta}
+                    </div>
+                  )}
                 </div>
               </>
             );

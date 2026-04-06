@@ -58,7 +58,7 @@ export default function FAQ() {
           {faqs.map((faq, index) => (
             <div 
               key={index}
-              className={`border rounded-2xl transition-all duration-300 ${openIndex === index ? "bg-black/[0.04] dark:bg-white/[0.04] border-blue-500/30" : "bg-black/[0.02] dark:bg-white/[0.02] border-black/5 dark:border-white/5 hover:bg-black/[0.04] dark:hover:bg-white/[0.04] hover:border-black/10 dark:hover:border-white/10"}`}
+              className={`rounded-2xl transition-all duration-300 ${openIndex === index ? "bg-black/[0.04] dark:bg-white/[0.04] border-blue-500/30" : "bg-black/[0.02] dark:bg-white/[0.02] border-black/5 dark:border-white/5 hover:bg-black/[0.04] dark:hover:bg-white/[0.04] hover:border-black/10 dark:hover:border-white/10"}`}
             >
               <button
                 className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"

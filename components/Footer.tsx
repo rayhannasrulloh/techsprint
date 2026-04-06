@@ -6,7 +6,7 @@ import { ThemeToggle } from "./ThemeToggle";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-black/10 dark:border-white/10 pt-20 pb-10 transition-colors">
+    <footer className="border-t border-black/5 dark:border-white/5 pt-20 pb-10 transition-colors">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
 
@@ -62,7 +62,7 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-black/10 dark:border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 transition-colors">
+        <div className="border-t border-black/5 dark:border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 transition-colors">
           <p className="text-black/60 dark:text-gray-500 font-medium dark:font-light text-xs">
             © {new Date().getFullYear()} 3IN1 Tech Sprint. All rights reserved.
           </p>

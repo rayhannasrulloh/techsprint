@@ -15,7 +15,7 @@ import Footer from "../components/Footer";
 import Countdown from "../components/Countdown";
 import PageLoader from "../components/PageLoader";
 import {
-  ArrowUpRight, MonitorSmartphone, DatabaseZap, Cpu, Calendar,
+  ArrowUpRight, ArrowRight, MonitorSmartphone, DatabaseZap, Cpu, Calendar,
   UserPlus, Timer, MonitorPlay, Rocket,
   Mail, MapPin, MessageSquare, Instagram, Twitter, Linkedin
 } from "lucide-react";
@@ -43,30 +43,34 @@ export default function LandingPage() {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
+  // Data Track
   const trackCards = [
     {
       href: '/track/ui-ux',
       title: 'UI/UX Design',
-      description: 'Design intuitive interfaces. Focus on user journey, wireframing, and interactive prototypes.',
-      icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><MonitorSmartphone className="text-white w-7 h-7 stroke-[1.5]" /></div>,
+      description: 'Design intuitive interfaces. Craft compelling user experiences and stunning prototypes.',
+      icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><MonitorSmartphone className="text-blue-500 w-7 h-7 stroke-[1.5]" /></div>,
       className: "group",
-      color: 'rgba(255,255,255,0.02)'
+      color: 'rgba(255,255,255,0.02)',
+      cta: <span className="inline-flex items-center text-sm font-bold dark:font-medium text-blue-600 dark:text-blue-400 group-hover:translate-x-2 transition-transform duration-300">Learn More <ArrowRight className="ml-2 w-4 h-4" /></span>
     },
     {
       href: '/track/data-automation',
       title: 'Data Automation',
-      description: 'Build scripts to process and automate pipelines. Show skills in Python, Node, and data efficiency.',
-      icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><DatabaseZap className="text-white w-7 h-7 stroke-[1.5]" /></div>,
+      description: 'Streamline workflows. Build intelligent scripts and automate data processing pipelines.',
+      icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><DatabaseZap className="text-blue-500 w-7 h-7 stroke-[1.5]" /></div>,
       className: "group",
-      color: 'rgba(255,255,255,0.02)'
+      color: 'rgba(255,255,255,0.02)',
+      cta: <span className="inline-flex items-center text-sm font-bold dark:font-medium text-blue-600 dark:text-blue-400 group-hover:translate-x-2 transition-transform duration-300">Learn More <ArrowRight className="ml-2 w-4 h-4" /></span>
     },
     {
       href: '/track/system-analyst',
       title: 'System Analyst',
       description: 'Architect robust systems. Create BRD, SRS, and comprehensive system architecture diagrams.',
-      icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><Cpu className="text-white w-7 h-7 stroke-[1.5]" /></div>,
+      icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><Cpu className="text-blue-500 w-7 h-7 stroke-[1.5]" /></div>,
       className: "group",
-      color: 'rgba(255,255,255,0.02)'
+      color: 'rgba(255,255,255,0.02)',
+      cta: <span className="inline-flex items-center text-sm font-bold dark:font-medium text-blue-600 dark:text-blue-400 group-hover:translate-x-2 transition-transform duration-300">Learn More <ArrowRight className="ml-2 w-4 h-4" /></span>
     }
   ];
 
@@ -77,28 +81,28 @@ export default function LandingPage() {
       title: "Early Bird",
       desc: "Open registration for early birds. Gather your team of 3 and secure your spot early.",
       icon: UserPlus,
-      color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
+      color: "text-blue-400", bg: "bg-blue-900/10", border: "border-blue-900/10"
     },
     {
       date: "13 April - 1 May 2026",
       title: "Batch 2 Registration",
       desc: "Last chance to join! Registration officially closes on May 1st at 23:59 WIB.",
       icon: Timer,
-      color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
+      color: "text-blue-400", bg: "bg-blue-900/10", border: "border-blue-900/10"
     },
     {
       date: "6 May 2026",
       title: "Technical Meeting",
       desc: "Mandatory briefing for all participants. We will discuss rules, submission guidelines, and judging criteria.",
       icon: MonitorPlay,
-      color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
+      color: "text-blue-400", bg: "bg-blue-900/10", border: "border-blue-900/10"
     },
     {
       date: "9 - 10 May 2026",
       title: "Competition Day",
       desc: "The sprint begins! Starts at 12:00 PM and ends the next day at 12:00 PM. Build your solutions and conquer the checkpoints.",
       icon: Rocket,
-      color: "text-blue-400", bg: "bg-blue-500/10", border: "border-blue-500/30"
+      color: "text-blue-400", bg: "bg-blue-900/10", border: "border-blue-900/10"
     }
   ];
 
@@ -382,23 +386,23 @@ export default function LandingPage() {
                 <h2 className="text-2xl md:text-3xl font-bold dark:font-light tracking-widest text-black dark:text-gray-300 uppercase flex items-center justify-center gap-3 transition-colors">
                   <TextReveal text="Sponsored by" />
                 </h2>
-                <Link href="/sponsorship" className="px-6 py-2.5 rounded-full border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] text-sm font-bold dark:font-light text-black dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 hover:border-blue-500/50 hover:text-blue-600 dark:hover:text-white transition-all duration-300 shadow-none dark:shadow-[0_0_15px_rgba(255,255,255,0.02)] hover:shadow-[0_4px_15px_rgba(0,0,0,0.05)] dark:hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                <Link href="/sponsorship" className="px-6 py-2.5 rounded-full bg-black/[0.02] dark:bg-white/[0.02] text-sm font-bold dark:font-light text-black dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 hover:border-blue-500/50 hover:text-blue-600 dark:hover:text-white transition-all duration-300 shadow-none dark:shadow-[0_0_15px_rgba(255,255,255,0.02)] hover:shadow-[0_4px_15px_rgba(0,0,0,0.05)] dark:hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]">
                   Become a sponsor
                 </Link>
               </div>
 
               <div className="flex flex-col gap-6">
                 {/* Case Collaborator / Main Sponsor (Full Width) */}
-                <div className="bg-white border border-gray-200 dark:bg-white/[0.02] dark:border-white/5 rounded-3xl p-8 md:p-12 flex flex-col xl:flex-row items-center justify-between gap-8 md:gap-12 hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-500 group relative overflow-hidden shadow-sm dark:shadow-none">
+                <div className="bg-white dark:bg-white/[0.02] rounded-3xl p-8 md:p-12 flex flex-col xl:flex-row items-center justify-between gap-8 md:gap-12 hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-500 group relative overflow-hidden shadow-sm dark:shadow-none">
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-100 to-blue-500/0 dark:via-blue-500/5 opacity-0 group-hover:opacity-100 transition-duration-700"></div>
 
                   <div className="flex flex-col items-center xl:items-start text-center xl:text-left z-10 w-full xl:w-1/3">
-                    <span className="text-xs font-bold dark:font-medium tracking-[0.2em] text-blue-600 dark:text-blue-400 uppercase mb-4 transition-colors">Case Collaborator</span>
-                    <span className="text-4xl md:text-5xl lg:text-6xl font-black dark:font-normal tracking-tight text-black dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-500 mb-2">Coming Soon</span>
+                    <span className="text-xs font-bold dark:font-medium tracking-[0.2em] text-blue-600 dark:text-blue-400 mb-4 transition-colors">Case Collaborator</span>
+                    <span className="text-4xl md:text-5xl lg:text-6xl font-black dark:font-bold tracking-tight text-black dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-500 mb-2">Coming Soon</span>
                     <span className="text-sm text-gray-800 dark:text-gray-400 font-medium dark:font-light transition-colors">The grand reveal of our main case collaborator will unlock on May 1st, 2026.</span>
                   </div>
 
-                  <div className="z-10 flex items-center justify-center bg-gray-100 dark:bg-[#03050a]/50 p-6 md:p-8 py-8 md:py-10 border border-gray-200 dark:border-white/5 rounded-3xl shadow-inner w-full xl:w-auto overflow-x-auto transition-colors">
+                  <div className="z-10 flex items-center justify-center bg-gray-100 dark:bg-[#03050a]/50 p-6 md:p-8 py-8 md:py-10 rounded-3xl shadow-inner w-full xl:w-auto overflow-x-auto transition-colors">
                     <Countdown targetDate="2026-05-01T00:00:00" />
                   </div>
                 </div>
@@ -406,28 +410,25 @@ export default function LandingPage() {
                 {/* Grid Style for Tiered Sponsors */}
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-4">
                   {/* Sponsor 2 */}
-                  <div className="bg-white border border-gray-200 dark:bg-white/[0.02] dark:border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-white/[0.02] rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
                     <div className="flex items-center gap-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-white transition-colors">
-                      {/* <img src="/g.webp" alt="Google" className="w-8 h-8 md:w-10 md:h-10" /> */}
                       <span className="text-2xl md:text-3xl font-bold dark:font-medium tracking-tight">Coming Soon</span>
                     </div>
                   </div>
 
                   {/* Sponsor 3 */}
-                  <div className="bg-white border border-gray-200 dark:bg-white/[0.02] dark:border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
+                  <div className="bg-white dark:bg-white/[0.02] rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
                     <div className="flex items-center gap-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-white transition-colors">
-                      {/* <Train className="w-8 h-8 md:w-10 md:h-10" /> */}
                       <span className="text-2xl md:text-3xl font-bold dark:font-medium tracking-tight">Coming Soon</span>
                     </div>
                   </div>
 
                   {/* Sponsor 4 */}
-                  <div className="bg-white border border-gray-200 dark:bg-white/[0.02] dark:border-white/5 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
+                  {/* <div className="bg-white dark:bg-white/[0.02] rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
                     <div className="flex items-center gap-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-white transition-colors">
-                      {/* <Utensils className="w-8 h-8 md:w-10 md:h-10" /> */}
                       <span className="text-2xl md:text-3xl font-bold dark:font-medium tracking-tight">Coming Soon</span>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
