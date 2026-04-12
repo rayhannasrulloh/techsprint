@@ -51,7 +51,7 @@ export default function ParticipantsPage() {
         id, team_name, track, status, created_at, 
         institution, leader_name, leader_email, leader_nim, leader_phone, discord_username,
         member1_name, member2_nim, member2_name, member3_nim,
-        cv_link, payment_proof_url,
+        cv_link, payment_proof_url, id_card_proof_url,
         ig_follow_proof_url, twibbon_proof_url, ig_story_proof_url,
         checkpoints ( id, checkpoint_number, github_link, report_text, created_at, is_reviewed ),
         submissions ( final_repo_link, presentation_link )
@@ -108,7 +108,7 @@ export default function ParticipantsPage() {
       "Team Name", "Track", "Institution", "Status", "Discord Username",
       "Leader Name", "Leader Email", "Leader Phone", "Leader NIM",
       "Member 2 Name", "Member 2 NIM", "Member 3 Name", "Member 3 NIM",
-      "CV Link", "Payment Receipt URL",
+      "CV Link", "Payment Receipt URL", "ID Cards URL",
       "IG Follow Proof", "Twibbon Proof", "Story & Tag Proof",
       "CP 1", "CP 2", "CP 3", "Final Repo", "Pitch Deck"
     ];
@@ -120,7 +120,7 @@ export default function ParticipantsPage() {
         team.team_name, team.track, team.institution || "-", team.status, team.discord_username || "-",
         team.leader_name || "-", team.leader_email || "-", team.leader_phone || "-", team.leader_nim || "-",
         team.member1_name || "-", team.member2_nim || "-", team.member2_name || "-", team.member3_nim || "-",
-        team.cv_link || "-", team.payment_proof_url || "-",
+        team.cv_link || "-", team.payment_proof_url || "-", team.id_card_proof_url || "-",
         team.ig_follow_proof_url || "-",
         team.twibbon_proof_url || "-",
         team.ig_story_proof_url || "-",
@@ -166,18 +166,18 @@ export default function ParticipantsPage() {
           <h1 className="text-3xl font-medium tracking-wider flex items-center gap-3">Participants Data</h1>
         </div>
 
-        <div className="flex gap-4 mb-4">
+        <div className="flex mb-4">
           <button
             onClick={() => setAccountType("Participants")}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${accountType === "Participants" ? "bg-blue-600 text-white shadow-lg" : "bg-white/5 text-gray-500 hover:text-white"}`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${accountType === "Participants" ? "bg-emerald-600 text-white shadow-lg" : "bg-white/5 text-gray-500 hover:text-white"}`}
           >
-            Teams (Participants)
+            Teams
           </button>
           <button
             onClick={() => setAccountType("Committee")}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${accountType === "Committee" ? "bg-purple-600 text-white shadow-lg" : "bg-white/5 text-gray-500 hover:text-white"}`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${accountType === "Committee" ? "bg-emerald-600 text-white shadow-lg" : "bg-white/5 text-gray-500 hover:text-white"}`}
           >
-            Committee Accounts (Admin)
+            Admin
           </button>
         </div>
 
@@ -282,6 +282,13 @@ export default function ParticipantsPage() {
                         {team.payment_proof_url && (
                           <a href={team.payment_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-blue-400 hover:text-blue-300 bg-blue-500/10 px-2 py-1 rounded-md border border-blue-500/20 w-full justify-center">
                             <Receipt className="w-3 h-3" /> Payment Receipt
+                          </a>
+                        )}
+
+                        {/* Bukti ID Card */}
+                        {team.id_card_proof_url && (
+                          <a href={team.id_card_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-amber-400 hover:text-amber-300 bg-amber-500/10 px-2 py-1 rounded-md border border-amber-500/20 w-full justify-center mb-1">
+                            <User className="w-3 h-3" /> View ID Cards
                           </a>
                         )}
 

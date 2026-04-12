@@ -58,7 +58,7 @@ export default function AdminInboxPage() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <div>
-              <h1 className="text-3xl font-semibold tracking-wider flex items-center gap-3">
+              <h1 className="text-3xl font-light tracking-wider flex items-center gap-3">
                 Support Inbox
               </h1>
               <p className="text-gray-400 text-sm mt-1">academic@techsprint.web.id</p>

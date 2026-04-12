@@ -8,7 +8,7 @@ import AdminSidebar from "@/components/admin/AdminSidebar";
 import { ShieldAlert, ArrowRight } from "lucide-react";
 import toast from "react-hot-toast";
 
-// 🔒 DAFTAR EMAIL ADMIN YANG DIIZINKAN MASUK
+// 🔒 DAFTAR EMAIL ADMIN YANG DIIZINKAN MASUK (Tetap diexport untuk keperluan filtering di page.tsx)
 export const ADMIN_EMAILS = ["rayhan.nasrulloh@student.president.ac.id", "academic@techsprint.web.id"];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -17,12 +17,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [isLoading, setIsLoading] = useState(true);
   const [sessionExists, setSessionExists] = useState(false);
 
-  // State untuk Form Login Admin
+  // Form State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const checkAdmin = async () => {
+  const checkAdminClearance = async () => {
     const { data: { session } } = await supabase.auth.getSession();
     
     if (!session) {
@@ -33,7 +33,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
     
     setSessionExists(true);
-    if (ADMIN_EMAILS.includes(session.user.email || "")) {
+    
+    // 🔥 CEK KE TABEL admin_profiles (Bukan hardcoded email lagi)
+    const { data: adminData, error } = await supabase
+      .from('admin_profiles')
+      .select('*')
+      .eq('id', session.user.id)
+      .single();
+
+    if (adminData && !error) {
       setIsAdmin(true);
     } else {
       setIsAdmin(false);
@@ -42,31 +50,31 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   };
 
   useEffect(() => {
-    checkAdmin();
+    checkAdminClearance();
   }, [router]);
 
-  // Fungsi Login Khusus Admin
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoggingIn(true);
-    const toastId = toast.loading("Verifying security clearance...");
+    const toastId = toast.loading("Authenticating Admin...");
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
 
-      // Cek apakah email yang login ada di daftar ADMIN_EMAILS
-      if (data.user && ADMIN_EMAILS.includes(data.user.email || "")) {
-        toast.success("Welcome to Command Center", { id: toastId });
-        checkAdmin(); // Refresh state agar gerbang terbuka
+      // Cek apakah user ID ada di tabel admin_profiles
+      const { data: adminCheck } = await supabase
+        .from('admin_profiles')
+        .select('id')
+        .eq('id', data.user.id)
+        .single();
+
+      if (adminCheck) {
+        toast.success("Access Granted", { id: toastId });
+        checkAdminClearance(); 
       } else {
-        // Jika login sukses tapi BUKAN admin (peserta nyasar)
         await supabase.auth.signOut();
-        toast.error("Unauthorized. Admin clearance required.", { id: toastId });
+        toast.error("Access Denied: You are not an Admin.", { id: toastId });
       }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
@@ -75,19 +83,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
   };
 
-  if (isLoading) return <div className="min-h-screen bg-[#121212] flex items-center justify-center text-blue-500">Initializing Secure Gateway...</div>;
+  if (isLoading) return <div className="min-h-screen bg-[#121212] flex items-center justify-center text-emerald-500">Initializing Secure Gateway...</div>;
 
-  // --- KONDISI 1: BELUM LOGIN SAMA SEKALI (TAMPILKAN FORM LOGIN ADMIN) ---
   if (!sessionExists) {
     return (
       <div className="min-h-screen bg-[#121212] flex flex-col items-center justify-center p-6 relative">
         <div className="w-full max-w-sm bg-[#1c1c1c] border border-white/10 rounded-xl p-8 shadow-sm relative overflow-hidden animate-in fade-in zoom-in-95 duration-500">
           
           <div className="relative z-10 text-center mb-8">
-            <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <ShieldAlert className="w-6 h-6 text-emerald-500" />
-            </div>
-            <h2 className="text-xl font-semibold text-white tracking-wide">Command Center</h2>
+            <h2 className="text-xl font-semibold text-white tracking-wide">Admin Panel</h2>
             <p className="text-gray-400 text-xs tracking-widest uppercase mt-2">Restricted Access Portal</p>
           </div>
 
@@ -120,7 +124,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     );
   }
 
-  // --- KONDISI 2: SUDAH LOGIN TAPI BUKAN ADMIN (Peserta yang coba-coba akses URL) ---
   if (sessionExists && !isAdmin) {
     return (
       <div className="min-h-screen bg-[#121212] flex flex-col items-center justify-center text-center p-6 animate-in fade-in">
@@ -130,7 +133,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <h1 className="text-3xl font-light text-white mb-2">Security Clearance Required</h1>
         <p className="text-gray-400 mb-8 max-w-md">Your current account does not have administrator privileges to access the Command Center.</p>
         <button 
-          onClick={async () => { await supabase.auth.signOut(); checkAdmin(); }} 
+          onClick={async () => { await supabase.auth.signOut(); checkAdminClearance(); }} 
           className="px-8 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-white transition-colors text-sm font-medium"
         >
           Sign Out & Return
@@ -139,13 +142,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     );
   }
 
-  // --- KONDISI 3: LOGIN SUKSES SEBAGAI ADMIN (Tampilkan Dashboard) ---
   return (
     <div className="min-h-screen bg-[#171717] text-white flex flex-col md:flex-row">
       <AdminSidebar />
-      <div className="flex-1 overflow-y-auto h-screen relative">
-        {children}
-      </div>
+      <div className="flex-1 overflow-y-auto h-screen relative">{children}</div>
     </div>
   );
 }
