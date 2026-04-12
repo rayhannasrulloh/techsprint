@@ -223,6 +223,20 @@ export default function RegisterPage() {
 
         <form onSubmit={handlePreSubmit} className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            {/* PENGUMUMAN BUKU PANDUAN */}
+            <div className="md:col-span-2 bg-gradient-to-r from-blue-900/20 to-blue-800/10 border border-blue-500/20 rounded-xl p-5 text-center">
+              <p className="text-sm text-gray-300 mb-2">
+                Pastikan sudah membaca dan memahami buku panduan dan seluruh persyaratan dengan baik sebelum mendaftar.
+              </p>
+              <p className="text-sm text-gray-400">
+                Buku Panduan:{' '}
+                <Link href="https://bit.ly/BukuPanduanParticipantTechSprint2026" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline underline-offset-4 font-medium transition-colors">
+                  https://bit.ly/BukuPanduanParticipantTechSprint2026
+                </Link>
+              </p>
+            </div>
+
             {/* COLUMN 1 */}
             <div className="space-y-6">
               <div className="space-y-4">
