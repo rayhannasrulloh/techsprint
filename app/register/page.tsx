@@ -394,13 +394,24 @@ export default function RegisterPage() {
                 {/* <div className="relative"><LinkIcon className="absolute left-4 top-4 w-5 h-5 text-gray-500" /><input type="url" value={cvLink} onChange={(e) => setCvLink(e.target.value)} placeholder="Drive Link to CVs (Optional)" className="w-full bg-[#0a0f24] border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-gray-200 focus:border-green-500 outline-none" /></div>
                  */}
                 <div className="bg-gradient-to-b from-green-500/10 to-green-950/10 border-t border-green-500/20 rounded-xl p-4">
-                  <div className="flex items-center gap-3 mb-2 text-green-500">
+                  <div className="flex items-center gap-3 mb-4 text-green-500">
                     <CreditCard className="w-5 h-5" /> <span className="font-semibold text-sm">Registration Fee</span>
                   </div>
-                  <p className="text-xs text-gray-400">Please transfer to:</p>
+                  
+                  <div className="text-xs text-gray-300 leading-relaxed mb-5 space-y-3">
+                    <p>Untuk secara resmi mengonfirmasi partisipasi Anda, silakan lakukan pembayaran sesuai kategori yang Anda pilih:</p>
+                    <ul className="space-y-1 ml-1">
+                      <li className="text-gray-500 line-through">🌟 (Periode telah berakhir) Early Bird (IDR 130.000) (khusus untuk 5 tim pertama, kuota terbatas!)</li>
+                      <li className="text-green-400 font-medium tracking-wide">💼 Reguler (IDR 150.000)</li>
+                    </ul>
+                    <p>Silakan transfer jumlah yang tepat ke rekening yang tercantum di bawah ini dan unggah bukti pembayaran Anda setelah transaksi selesai. Pendaftaran Anda akan berhasil diproses hanya setelah verifikasi pembayaran.</p>
+                    <p className="text-yellow-500/90 font-medium">⚠️ Harap diperhatikan bahwa semua pembayaran tidak dapat dikembalikan.</p>
+                  </div>
+
+                  <p className="text-xs text-gray-400 text-center">Please transfer to:</p>
                   <img src="/img/qris-techsprint.jpeg" alt="QRIS" className="w-64 mx-auto my-3" />
-                  <p className="text-white text-base tracking-widest">Rp. 150.000/Team</p>
-                  <p className="text-gray-400 mb-3">QRIS a.n CHIBI MARUKO-CHAN</p>
+                  <p className="text-white text-base tracking-widest text-center font-medium">Rp. 150.000/Team</p>
+                  <p className="text-gray-400 mb-4 text-center text-xs">QRIS a.n CHIBI MARUKO-CHAN</p>
 
                   <label className="flex items-center justify-center gap-2 w-full bg-gradient-to-b from-green-400/10 to-green-950/10 border border-dashed border-white/20 hover:border-green-500/50 hover:bg-green-500/10 rounded-lg p-3 cursor-pointer transition-colors">
                     <Upload className="w-4 h-4 text-gray-400" />
