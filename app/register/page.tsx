@@ -36,11 +36,15 @@ export default function RegisterPage() {
   const [member3Name, setMember3Name] = useState("");
   const [member3Nim, setMember3Nim] = useState("");
   const [cvLink, setCvLink] = useState("");
+
+  const [idCardFile, setIdCardFile] = useState<File | null>(null);
   const [paymentFile, setPaymentFile] = useState<File | null>(null);
+  
   // Social Media Proofs (.pdf)
   const [igFollowFile, setIgFollowFile] = useState<File | null>(null);
   const [twibbonFile, setTwibbonFile] = useState<File | null>(null);
   const [igStoryFile, setIgStoryFile] = useState<File | null>(null);
+
 
   // UI State
   const [isLoading, setIsLoading] = useState(false);
@@ -48,9 +52,10 @@ export default function RegisterPage() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [message, setMessage] = useState("");
+  
 
   // --- MAINTENANCE MODE TOGGLE ---
-  const isMaintenanceMode = true;
+  const isMaintenanceMode = false;
 
   if (isMaintenanceMode) {
     return (
@@ -78,11 +83,22 @@ export default function RegisterPage() {
     );
   }
 
+  // Helper untuk validasi ukuran file (10MB = 10 * 1024 * 1024 bytes)
+  const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+  const validateFile = (file: File | null) => {
+    if (file && file.size > MAX_FILE_SIZE) {
+      toast.error(`File "${file.name}" is too large! Maximum 10MB.`);
+      return false;
+    }
+    return true;
+  };
+
   // 1. Tahan submit form dan buka modal konfirmasi
   const handlePreSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!paymentFile || !igFollowFile || !twibbonFile || !igStoryFile) {
-      toast.error("Mohon upload semua dokumen bukti pembayaran dan sosial media!");
+    if (!paymentFile || !idCardFile || !igFollowFile || !twibbonFile || !igStoryFile) {
+      toast.error("Please upload all payment proof and social media documents!");
       return;
     }
     setShowConfirmModal(true);
@@ -114,8 +130,9 @@ export default function RegisterPage() {
         };
 
         // Upload semua file secara paralel agar cepat
-        const [paymentUrl, igFollowUrl, twibbonUrl, igStoryUrl] = await Promise.all([
+        const [paymentUrl, idCardUrl, igFollowUrl, twibbonUrl, igStoryUrl] = await Promise.all([
           uploadDoc(paymentFile!, 'payment'),
+          uploadDoc(idCardFile!, 'id_card'),
           uploadDoc(igFollowFile!, 'ig_follow'),
           uploadDoc(twibbonFile!, 'twibbon'),
           uploadDoc(igStoryFile!, 'ig_story')
@@ -139,6 +156,7 @@ export default function RegisterPage() {
           member3_nim: member3Nim,
           cv_link: cvLink,
           payment_proof_url: paymentUrl,
+          id_card_proof_url: idCardUrl,
           ig_follow_proof_url: igFollowUrl,   // URL PDF Follow IG
           twibbon_proof_url: twibbonUrl,      // URL PDF Twibbon
           ig_story_proof_url: igStoryUrl,     // URL PDF Story & Comment
@@ -246,7 +264,6 @@ export default function RegisterPage() {
               <div className="space-y-4">
                 <h3 className="text-sm tracking-widest border-b border-white/10 pb-2 uppercase">Leader Identity</h3>
                 <div className="relative"><User className="absolute left-4 top-4 w-5 h-5 text-gray-500" /><input type="text" required value={leaderName} onChange={(e) => setLeaderName(e.target.value)} placeholder="Leader Full Name" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
-                <div className="relative"><User className="absolute left-4 top-4 w-5 h-5 text-gray-500" /><input type="text" required value={leaderNim} onChange={(e) => setLeaderNim(e.target.value)} placeholder="Leader NIM / NIK" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
                 <div className="relative"><Phone className="absolute left-4 top-4 w-5 h-5 text-gray-500" /><input type="tel" required value={leaderPhone} onChange={(e) => setLeaderPhone(e.target.value)} placeholder="Leader WhatsApp" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
                 <div className="relative"><MessageSquare className="absolute left-4 top-4 w-5 h-5 text-gray-500" /><input type="text" required value={discordUsername} onChange={(e) => setDiscordUsername(e.target.value)} placeholder="Leader Discord Username" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
               </div>
@@ -255,13 +272,45 @@ export default function RegisterPage() {
               <div className="space-y-4">
                 <h3 className="text-sm tracking-widest border-b border-white/10 pb-2 uppercase">Team Members</h3>
                 <div className="flex gap-2">
-                  <div className="relative w-full"><UserPlus className="absolute left-3 top-4 w-4 h-4 text-gray-500" /><input type="text" value={member2Name} onChange={(e) => setMember2Name(e.target.value)} placeholder="Member 2 Name" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-10 pr-3 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
-                  <div className="relative w-full"><input type="text" value={member2Nim} onChange={(e) => setMember2Nim(e.target.value)} placeholder="Member 2 NIM" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 px-4 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
+                  <div className="relative w-full">
+                    <UserPlus className="absolute left-3 top-4 w-4 h-4 text-gray-500" />
+                    <input type="text" value={member2Name} onChange={(e) => setMember2Name(e.target.value)} placeholder="Member 2 Name" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-10 pr-3 text-sm text-gray-200 focus:border-blue-300/50 outline-none" />
+                  </div>
                 </div>
                 <div className="flex gap-2">
-                  <div className="relative w-full"><UserPlus className="absolute left-3 top-4 w-4 h-4 text-gray-500" /><input type="text" value={member3Name} onChange={(e) => setMember3Name(e.target.value)} placeholder="Member 3 Name" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-10 pr-3 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
-                  <div className="relative w-full"><input type="text" value={member3Nim} onChange={(e) => setMember3Nim(e.target.value)} placeholder="Member 3 NIM" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 px-4 text-sm text-gray-200 focus:border-blue-300/50 outline-none" /></div>
+                  <div className="relative w-full">
+                    <UserPlus className="absolute left-3 top-4 w-4 h-4 text-gray-500" />
+                    <input type="text" value={member3Name} onChange={(e) => setMember3Name(e.target.value)} placeholder="Member 3 Name" className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-10 pr-3 text-sm text-gray-200 focus:border-blue-300/50 outline-none" />
+                  </div>
                 </div>
+              </div>
+
+              <div className="bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl p-4 mt-4">
+                <p className="text-sm text-gray-200 mb-1 font-medium">Upload ID Cards</p>
+                <p className="text-[11px] text-gray-500 mb-3 leading-relaxed">
+                  Combine ID Cards of all team members into a <strong>single PDF file</strong>.
+                </p>
+                <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
+                  <span className="text-xs text-gray-400 truncate max-w-[200px]">
+                    {idCardFile ? idCardFile.name : "Upload ID Cards (.pdf - Max 10MB)"}
+                  </span>
+                  <Upload className="w-4 h-4 text-gray-400" />
+                  <input 
+                    type="file" 
+                    accept=".pdf" 
+                    required 
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] || null;
+                      if (file && file.size > 10 * 1024 * 1024) {
+                        toast.error("File too large! Maximum 10MB.");
+                        e.target.value = "";
+                      } else {
+                        setIdCardFile(file);
+                      }
+                    }} 
+                    className="hidden" 
+                  />
+                </label>
               </div>
             </div>
 
@@ -279,33 +328,63 @@ export default function RegisterPage() {
                 {/* 1. Follow IG */}
                 <div className="bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl p-4">
                   <p className="text-sm text-gray-200 mb-1 font-medium">1. Proof of Instagram Follow</p>
-                  <p className="text-xs text-gray-500 mb-3">All team members must follow our official Instagram account, @techsprint26.</p>
+                  <p className="text-xs text-gray-500 mb-3">All team members must follow our official Instagram account, @techsprint26. Max 10MB</p>
                   <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
                     <span className="text-xs text-gray-300 truncate max-w-[200px]">{igFollowFile ? igFollowFile.name : "Upload File (.pdf)"}</span>
                     <Upload className="w-4 h-4 text-gray-400" />
-                    <input type="file" accept=".pdf" required onChange={(e) => setIgFollowFile(e.target.files?.[0] || null)} className="hidden" />
+                    <input 
+                      type="file" 
+                      accept=".pdf" 
+                      required 
+                      onChange={(e) => {
+                        const file = e.target.files?.[0] || null;
+                        if (validateFile(file)) {
+                          setIgFollowFile(file);
+                        } else {
+                          e.target.value = ""; // Reset input jika gagal
+                        }
+                      }} 
+                      className="hidden" 
+                    />
                   </label>
                 </div>
 
                 {/* 2. Upload Twibbon */}
                 <div className="bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl p-4">
                   <p className="text-sm text-gray-200 mb-1 font-medium">2. Proof of Twibbon Upload</p>
-                  <p className="text-xs text-gray-500 mb-3">Screenshots of the Twibbon posted on each member&apos;s respective Instagram feed.</p>
+                  <p className="text-xs text-gray-500 mb-3">Screenshots of the Twibbon posted on each member&apos;s respective Instagram feed. Max 10MB</p>
+                  <p className="text-xs text-gray-500 mb-3">Link Twibbon: <Link href="https://bit.ly/TECHSPRINT3IN1TWIBBONLINK" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400">https://bit.ly/TECHSPRINT3IN1TWIBBONLINK</Link></p>
                   <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
                     <span className="text-xs text-gray-300 truncate max-w-[200px]">{twibbonFile ? twibbonFile.name : "Upload File (.pdf)"}</span>
                     <Upload className="w-4 h-4 text-gray-400" />
-                    <input type="file" accept=".pdf" required onChange={(e) => setTwibbonFile(e.target.files?.[0] || null)} className="hidden" />
+                    <input type="file" accept=".pdf"
+                      required onChange={(e) => {
+                        const file = e.target.files?.[0] || null;
+                        if (validateFile(file)) {
+                          setTwibbonFile(file);
+                        } else {
+                          e.target.value = ""; // Reset input jika gagal
+                        }
+                      }} className="hidden" />
                   </label>
                 </div>
 
                 {/* 3. Story, Comment & Tag */}
                 <div className="bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl p-4">
                   <p className="text-sm text-gray-200 mb-1 font-medium">3. Proof of Instagram Story</p>
-                  <p className="text-xs text-gray-500 mb-3">Screenshots of sharing the event poster on your Instagram Story.</p>
+                  <p className="text-xs text-gray-500 mb-3">Screenshots of sharing the event poster on your Instagram Story. Max 10MB</p>
                   <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
                     <span className="text-xs text-gray-300 truncate max-w-[200px]">{igStoryFile ? igStoryFile.name : "Upload File (.pdf)"}</span>
                     <Upload className="w-4 h-4 text-gray-400" />
-                    <input type="file" accept=".pdf" required onChange={(e) => setIgStoryFile(e.target.files?.[0] || null)} className="hidden" />
+                    <input type="file" accept=".pdf"
+                      required onChange={(e) => {
+                        const file = e.target.files?.[0] || null;
+                        if (validateFile(file)) {
+                          setIgStoryFile(file);
+                        } else {
+                          e.target.value = ""; // Reset input jika gagal
+                        }
+                      }} className="hidden" />
                   </label>
                 </div>
               </div>
@@ -318,14 +397,23 @@ export default function RegisterPage() {
                   <div className="flex items-center gap-3 mb-2 text-green-500">
                     <CreditCard className="w-5 h-5" /> <span className="font-semibold text-sm">Registration Fee</span>
                   </div>
-                  <p className="text-white text-base tracking-widest">Rp. 130.000/Team for Early Bird</p>
-                  <p className="text-xs text-gray-400">Please transfer to: <br /><strong className="text-white text-lg tracking-widest">Mandiri 1060023052007</strong></p>
-                  <p className="text-gray-400 mb-3">a.n DARA AZZAHRA</p>
+                  <p className="text-xs text-gray-400">Please transfer to:</p>
+                  <img src="/img/qris-techsprint.jpeg" alt="QRIS" className="w-64 mx-auto my-3" />
+                  <p className="text-white text-base tracking-widest">Rp. 150.000/Team</p>
+                  <p className="text-gray-400 mb-3">QRIS a.n CHIBI MARUKO-CHAN</p>
 
                   <label className="flex items-center justify-center gap-2 w-full bg-gradient-to-b from-green-400/10 to-green-950/10 border border-dashed border-white/20 hover:border-green-500/50 hover:bg-green-500/10 rounded-lg p-3 cursor-pointer transition-colors">
                     <Upload className="w-4 h-4 text-gray-400" />
-                    <span className="text-xs text-gray-300 truncate max-w-[200px]">{paymentFile ? paymentFile.name : "Upload Payment Receipt"}</span>
-                    <input type="file" accept="image/*" required onChange={(e) => setPaymentFile(e.target.files?.[0] || null)} className="hidden" />
+                    <span className="text-xs text-gray-300 truncate max-w-[200px]">{paymentFile ? paymentFile.name : "Upload Payment Receipt (Image)"}</span>
+                    <input type="file" accept="image/*"
+                      required onChange={(e) => {
+                        const file = e.target.files?.[0] || null;
+                        if (validateFile(file)) {
+                          setPaymentFile(file);
+                        } else {
+                          e.target.value = ""; // Reset input jika gagal
+                        }
+                      }} className="hidden" />
                   </label>
                 </div>
               </div>

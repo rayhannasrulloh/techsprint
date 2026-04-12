@@ -9,7 +9,7 @@ import { ShieldAlert, ArrowRight } from "lucide-react";
 import toast from "react-hot-toast";
 
 // 🔒 DAFTAR EMAIL ADMIN YANG DIIZINKAN MASUK
-const ADMIN_EMAILS = ["rayhan.nasrulloh@student.president.ac.id", "academic@techsprint.web.id"];
+export const ADMIN_EMAILS = ["rayhan.nasrulloh@student.president.ac.id", "academic@techsprint.web.id"];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();

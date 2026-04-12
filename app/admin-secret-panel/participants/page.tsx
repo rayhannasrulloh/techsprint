@@ -12,6 +12,8 @@ import {
 // Import Modal
 import CheckpointModal from "@/components/admin/CheckpointModal";
 
+import { ADMIN_EMAILS } from "@/app/admin-secret-panel/layout";
+
 // KONFIGURASI WAKTU HACKATHON (WIB)
 const START_TIME = new Date("2026-05-09T12:00:00+07:00").getTime();
 const CP_DEADLINES: Record<number, number> = {
@@ -28,12 +30,14 @@ export default function ParticipantsPage() {
   // Filter States
   const [activeStatusTab, setActiveStatusTab] = useState("All");
   const [activeTrackTab, setActiveTrackTab] = useState("All");
+  const [accountType, setAccountType] = useState("Participants");
 
   const [now, setNow] = useState<number>(new Date().getTime());
 
   // Modal State
   const [isCpModalOpen, setIsCpModalOpen] = useState(false);
   const [selectedCp, setSelectedCp] = useState<any>(null);
+
 
   // Real-time clock untuk status Checkpoint
   useEffect(() => {
@@ -133,11 +137,17 @@ export default function ParticipantsPage() {
   };
 
   // --- FILTERING ---
-  const filteredTeams = teamsData.filter(t =>
-    (t.team_name.toLowerCase().includes(searchQuery.toLowerCase()) || (t.leader_email && t.leader_email.toLowerCase().includes(searchQuery.toLowerCase()))) &&
-    (activeTrackTab === "All" || t.track === activeTrackTab) &&
-    (activeStatusTab === "All" || t.status.toLowerCase() === activeStatusTab.toLowerCase())
-  );
+  const filteredTeams = teamsData.filter(t => {
+    // Cek apakah email termasuk dalam daftar admin hardcoded
+    const isAdminAccount = ADMIN_EMAILS.includes(t.leader_email);
+
+    const matchType = accountType === "Committee" ? isAdminAccount : !isAdminAccount;
+    const matchSearch = t.team_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (t.leader_email && t.leader_email.toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchStatus = activeStatusTab === "All" || t.status.toLowerCase() === activeStatusTab.toLowerCase();
+
+    return matchType && matchSearch && matchStatus;
+  });
 
   return (
     <div className="max-w-[90rem] mx-auto animate-in fade-in duration-500">
@@ -154,6 +164,21 @@ export default function ParticipantsPage() {
       <div className="flex flex-col md:flex-row justify-between items-center border-b border-white/10 p-6 gap-4">
         <div>
           <h1 className="text-3xl font-medium tracking-wider flex items-center gap-3">Participants Data</h1>
+        </div>
+
+        <div className="flex gap-4 mb-4">
+          <button
+            onClick={() => setAccountType("Participants")}
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${accountType === "Participants" ? "bg-blue-600 text-white shadow-lg" : "bg-white/5 text-gray-500 hover:text-white"}`}
+          >
+            Teams (Participants)
+          </button>
+          <button
+            onClick={() => setAccountType("Committee")}
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${accountType === "Committee" ? "bg-purple-600 text-white shadow-lg" : "bg-white/5 text-gray-500 hover:text-white"}`}
+          >
+            Committee Accounts (Admin)
+          </button>
         </div>
 
         <div className="flex items-center gap-3 w-full md:w-auto">

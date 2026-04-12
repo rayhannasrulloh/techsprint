@@ -211,9 +211,8 @@ export default function LandingPage() {
                 {mounted && !isMobile ? (
                   <Typewriter
                     text={[
-                      "Countdown to Early Bird Registration Deadline",
-                      "Early bird spots are limited. Register now!",
-                      "Early Bird ends soon. Limited to the first 5 teams."
+                      "Early Bird Registration is Closed!",
+                      "Normal Batch Registration is Open!"
                     ]}
                     delay={1.8}
                     speed={0.05}
@@ -221,7 +220,7 @@ export default function LandingPage() {
                     className="inline-block mb-6 text-xl md:text-2xl h-8 text-center md:text-left"
                   />
                 ) : (
-                  <span className="inline-block mb-6 text-xl md:text-2xl text-center md:text-left h-8">Countdown to 1st Batch Registration Deadline</span>
+                  <span className="inline-block mb-6 text-xl md:text-2xl text-center md:text-left h-8">Early Bird Registration is Closed!</span>
                 )}
                 <Countdown targetDate="2026-04-12T23:59:59" />
               </div>
@@ -229,9 +228,9 @@ export default function LandingPage() {
               <div className="flex flex-col sm:flex-row justify-center md:justify-start items-center gap-6 mt-4">
                 {/* Reference Button Style: Large */}
                 <Link
-                  href="https://bit.ly/TECHSPRINT-2026-3IN1-EARLYBIRD" target="_blank" rel="noopener noreferrer"
+                  href="/register" 
                   className="flex items-center text-white text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] px-8 py-3 rounded-full font-normal dark:shadow-[0_0_20px_rgba(0,51,255,0.4)] dark:hover:shadow-[0_0_35px_rgba(0,51,255,0.7)] transition-all duration-300">
-                  Register on Google Form <ArrowUpRight className="ml-2 w-5 h-5" />
+                  Register Now! <ArrowUpRight className="ml-2 w-5 h-5" />
                 </Link>
                 <button
                   onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
