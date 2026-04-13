@@ -85,8 +85,8 @@ export default function LandingPage() {
     },
     {
       date: "13 April - 1 May 2026",
-      title: "Batch 2 Registration",
-      desc: "Last chance to join! Registration officially closes on May 1st at 23:59 WIB.",
+      title: "Normal Batch Registration",
+      desc: "Last chance to join!",
       icon: Timer,
       color: "text-blue-400", bg: "bg-blue-900/10", border: "border-blue-900/10"
     },
@@ -222,7 +222,7 @@ export default function LandingPage() {
                 ) : (
                   <span className="inline-block mb-6 text-xl md:text-2xl text-center md:text-left h-8">Early Bird Registration is Closed!</span>
                 )}
-                <Countdown targetDate="2026-04-12T23:59:59" />
+                <Countdown targetDate="2026-04-26T23:59:59" />
               </div>
 
               <div className="flex flex-col sm:flex-row justify-center md:justify-start items-center gap-6 mt-4">

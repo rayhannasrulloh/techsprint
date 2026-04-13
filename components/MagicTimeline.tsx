@@ -116,9 +116,9 @@ const MagicTimeline: React.FC<MagicTimelineProps> = ({
 
           const content = (
             <>
-              <span className={`text-xs md:text-sm font-normal tracking-wider uppercase mb-2 block z-10 relative ${item.color}`}>
+              {/* <span className={`text-xs md:text-sm font-normal tracking-wider uppercase mb-2 block z-10 relative ${item.color}`}>
                 {item.date}
-              </span>
+              </span> */}
               <h3 className="text-xl md:text-2xl font-bold dark:font-normal text-black dark:text-gray-100 mb-3 z-10 relative transition-colors">
                 {item.title}
               </h3>
