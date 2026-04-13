@@ -76,7 +76,7 @@ export default function SystemAnalystTrackPage() {
             <Link href="/register" className="px-8 py-3 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors">
               Register Track
             </Link>
-            <a href="/SYSTEM-ANALYST-TECH-SPRINT-2026-BOOKLET-PARTICIPANT.pdf" target="_blank" rel="noopener noreferrer" className="relative group p-[2px] rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 transition-all inline-flex">
+            <a href="/booklet/SYSTEM-ANALYST-TECH-SPRINT-2026-BOOKLET-PARTICIPANT.pdf" target="_blank" rel="noopener noreferrer" className="relative group p-[2px] rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 transition-all inline-flex">
               <span className="flex items-center gap-2 px-8 py-3 bg-black text-white font-medium rounded-full w-full h-full group-hover:bg-black/50 transition-colors duration-300">
                 <Download className="w-4 h-4" /> Download Rulebook
               </span>
