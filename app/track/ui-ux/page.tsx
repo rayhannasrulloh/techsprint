@@ -44,7 +44,7 @@ export default function UIUXTrackPage() {
             Design intuitive interfaces. Focus on user journey, wireframing, and interactive prototypes. Shape the future of digital experiences by prioritizing empathy and usability.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="https://bit.ly/TECHSPRINT-2026-3IN1-EARLYBIRD" className="px-8 py-3 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors">
+            <Link href="/register" className="px-8 py-3 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-500 transition-colors">
               Register Track
             </Link>
             <a href="/UI-UX-DESIGN-TECH-SPRINT-2026-BOOKLET-PARTICIPANT.pdf" target="_blank" rel="noopener noreferrer" className="relative group p-[2px] rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 transition-all inline-flex">
