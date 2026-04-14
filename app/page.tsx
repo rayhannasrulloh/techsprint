@@ -84,7 +84,7 @@ export default function LandingPage() {
       color: "text-blue-400", bg: "bg-blue-900/10", border: "border-blue-900/10"
     },
     {
-      date: "13 April - 26 April 2026",
+      date: "13 - 26 April 2026",
       title: "Normal Batch Registration",
       desc: "Last chance to join!",
       icon: Timer,
