@@ -65,7 +65,7 @@ export default function LandingPage() {
     },
     {
       href: '/track/system-analyst',
-      title: 'System Analyst',
+      title: 'System Analysis',
       description: 'Architect robust systems. Create BRD, SRS, and comprehensive system architecture diagrams.',
       icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><Cpu className="text-blue-500 w-7 h-7 stroke-[1.5]" /></div>,
       className: "group",

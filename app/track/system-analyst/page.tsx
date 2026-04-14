@@ -67,7 +67,7 @@ export default function SystemAnalystTrackPage() {
             <Cpu className="text-blue-400 w-10 h-10" />
           </div> */}
           <h1 className="text-5xl md:text-[200px] font-bold tracking-[-0.1em] bg-gradient-to-b from-blue-500 to-blue-950/5 bg-clip-text text-transparent mb-6">
-            System Analyst
+            System Analysis
           </h1>
           <p className="text-gray-400 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">
             Architect robust systems. Create BRD, SRS, and comprehensive system architecture diagrams. Design the foundational blueprints that shape how technology serves business needs.
