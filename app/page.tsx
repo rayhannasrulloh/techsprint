@@ -84,7 +84,7 @@ export default function LandingPage() {
       color: "text-blue-400", bg: "bg-blue-900/10", border: "border-blue-900/10"
     },
     {
-      date: "13 April - 1 May 2026",
+      date: "13 April - 26 April 2026",
       title: "Normal Batch Registration",
       desc: "Last chance to join!",
       icon: Timer,
@@ -220,7 +220,7 @@ export default function LandingPage() {
                     className="inline-block mb-6 text-xl md:text-2xl h-8 text-center md:text-left"
                   />
                 ) : (
-                  <span className="inline-block mb-6 text-xl md:text-2xl text-center md:text-left h-8">Early Bird Registration is Closed!</span>
+                  <span className="inline-block mb-6 text-xl md:text-2xl text-center md:text-left h-8">Normal Registration is Open!</span>
                 )}
                 <Countdown targetDate="2026-04-26T23:59:59" />
               </div>
@@ -335,7 +335,7 @@ export default function LandingPage() {
             </div>
           </section>
 
-          {/* --- NEW TIMELINE SECTION --- */}
+          {/* --- TIMELINE SECTION --- */}
           <section className="py-24 relative overflow-hidden">
             {/* Glow background effect */}
             <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-100 dark:bg-blue-900/10 blur-[120px] rounded-full pointer-events-none transition-colors"></div>

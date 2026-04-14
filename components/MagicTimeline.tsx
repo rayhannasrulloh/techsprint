@@ -95,14 +95,13 @@ const MagicTimeline: React.FC<MagicTimelineProps> = ({
       )}
 
       {/* Renders the Vertical Timeline Layout */}
-      <div 
+      <div
         className="bento-section relative border-l-3 border-blue-500/30 ml-4 md:ml-10 space-y-12 pb-8 w-full select-none"
         ref={gridRef}
       >
         {events.map((item, index) => {
-          const baseClassName = `card w-full p-6 md:p-8 rounded-2xl font-light overflow-hidden transition-all duration-500 ease-in-out hover:bg-black/5 dark:hover:bg-white/[0.04] ${
-            enableBorderGlow ? 'card--border-glow' : ''
-          }`;
+          const baseClassName = `card w-full p-6 md:p-8 rounded-2xl font-light overflow-hidden transition-all duration-500 ease-in-out hover:bg-black/5 dark:hover:bg-white/[0.04] ${enableBorderGlow ? 'card--border-glow' : ''
+            }`;
 
           const cardStyle = {
             backgroundColor: 'var(--background-dark)',
@@ -116,9 +115,9 @@ const MagicTimeline: React.FC<MagicTimelineProps> = ({
 
           const content = (
             <>
-              {/* <span className={`text-xs md:text-sm font-normal tracking-wider uppercase mb-2 block z-10 relative ${item.color}`}>
+              <span className={`text-xs md:text-sm font-normal tracking-wider uppercase mb-2 block z-10 relative ${item.color}`}>
                 {item.date}
-              </span> */}
+              </span>
               <h3 className="text-xl md:text-2xl font-bold dark:font-normal text-black dark:text-gray-100 mb-3 z-10 relative transition-colors">
                 {item.title}
               </h3>
