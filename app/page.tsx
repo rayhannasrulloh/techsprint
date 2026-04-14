@@ -407,27 +407,42 @@ export default function LandingPage() {
                 </div>
 
                 {/* Grid Style for Tiered Sponsors */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-4">
-                  {/* Sponsor 2 */}
-                  <div className="bg-white dark:bg-white/[0.02] rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
-                    <div className="flex items-center gap-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-white transition-colors">
-                      <span className="text-2xl md:text-3xl font-bold dark:font-medium tracking-tight">Coming Soon</span>
-                    </div>
-                  </div>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
+                  {/* Dicoding */}
+                  <a href="https://www.dicoding.com/" target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-white/[0.02] p-8 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
+                    <img 
+                      src="/sponsor-logo/Dicoding-Logo-White.png" 
+                      alt="Dicoding" 
+                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100 invert dark:invert-0" 
+                    />
+                  </a>
 
-                  {/* Sponsor 3 */}
-                  <div className="bg-white dark:bg-white/[0.02] rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
-                    <div className="flex items-center gap-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-white transition-colors">
-                      <span className="text-2xl md:text-3xl font-bold dark:font-medium tracking-tight">Coming Soon</span>
-                    </div>
-                  </div>
+                  {/* Dyputu */}
+                  <a href="https://dyputustudio.com/" target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-white/[0.02] p-8 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
+                    <img 
+                      src="/sponsor-logo/Dyputu.png" 
+                      alt="Dyputu" 
+                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100" 
+                    />
+                  </a>
 
-                  {/* Sponsor 4 */}
-                  {/* <div className="bg-white dark:bg-white/[0.02] rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
-                    <div className="flex items-center gap-4 text-gray-800 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-white transition-colors">
-                      <span className="text-2xl md:text-3xl font-bold dark:font-medium tracking-tight">Coming Soon</span>
-                    </div>
-                  </div> */}
+                  {/* KitaLulus */}
+                  <a href="https://www.kitalulus.com/" target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-white/[0.02] p-8 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
+                    <img 
+                      src="/sponsor-logo/KitaLulus-Logo-White.png" 
+                      alt="KitaLulus" 
+                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100 invert dark:invert-0" 
+                    />
+                  </a>
+
+                  {/* Sewa HT */}
+                  <a href="https://sewaht.id/" target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-white/[0.02] p-8 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
+                    <img 
+                      src="/sponsor-logo/logo-sewa-HT.png" 
+                      alt="Sewa HT" 
+                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100" 
+                    />
+                  </a>
                 </div>
               </div>
 
