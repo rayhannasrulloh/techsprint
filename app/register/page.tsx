@@ -232,7 +232,7 @@ export default function RegisterPage() {
               <p className="text-sm text-gray-400">
                 Buku Panduan:{' '}
                 <Link href="https://bit.ly/BukuPanduanParticipantTechSprint2026" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline underline-offset-4 font-medium transition-colors">
-                  https://bit.ly/BukuPanduanParticipantTechSprint2026
+                  Buku Panduan Participant Tech Sprint 2026
                 </Link>
               </p>
             </div>
@@ -367,7 +367,7 @@ export default function RegisterPage() {
                 <div className="bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl p-4">
                   <p className="text-sm text-gray-200 mb-1 font-medium">2. Bukti Unggah Twibbon</p>
                   <p className="text-xs text-gray-500 mb-3">Tangkapan layar postingan Twibbon di feed Instagram masing-masing anggota. Maks 10MB</p>
-                  <p className="text-xs text-gray-500 mb-3">Link Twibbon: <Link href="https://bit.ly/TECHSPRINT3IN1TWIBBONLINK" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400">https://bit.ly/TECHSPRINT3IN1TWIBBONLINK</Link></p>
+                  <p className="text-xs text-gray-500 mb-3">Link Twibbon: <Link href="https://bit.ly/TECHSPRINT3IN1TWIBBONLINK" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400">TECH SPRINT 2026 TWIBBON</Link></p>
                   <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
                     <span className="text-xs text-gray-300 truncate max-w-[200px]">{twibbonFile ? twibbonFile.name : "Unggah File (.pdf)"}</span>
                     <Upload className="w-4 h-4 text-gray-400" />
