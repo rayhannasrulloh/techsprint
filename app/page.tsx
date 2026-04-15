@@ -228,7 +228,7 @@ export default function LandingPage() {
               <div className="flex flex-col sm:flex-row justify-center md:justify-start items-center gap-6 mt-4">
                 {/* Reference Button Style: Large */}
                 <Link
-                  href="/register" 
+                  href="/register"
                   className="flex items-center text-white text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] px-8 py-3 rounded-full font-normal dark:shadow-[0_0_20px_rgba(0,51,255,0.4)] dark:hover:shadow-[0_0_35px_rgba(0,51,255,0.7)] transition-all duration-300">
                   Register Now! <ArrowUpRight className="ml-2 w-5 h-5" />
                 </Link>
@@ -306,6 +306,114 @@ export default function LandingPage() {
                 <p>
                   Carrying the mission to create sustainable tech solutions addressing real campus and student challenges, the event introduces a unique approach across three specialized tracks: <span className="text-blue-600 dark:text-gray-200 font-bold dark:font-normal">UI/UX Design, Data Automation, and System Analysis</span>. Each track targets 8 competing teams, bringing together a total of 72 participants across all three tracks. The sprint unfolds in two structured phases: <span className="text-black dark:text-white font-bold dark:font-medium">Day 1 (BUILD)</span>, where teams ideate and rapidly prototype their solutions, and <span className="text-black dark:text-white font-bold dark:font-medium">Day 2 (TEST + PITCH)</span>, where top teams present their final outputs to a panel of industry judges.
                 </p>
+              </div>
+            </div>
+          </section>
+
+          {/* --- MASCOT SECTION --- */}
+          <section id="mascot" className="py-24 relative overflow-hidden">
+            {/* Background glow effects */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-blue-100 dark:bg-blue-900/10 blur-[140px] rounded-full pointer-events-none transition-colors" />
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-200/30 dark:bg-blue-500/5 blur-[80px] rounded-full pointer-events-none transition-colors" />
+
+            <style dangerouslySetInnerHTML={{
+              __html: `
+              @keyframes mascotFloat {
+                0%, 100% { transform: translateY(0px) rotate(-1deg); }
+                50% { transform: translateY(-18px) rotate(1deg); }
+              }
+              @keyframes mascotGlow {
+                0%, 100% { filter: drop-shadow(0 0 20px rgba(59,130,246,0.3)) drop-shadow(0 20px 40px rgba(0,0,0,0.2)); }
+                50% { filter: drop-shadow(0 0 40px rgba(59,130,246,0.6)) drop-shadow(0 30px 50px rgba(0,0,0,0.3)); }
+              }
+              .mascot-img {
+                animation: mascotFloat 5s ease-in-out infinite, mascotGlow 5s ease-in-out infinite;
+              }
+              @keyframes starTwinkle {
+                0%, 100% { opacity: 0.3; transform: scale(0.8); }
+                50% { opacity: 1; transform: scale(1.2); }
+              }
+              .star-1 { animation: starTwinkle 2.1s ease-in-out infinite; }
+              .star-2 { animation: starTwinkle 1.7s ease-in-out infinite 0.4s; }
+              .star-3 { animation: starTwinkle 2.5s ease-in-out infinite 0.9s; }
+              .star-4 { animation: starTwinkle 1.9s ease-in-out infinite 1.3s; }
+            `}} />
+
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
+
+              {/* Section Header */}
+              <div className="text-center mb-16">
+                <p className="text-sm font-bold tracking-[0.3em] uppercase mb-3 transition-colors">
+                  Official Mascot
+                </p>
+                <h2
+                  className="text-2xl font-bold dark:font-light tracking-widest text-black dark:text-gray-300 uppercase transition-colors"
+                  style={{ textShadow: mounted && resolvedTheme !== 'dark' ? "none" : "0 0 3px rgba(255,255,255,0.5), 0 0 8px rgba(59,130,246,0.4)" }}
+                >
+                  Mr. Sprint
+                </h2>
+              </div>
+
+              {/* Main mascot layout */}
+              <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+
+                {/* Left: Description cards (stacked) */}
+                <div className="flex flex-col gap-6 lg:w-[45%] order-2 lg:order-1">
+
+                  {/* Card 1 - Main bio */}
+                  <div className="relative bg-white/70 dark:bg-white/[0.03] backdrop-blur-md dark:border-white/[0.06] rounded-3xl p-7 shadow-[0_4px_24px_rgba(59,130,246,0.08)] dark:shadow-[0_4px_32px_rgba(0,0,0,0.4)] hover:border-blue-400/40 dark:hover:border-blue-500/20 transition-all duration-500 group overflow-hidden">
+                    {/* Corner glow */}
+                    <div className="absolute -top-6 -right-6 w-24 h-24 bg-blue-400/10 dark:bg-blue-500/10 rounded-full blur-2xl pointer-events-none transition-colors" />
+                    {/* Twinkling stars */}
+                    <span className="star-1 absolute top-4 left-4 text-blue-400 dark:text-blue-300 text-lg select-none pointer-events-none">✦</span>
+                    <span className="star-2 absolute top-6 right-10 text-blue-500 dark:text-cyan-400 text-sm select-none pointer-events-none">✦</span>
+
+                    <p className="text-black/80 dark:text-gray-300 font-medium dark:font-light text-sm md:text-base leading-relaxed text-justify relative z-10 transition-colors">
+                      Born in the digital halls of <span className="text-blue-600 dark:text-blue-400 font-bold dark:font-medium">PUMA IS</span>, Mr. SPRINT is not just an ordinary robot. Mr. SPRINT is a sharp, suit-up robot built to assist your innovation, and embodies the spirit of the modern tech. Mr. SPRINT represents every student who dares to <span className="text-black dark:text-white font-bold dark:font-semibold">THINK</span> beyond the room, <span className="text-black dark:text-white font-bold dark:font-semibold">BUILD</span> something real, and create <span className="text-black dark:text-white font-bold dark:font-semibold">IMPACT</span> that matters. Mr. SPRINT&apos;s glowing eyes represent clarity of vision, and Mr. SPRINT dressed for success with a mind wired for problem-solving.
+                    </p>
+                  </div>
+
+                  {/* Card 2 - Motivational quote */}
+                  <div className="relative bg-white/70 dark:bg-white/[0.03] backdrop-blur-md dark:border-white/[0.06] rounded-3xl p-7 shadow-[0_4px_24px_rgba(59,130,246,0.08)] dark:shadow-[0_4px_32px_rgba(0,0,0,0.4)] hover:border-blue-400/40 dark:hover:border-blue-500/20 transition-all duration-500 group overflow-hidden">
+                    <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-cyan-400/10 dark:bg-cyan-500/10 rounded-full blur-2xl pointer-events-none transition-colors" />
+                    <span className="star-3 absolute bottom-5 right-6 text-blue-400 dark:text-cyan-300 text-lg select-none pointer-events-none">✦</span>
+                    <span className="star-4 absolute top-5 right-4 text-blue-500 dark:text-blue-300 text-sm select-none pointer-events-none">✦</span>
+
+                    <p className="text-black/80 dark:text-gray-300 font-medium dark:font-light text-sm md:text-base leading-relaxed relative z-10 transition-colors">
+                      In a world where innovation moves fast, Mr. SPRINT reminds us that every big impact starts with the courage to take the first step.{" "}
+                      <span className="text-blue-600 dark:text-blue-400 font-bold dark:font-semibold">The SPRINT starts now!</span>
+                    </p>
+                  </div>
+
+                  {/* Meet Mr. Sprint tagline */}
+                  <div className="text-center lg:text-left">
+                    <p className="text-gray-600 dark:text-gray-500 font-medium dark:font-light text-sm italic transition-colors">
+                      The official mascot of Tech Sprint &apos;26 is now here.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right: Mascot image */}
+                <div className="lg:w-[55%] flex justify-center items-end order-1 lg:order-2 relative">
+                  {/* Radial glow behind mascot */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="w-72 h-72 md:w-96 md:h-96 rounded-full bg-blue-400/10 dark:bg-blue-500/15 blur-[60px] transition-colors" />
+                  </div>
+
+                  {/* Decorative floating badge */}
+                  <div className="hidden md:block absolute top-4 right-4 md:top-8 md:right-8 bg-white/80 dark:bg-white/[0.05] backdrop-blur-md dark:border-blue-500/20 rounded-2xl px-4 py-2 shadow-sm dark:shadow-none z-10 transition-colors">
+                    <p className="text-[10px] md:text-xs font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase">Meet</p>
+                    <p className="text-sm md:text-base font-black text-black dark:text-white tracking-wider">MR. SPRINT</p>
+                  </div>
+
+                  <img
+                    src="/mascot/Pengenalan maskot (Kanan).webp"
+                    alt="Mr. Sprint — Official Mascot of Tech Sprint 2026"
+                    className="mascot-img w-64 md:w-80 lg:w-[420px] xl:w-[480px] h-auto object-contain relative z-10 select-none"
+                    draggable={false}
+                  />
+                </div>
+
               </div>
             </div>
           </section>
@@ -410,37 +518,37 @@ export default function LandingPage() {
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
                   {/* Dicoding */}
                   <a href="https://www.dicoding.com/" target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-white/[0.02] p-8 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
-                    <img 
-                      src="/sponsor-logo/Dicoding-Logo-White.png" 
-                      alt="Dicoding" 
-                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100 invert dark:invert-0" 
+                    <img
+                      src="/sponsor-logo/Dicoding-Logo-White.png"
+                      alt="Dicoding"
+                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100 invert dark:invert-0"
                     />
                   </a>
 
                   {/* Dyputu */}
                   <a href="https://dyputustudio.com/" target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-white/[0.02] p-8 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
-                    <img 
-                      src="/sponsor-logo/Dyputu.png" 
-                      alt="Dyputu" 
-                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100" 
+                    <img
+                      src="/sponsor-logo/Dyputu.png"
+                      alt="Dyputu"
+                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                     />
                   </a>
 
                   {/* KitaLulus */}
                   <a href="https://www.kitalulus.com/" target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-white/[0.02] p-8 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
-                    <img 
-                      src="/sponsor-logo/KitaLulus-Logo-White.png" 
-                      alt="KitaLulus" 
-                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100 invert dark:invert-0" 
+                    <img
+                      src="/sponsor-logo/KitaLulus-Logo-White.png"
+                      alt="KitaLulus"
+                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100 invert dark:invert-0"
                     />
                   </a>
 
                   {/* Sewa HT */}
                   <a href="https://sewaht.id/" target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-white/[0.02] p-8 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
-                    <img 
-                      src="/sponsor-logo/logo-sewa-HT.png" 
-                      alt="Sewa HT" 
-                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100" 
+                    <img
+                      src="/sponsor-logo/logo-sewa-HT.png"
+                      alt="Sewa HT"
+                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                     />
                   </a>
                 </div>
