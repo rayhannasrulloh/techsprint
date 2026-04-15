@@ -91,13 +91,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="w-full max-w-sm bg-[#1c1c1c] border border-white/10 rounded-xl p-8 shadow-sm relative overflow-hidden animate-in fade-in zoom-in-95 duration-500">
           
           <div className="relative z-10 text-center mb-8">
-            <h2 className="text-xl font-semibold text-white tracking-wide">Admin Panel</h2>
-            <p className="text-gray-400 text-xs tracking-widest uppercase mt-2">Restricted Access Portal</p>
+            <h2 className="text-xl text-white tracking-wide">Admin Panel</h2>
           </div>
 
           <form onSubmit={handleAdminLogin} className="space-y-4 relative z-10">
             <div>
-              <label className="block text-xs font-medium text-gray-300 mb-1.5">Admin Email</label>
+              <label className="block text-xs font-medium text-gray-300 mb-1.5">Email</label>
               <input 
                 type="email" required value={email} onChange={(e) => setEmail(e.target.value)} 
                 className="w-full bg-[#121212] border border-white/10 rounded-md p-3 text-sm text-white focus:border-emerald-500 focus:outline-none transition-colors" 
