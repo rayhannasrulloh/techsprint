@@ -500,7 +500,7 @@ export default function LandingPage() {
 
               <div className="flex flex-col gap-6">
                 {/* Case Collaborator / Main Sponsor (Full Width) */}
-                <div className="bg-white dark:bg-white/[0.02] rounded-3xl p-8 md:p-12 flex flex-col xl:flex-row items-center justify-between gap-8 md:gap-12 hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-500 group relative overflow-hidden shadow-sm dark:shadow-none">
+                {/* <div className="bg-white dark:bg-white/[0.02] rounded-3xl p-8 md:p-12 flex flex-col xl:flex-row items-center justify-between gap-8 md:gap-12 hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-500 group relative overflow-hidden shadow-sm dark:shadow-none">
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-100 to-blue-500/0 dark:via-blue-500/5 opacity-0 group-hover:opacity-100 transition-duration-700"></div>
 
                   <div className="flex flex-col items-center xl:items-start text-center xl:text-left z-10 w-full xl:w-1/3">
@@ -512,7 +512,7 @@ export default function LandingPage() {
                   <div className="z-10 flex items-center justify-center bg-gray-100 dark:bg-[#03050a]/50 p-6 md:p-8 py-8 md:py-10 rounded-3xl shadow-inner w-full xl:w-auto overflow-x-auto transition-colors">
                     <Countdown targetDate="2026-05-01T00:00:00" />
                   </div>
-                </div>
+                </div> */}
 
                 {/* Grid Style for Tiered Sponsors */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
