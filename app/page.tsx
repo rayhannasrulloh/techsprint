@@ -14,17 +14,164 @@ import FAQ from "../components/FAQ";
 import Footer from "../components/Footer";
 import Countdown from "../components/Countdown";
 import PageLoader from "../components/PageLoader";
+import { useLang } from "../components/LanguageContext";
 import {
   ArrowUpRight, ArrowRight, MonitorSmartphone, DatabaseZap, Cpu, Calendar,
   UserPlus, Timer, MonitorPlay, Rocket,
   Mail, MapPin, MessageSquare, Instagram, Twitter, Linkedin
 } from "lucide-react";
 
+// ─── Translation strings ────────────────────────────────────────────────────
+const translations = {
+  en: {
+    // Nav
+    navUiUx: "UI/UX Design",
+    navDataAuto: "Data Automation",
+    navSystemAnalyst: "System Analyst",
+    navLogin: "Login",
+    navRegister: "Register",
+    navDashboard: "Dashboard",
+
+    // Hero
+    typewriterLines: [
+      "Early Bird Registration is Closed!",
+      "Normal Batch Registration is Open!",
+    ],
+    typewriterMobile: "Normal Registration is Open!",
+    heroPrimary: "Register Now!",
+    heroSecondary: "Learn More",
+
+    // About
+    aboutHeading: "Ready to Innovate, Create the Future State",
+    aboutP1: (
+      <>
+        Tech Sprint 2026 - <span className="text-blue-600 dark:text-gray-200 font-bold dark:font-normal">3IN1</span> is the flagship innovation competition organized by the Research and Development (R&D) Division of the President University Major Association of Information Systems (PUMA IS). Building on the prestigious legacy of previous iterations, evolving from CompClub (2021–2023) to the international Golden Code Hackathon in 2025, this year&apos;s event is designed as an intensive 2-day innovation sprint. With a core philosophy of <span className="text-black dark:text-white font-bold dark:font-medium">&quot;Tech With Impact,&quot;</span> rooted in the philosophy of <span className="text-black dark:text-white font-bold dark:font-medium">THINK, BUILD,</span> and <span className="text-black dark:text-white font-bold dark:font-medium">IMPACT</span>, the sprint challenges participants to move from analytical thinking (THINK) to hands-on prototyping (BUILD) to deliver measurable real-world implementation (IMPACT).
+      </>
+    ),
+    aboutP2: (
+      <>
+        Carrying the mission to create sustainable tech solutions addressing real campus and student challenges, the event introduces a unique approach across three specialized tracks: <span className="text-blue-600 dark:text-gray-200 font-bold dark:font-normal">UI/UX Design, Data Automation, and System Analysis</span>. Each track targets 8 competing teams, bringing together a total of 72 participants across all three tracks. The sprint unfolds in two structured phases: <span className="text-black dark:text-white font-bold dark:font-medium">Day 1 (BUILD)</span>, where teams ideate and rapidly prototype their solutions, and <span className="text-black dark:text-white font-bold dark:font-medium">Day 2 (TEST + PITCH)</span>, where top teams present their final outputs to a panel of industry judges.
+      </>
+    ),
+
+    // Mascot
+    mascotLabel: "Official Mascot",
+    mascotBio: (
+      <>
+        Born in the digital halls of <span className="text-blue-600 dark:text-blue-400 font-bold dark:font-medium">PUMA IS</span>, Mr. SPRINT is not just an ordinary robot. Mr. SPRINT is a sharp, suit-up robot built to assist your innovation, and embodies the spirit of the modern tech. Mr. SPRINT represents every student who dares to <span className="text-black dark:text-white font-bold dark:font-semibold">THINK</span> beyond the room, <span className="text-black dark:text-white font-bold dark:font-semibold">BUILD</span> something real, and create <span className="text-black dark:text-white font-bold dark:font-semibold">IMPACT</span> that matters. Mr. SPRINT&apos;s glowing eyes represent clarity of vision, and Mr. SPRINT dressed for success with a mind wired for problem-solving.
+      </>
+    ),
+    mascotQuote: (
+      <>
+        In a world where innovation moves fast, Mr. SPRINT reminds us that every big impact starts with the courage to take the first step.{" "}
+        <span className="text-blue-600 dark:text-blue-400 font-bold dark:font-semibold">The SPRINT starts now!</span>
+      </>
+    ),
+    mascotTagline: "The official mascot of Tech Sprint '26 is now here.",
+
+    // Timeline
+    timelineHeading: "Event Journey",
+    timelineSubheading: "Mark your calendar for these important dates.",
+    timelineEvents: [
+      { date: "6 – 12 April 2026", title: "Early Bird", desc: "Open registration for early birds. Gather your team of 3 and secure your spot early." },
+      { date: "13 – 26 April 2026", title: "Normal Batch Registration", desc: "Last chance to join!" },
+      { date: "6 May 2026", title: "Technical Meeting", desc: "Mandatory briefing for all participants. We will discuss rules, submission guidelines, and judging criteria." },
+      { date: "9 – 10 May 2026", title: "Competition Day", desc: "The sprint begins! Starts at 12:00 PM and ends the next day at 12:00 PM. Build your solutions and conquer the checkpoints." },
+    ],
+
+    // Tracks
+    tracksHeading: "Track Categories",
+    trackCards: [
+      { title: "UI/UX Design", description: "Design intuitive interfaces. Craft compelling user experiences and stunning prototypes." },
+      { title: "Data Automation", description: "Streamline workflows. Build intelligent scripts and automate data processing pipelines." },
+      { title: "System Analysis", description: "Architect robust systems. Create BRD, SRS, and comprehensive system architecture diagrams." },
+    ],
+    trackCta: "Learn More",
+
+    // Sponsors
+    sponsorsHeading: "Sponsored by",
+    becomeSponsort: "Become a sponsor",
+  },
+
+  id: {
+    // Nav
+    navUiUx: "UI/UX Design",
+    navDataAuto: "Data Automation",
+    navSystemAnalyst: "System Analyst",
+    navLogin: "Masuk",
+    navRegister: "Daftar",
+    navDashboard: "Dasbor",
+
+    // Hero
+    typewriterLines: [
+      "Pendaftaran Early Bird Telah Ditutup!",
+      "Pendaftaran Batch Normal Kini Dibuka!",
+    ],
+    typewriterMobile: "Pendaftaran Normal Kini Dibuka!",
+    heroPrimary: "Daftar Sekarang!",
+    heroSecondary: "Pelajari Lebih Lanjut",
+
+    // About
+    aboutHeading: "Siap Berinovasi, Ciptakan Masa Depan",
+    aboutP1: (
+      <>
+        Tech Sprint 2026 - <span className="text-blue-600 dark:text-gray-200 font-bold dark:font-normal">3IN1</span> adalah kompetisi inovasi unggulan yang diselenggarakan oleh Divisi Riset dan Pengembangan (R&D) dari Asosiasi Jurusan Sistem Informasi President University (PUMA IS). Melanjutkan warisan bergengsi dari edisi sebelumnya, yang berkembang dari CompClub (2021–2023) hingga Golden Code Hackathon internasional pada tahun 2025, acara tahun ini dirancang sebagai sprint inovasi intensif selama 2 hari. Dengan filosofi utama <span className="text-black dark:text-white font-bold dark:font-medium">&quot;Tech With Impact,&quot;</span> yang berakar pada filosofi <span className="text-black dark:text-white font-bold dark:font-medium">THINK, BUILD,</span> dan <span className="text-black dark:text-white font-bold dark:font-medium">IMPACT</span>, sprint ini menantang peserta untuk bergerak dari pemikiran analitis (THINK) menuju prototyping langsung (BUILD) hingga menghasilkan implementasi nyata yang terukur (IMPACT).
+      </>
+    ),
+    aboutP2: (
+      <>
+        Mengemban misi menciptakan solusi teknologi berkelanjutan untuk tantangan nyata di kampus dan kehidupan mahasiswa, acara ini menghadirkan pendekatan unik melalui tiga trek khusus: <span className="text-blue-600 dark:text-gray-200 font-bold dark:font-normal">UI/UX Design, Data Automation, dan System Analysis</span>. Setiap trek menargetkan 8 tim yang bersaing, dengan total 72 peserta dari ketiga trek. Sprint berlangsung dalam dua fase terstruktur: <span className="text-black dark:text-white font-bold dark:font-medium">Hari 1 (BUILD)</span>, di mana tim mengembangkan ide dan membuat prototipe secara cepat, dan <span className="text-black dark:text-white font-bold dark:font-medium">Hari 2 (TEST + PITCH)</span>, di mana tim terbaik mempresentasikan hasil akhir kepada panel juri industri.
+      </>
+    ),
+
+    // Mascot
+    mascotLabel: "Maskot Resmi",
+    mascotBio: (
+      <>
+        Lahir di koridor digital <span className="text-blue-600 dark:text-blue-400 font-bold dark:font-medium">PUMA IS</span>, Mr. SPRINT bukan sekadar robot biasa. Mr. SPRINT adalah robot berjas yang tajam, dibangun untuk mendukung inovasimu, dan mewujudkan semangat teknologi modern. Mr. SPRINT mewakili setiap mahasiswa yang berani <span className="text-black dark:text-white font-bold dark:font-semibold">BERPIKIR</span> melampaui batas, <span className="text-black dark:text-white font-bold dark:font-semibold">MEMBANGUN</span> sesuatu yang nyata, dan menciptakan <span className="text-black dark:text-white font-bold dark:font-semibold">DAMPAK</span> yang berarti. Mata Mr. SPRINT yang bercahaya melambangkan kejelasan visi, dan penampilannya yang rapi mencerminkan pikiran yang terprogram untuk memecahkan masalah.
+      </>
+    ),
+    mascotQuote: (
+      <>
+        Di dunia yang bergerak cepat, Mr. SPRINT mengingatkan kita bahwa setiap dampak besar dimulai dari keberanian untuk mengambil langkah pertama.{" "}
+        <span className="text-blue-600 dark:text-blue-400 font-bold dark:font-semibold">SPRINT dimulai sekarang!</span>
+      </>
+    ),
+    mascotTagline: "Maskot resmi Tech Sprint '26 kini telah hadir.",
+
+    // Timeline
+    timelineHeading: "Perjalanan Acara",
+    timelineSubheading: "Tandai tanggal-tanggal penting berikut di kalendermu.",
+    timelineEvents: [
+      { date: "6 – 12 April 2026", title: "Early Bird", desc: "Pendaftaran dibuka untuk early bird. Kumpulkan tim beranggotakan 3 orang dan amankan tempatmu lebih awal." },
+      { date: "13 – 26 April 2026", title: "Pendaftaran Batch Normal", desc: "Kesempatan terakhir untuk bergabung!" },
+      { date: "6 Mei 2026", title: "Technical Meeting", desc: "Briefing wajib bagi seluruh peserta. Kami akan membahas peraturan, panduan pengumpulan tugas, dan kriteria penilaian." },
+      { date: "9 – 10 Mei 2026", title: "Hari Kompetisi", desc: "Sprint dimulai! Mulai pukul 12.00 siang dan berakhir keesokan harinya pukul 12.00 siang. Kembangkan solusimu dan taklukkan setiap checkpoint." },
+    ],
+
+    // Tracks
+    tracksHeading: "Kategori Trek",
+    trackCards: [
+      { title: "UI/UX Design", description: "Rancang antarmuka yang intuitif. Ciptakan pengalaman pengguna yang memikat dan prototipe yang memukau." },
+      { title: "Data Automation", description: "Optimalkan alur kerja. Bangun skrip cerdas dan otomasi pipeline pemrosesan data." },
+      { title: "System Analysis", description: "Rancang sistem yang kokoh. Buat BRD, SRS, dan diagram arsitektur sistem yang komprehensif." },
+    ],
+    trackCta: "Pelajari Lebih Lanjut",
+
+    // Sponsors
+    sponsorsHeading: "Disponsori oleh",
+    becomeSponsort: "Jadilah sponsor",
+  },
+};
+
 export default function LandingPage() {
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { resolvedTheme } = useTheme();
+  const { lang } = useLang();
+
+  const tx = translations[lang];
 
   useEffect(() => {
     setMounted(true);
@@ -43,84 +190,41 @@ export default function LandingPage() {
     return () => window.removeEventListener("resize", checkIsMobile);
   }, []);
 
-  // Data Track
-  const trackCards = [
-    {
-      href: '/track/ui-ux',
-      title: 'UI/UX Design',
-      description: 'Design intuitive interfaces. Craft compelling user experiences and stunning prototypes.',
-      icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><MonitorSmartphone className="text-blue-500 w-7 h-7 stroke-[1.5]" /></div>,
+  // Data Track — rebuilt from translations
+  const trackCards = tx.trackCards.map((card, i) => {
+    const icons = [
+      <div key="uiux" className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><MonitorSmartphone className="text-blue-500 w-7 h-7 stroke-[1.5]" /></div>,
+      <div key="data" className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><DatabaseZap className="text-blue-500 w-7 h-7 stroke-[1.5]" /></div>,
+      <div key="sys" className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><Cpu className="text-blue-500 w-7 h-7 stroke-[1.5]" /></div>,
+    ];
+    const hrefs = ['/track/ui-ux', '/track/data-automation', '/track/system-analyst'];
+    return {
+      href: hrefs[i],
+      title: card.title,
+      description: card.description,
+      icon: icons[i],
       className: "group",
       color: 'rgba(255,255,255,0.02)',
-      cta: <span className="inline-flex items-center text-sm font-bold dark:font-medium text-blue-600 dark:text-blue-400 group-hover:translate-x-2 transition-transform duration-300">Learn More <ArrowRight className="ml-2 w-4 h-4" /></span>
-    },
-    {
-      href: '/track/data-automation',
-      title: 'Data Automation',
-      description: 'Streamline workflows. Build intelligent scripts and automate data processing pipelines.',
-      icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><DatabaseZap className="text-blue-500 w-7 h-7 stroke-[1.5]" /></div>,
-      className: "group",
-      color: 'rgba(255,255,255,0.02)',
-      cta: <span className="inline-flex items-center text-sm font-bold dark:font-medium text-blue-600 dark:text-blue-400 group-hover:translate-x-2 transition-transform duration-300">Learn More <ArrowRight className="ml-2 w-4 h-4" /></span>
-    },
-    {
-      href: '/track/system-analyst',
-      title: 'System Analysis',
-      description: 'Architect robust systems. Create BRD, SRS, and comprehensive system architecture diagrams.',
-      icon: <div className="bg-blue-500/10 w-14 h-14 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform"><Cpu className="text-blue-500 w-7 h-7 stroke-[1.5]" /></div>,
-      className: "group",
-      color: 'rgba(255,255,255,0.02)',
-      cta: <span className="inline-flex items-center text-sm font-bold dark:font-medium text-blue-600 dark:text-blue-400 group-hover:translate-x-2 transition-transform duration-300">Learn More <ArrowRight className="ml-2 w-4 h-4" /></span>
-    }
-  ];
+      cta: <span className="inline-flex items-center text-sm font-bold dark:font-medium text-blue-600 dark:text-blue-400 group-hover:translate-x-2 transition-transform duration-300">{tx.trackCta} <ArrowRight className="ml-2 w-4 h-4" /></span>,
+    };
+  });
 
   // Data Timeline Event
-  const timelineEvents = [
-    {
-      date: "6 - 12 April 2026",
-      title: "Early Bird",
-      desc: "Open registration for early birds. Gather your team of 3 and secure your spot early.",
-      icon: UserPlus,
-      color: "text-blue-400", bg: "bg-blue-900/10", border: "border-blue-900/10"
-    },
-    {
-      date: "13 - 26 April 2026",
-      title: "Normal Batch Registration",
-      desc: "Last chance to join!",
-      icon: Timer,
-      color: "text-blue-400", bg: "bg-blue-900/10", border: "border-blue-900/10"
-    },
-    {
-      date: "6 May 2026",
-      title: "Technical Meeting",
-      desc: "Mandatory briefing for all participants. We will discuss rules, submission guidelines, and judging criteria.",
-      icon: MonitorPlay,
-      color: "text-blue-400", bg: "bg-blue-900/10", border: "border-blue-900/10"
-    },
-    {
-      date: "9 - 10 May 2026",
-      title: "Competition Day",
-      desc: "The sprint begins! Starts at 12:00 PM and ends the next day at 12:00 PM. Build your solutions and conquer the checkpoints.",
-      icon: Rocket,
-      color: "text-blue-400", bg: "bg-blue-900/10", border: "border-blue-900/10"
-    }
-  ];
-
-  const serializedTimelineEvents = timelineEvents.map((item) => {
-    const Icon = item.icon;
+  const timelineIcons = [UserPlus, Timer, MonitorPlay, Rocket];
+  const serializedTimelineEvents = tx.timelineEvents.map((item, i) => {
+    const Icon = timelineIcons[i];
     return {
       date: item.date,
       title: item.title,
       desc: item.desc,
-      color: item.color,
+      color: "text-blue-400",
       nodeMarker: (
-        <div className={`w-6 h-6 md:w-8 md:h-8 ${item.bg} ${item.border} border rounded-full flex items-center justify-center`}>
-          <Icon className={`w-3 h-3 md:w-4 md:h-4 ${item.color}`} />
+        <div className="w-6 h-6 md:w-8 md:h-8 bg-blue-900/10 border-blue-900/10 border rounded-full flex items-center justify-center">
+          <Icon className="w-3 h-3 md:w-4 md:h-4 text-blue-400" />
         </div>
-      )
+      ),
     };
   });
-
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-transparent dark:bg-gradient-to-b dark:from-[#0a0f24] dark:via-[#050814] dark:to-black text-gray-900 dark:text-white font-sans selection:bg-blue-500 selection:text-white overflow-x-hidden relative transition-colors duration-500">
@@ -167,9 +271,9 @@ export default function LandingPage() {
             </div>
 
             <div className="hidden md:flex flex-1 items-center justify-center gap-8">
-              <Link href="/track/ui-ux" className="text-sm font-medium text-black hover:text-blue-600 dark:font-light dark:text-gray-300 dark:hover:text-white transition-colors tracking-wide">UI/UX Design</Link>
-              <Link href="/track/data-automation" className="text-sm font-medium text-black hover:text-blue-600 dark:font-light dark:text-gray-300 dark:hover:text-white transition-colors tracking-wide">Data Automation</Link>
-              <Link href="/track/system-analyst" className="text-sm font-medium text-black hover:text-blue-600 dark:font-light dark:text-gray-300 dark:hover:text-white transition-colors tracking-wide">System Analyst</Link>
+              <Link href="/track/ui-ux" className="text-sm font-medium text-black hover:text-blue-600 dark:font-light dark:text-gray-300 dark:hover:text-white transition-colors tracking-wide">{tx.navUiUx}</Link>
+              <Link href="/track/data-automation" className="text-sm font-medium text-black hover:text-blue-600 dark:font-light dark:text-gray-300 dark:hover:text-white transition-colors tracking-wide">{tx.navDataAuto}</Link>
+              <Link href="/track/system-analyst" className="text-sm font-medium text-black hover:text-blue-600 dark:font-light dark:text-gray-300 dark:hover:text-white transition-colors tracking-wide">{tx.navSystemAnalyst}</Link>
             </div>
 
             <div className="flex-1 flex justify-end space-x-2 md:space-x-6 items-center">
@@ -181,16 +285,16 @@ export default function LandingPage() {
                     <Instagram className="w-5 h-5" />
                   </a>
                   <Link href="/dashboard" aria-describedby="Masuk ke Dashboard anda" className="flex items-center text-sm bg-blue-600 text-white px-5 py-2 rounded-full font-medium shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] hover:scale-105 transition-all duration-300">
-                    Dashboard
+                    {tx.navDashboard}
                   </Link>
                 </div>
               ) : (
                 <div className="flex items-center gap-4">
                   <Link href="/login" className="text-sm font-medium text-black hover:text-blue-600 dark:font-light dark:text-gray-300 dark:hover:text-white transition-colors">
-                    Login
+                    {tx.navLogin}
                   </Link>
                   <Link href="/register" className="flex items-center text-sm bg-blue-600 text-white px-5 py-2 rounded-full font-medium dark:hover:shadow-[0_0_25px_rgba(37,99,235,0.6)] dark:hover:scale-105 transition-all duration-300">
-                    Register <ArrowUpRight className="ml-1 w-4 h-4" />
+                    {tx.navRegister} <ArrowUpRight className="ml-1 w-4 h-4" />
                   </Link>
                 </div>
               )}
@@ -210,17 +314,14 @@ export default function LandingPage() {
               >
                 {mounted && !isMobile ? (
                   <Typewriter
-                    text={[
-                      "Early Bird Registration is Closed!",
-                      "Normal Batch Registration is Open!"
-                    ]}
+                    text={tx.typewriterLines}
                     delay={1.8}
                     speed={0.05}
                     pauseBetween={2500}
                     className="inline-block mb-6 text-xl md:text-2xl h-8 text-center md:text-left"
                   />
                 ) : (
-                  <span className="inline-block mb-6 text-xl md:text-2xl text-center md:text-left h-8">Normal Registration is Open!</span>
+                  <span className="inline-block mb-6 text-xl md:text-2xl text-center md:text-left h-8">{tx.typewriterMobile}</span>
                 )}
                 <Countdown targetDate="2026-04-26T23:59:59" />
               </div>
@@ -230,13 +331,13 @@ export default function LandingPage() {
                 <Link
                   href="/register"
                   className="flex items-center text-white text-lg bg-gradient-to-r from-[#0033ff] to-[#001188] px-8 py-3 rounded-full font-normal dark:shadow-[0_0_20px_rgba(0,51,255,0.4)] dark:hover:shadow-[0_0_35px_rgba(0,51,255,0.7)] transition-all duration-300">
-                  Register Now! <ArrowUpRight className="ml-2 w-5 h-5" />
+                  {tx.heroPrimary} <ArrowUpRight className="ml-2 w-5 h-5" />
                 </Link>
                 <button
                   onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
                   className="text-black hover:text-blue-600 font-medium dark:text-gray-400 dark:hover:text-white dark:font-light tracking-wide transition-colors"
                 >
-                  Learn More
+                  {tx.heroSecondary}
                 </button>
               </div>
             </div>
@@ -291,21 +392,17 @@ export default function LandingPage() {
               >
                 {mounted && !isMobile ? (
                   <TextReveal
-                    text="Ready to Innovate, Create the Future State"
+                    text={tx.aboutHeading}
                     delay={0.5}
                     className="inline-block text-4xl md:text-5xl lg:text-6xl font-black dark:font-bold"
                   />
                 ) : (
-                  <span className="inline-block text-4xl md:text-5xl lg:text-6xl font-black dark:font-bold">Ready to Innovate,<br />Create the Future State</span>
+                  <span className="inline-block text-4xl md:text-5xl lg:text-6xl font-black dark:font-bold">{tx.aboutHeading}</span>
                 )}
               </h2>
               <div className="space-y-6 text-black dark:text-gray-400 font-medium dark:font-light text-base md:text-lg leading-relaxed text-justify md:text-center transition-colors">
-                <p>
-                  Tech Sprint 2026 - <span className="text-blue-600 dark:text-gray-200 font-bold dark:font-normal">3IN1</span> is the flagship innovation competition organized by the Research and Development (R&D) Division of the President University Major Association of Information Systems (PUMA IS). Building on the prestigious legacy of previous iterations, evolving from CompClub (2021-2023) to the international Golden Code Hackathon in 2025, this year’s event is designed as an intensive 2-day innovation sprint. With a core philosophy of <span className="text-black dark:text-white font-bold dark:font-medium">"Tech With Impact,"</span> rooted in the philosophy of <span className="text-black dark:text-white font-bold dark:font-medium">THINK, BUILD,</span> and <span className="text-black dark:text-white font-bold dark:font-medium">IMPACT</span>, the sprint challenges participants to move from analytical thinking (THINK) to hands-on prototyping (BUILD) to deliver measurable real-world implementation (IMPACT).
-                </p>
-                <p>
-                  Carrying the mission to create sustainable tech solutions addressing real campus and student challenges, the event introduces a unique approach across three specialized tracks: <span className="text-blue-600 dark:text-gray-200 font-bold dark:font-normal">UI/UX Design, Data Automation, and System Analysis</span>. Each track targets 8 competing teams, bringing together a total of 72 participants across all three tracks. The sprint unfolds in two structured phases: <span className="text-black dark:text-white font-bold dark:font-medium">Day 1 (BUILD)</span>, where teams ideate and rapidly prototype their solutions, and <span className="text-black dark:text-white font-bold dark:font-medium">Day 2 (TEST + PITCH)</span>, where top teams present their final outputs to a panel of industry judges.
-                </p>
+                <p>{tx.aboutP1}</p>
+                <p>{tx.aboutP2}</p>
               </div>
             </div>
           </section>
@@ -344,7 +441,7 @@ export default function LandingPage() {
               {/* Section Header */}
               <div className="text-center mb-16">
                 <p className="text-sm font-bold tracking-[0.3em] uppercase mb-3 transition-colors">
-                  Official Mascot
+                  {tx.mascotLabel}
                 </p>
                 <h2
                   className="text-2xl font-bold dark:font-light tracking-widest text-black dark:text-gray-300 uppercase transition-colors"
@@ -369,7 +466,7 @@ export default function LandingPage() {
                     <span className="star-2 absolute top-6 right-10 text-blue-500 dark:text-cyan-400 text-sm select-none pointer-events-none">✦</span>
 
                     <p className="text-black/80 dark:text-gray-300 font-medium dark:font-light text-sm md:text-base leading-relaxed text-justify relative z-10 transition-colors">
-                      Born in the digital halls of <span className="text-blue-600 dark:text-blue-400 font-bold dark:font-medium">PUMA IS</span>, Mr. SPRINT is not just an ordinary robot. Mr. SPRINT is a sharp, suit-up robot built to assist your innovation, and embodies the spirit of the modern tech. Mr. SPRINT represents every student who dares to <span className="text-black dark:text-white font-bold dark:font-semibold">THINK</span> beyond the room, <span className="text-black dark:text-white font-bold dark:font-semibold">BUILD</span> something real, and create <span className="text-black dark:text-white font-bold dark:font-semibold">IMPACT</span> that matters. Mr. SPRINT&apos;s glowing eyes represent clarity of vision, and Mr. SPRINT dressed for success with a mind wired for problem-solving.
+                      {tx.mascotBio}
                     </p>
                   </div>
 
@@ -380,15 +477,14 @@ export default function LandingPage() {
                     <span className="star-4 absolute top-5 right-4 text-blue-500 dark:text-blue-300 text-sm select-none pointer-events-none">✦</span>
 
                     <p className="text-black/80 dark:text-gray-300 font-medium dark:font-light text-sm md:text-base leading-relaxed relative z-10 transition-colors">
-                      In a world where innovation moves fast, Mr. SPRINT reminds us that every big impact starts with the courage to take the first step.{" "}
-                      <span className="text-blue-600 dark:text-blue-400 font-bold dark:font-semibold">The SPRINT starts now!</span>
+                      {tx.mascotQuote}
                     </p>
                   </div>
 
                   {/* Meet Mr. Sprint tagline */}
                   <div className="text-center lg:text-left">
                     <p className="text-gray-600 dark:text-gray-500 font-medium dark:font-light text-sm italic transition-colors">
-                      The official mascot of Tech Sprint &apos;26 is now here.
+                      {tx.mascotTagline}
                     </p>
                   </div>
                 </div>
@@ -422,7 +518,7 @@ export default function LandingPage() {
           <section className="py-24">
             <div className="max-w-7xl mx-auto px-6">
               <h2 className="text-2xl font-bold dark:font-light text-center mb-16 tracking-widest text-black dark:text-gray-300 uppercase transition-colors">
-                <TextReveal text="Track Categories" />
+                <TextReveal text={tx.tracksHeading} />
               </h2>
 
               <MagicBento
@@ -451,34 +547,14 @@ export default function LandingPage() {
             <div className="max-w-4xl mx-auto px-6 relative z-10">
               <div className="text-center mb-16">
                 <h2 className="text-2xl font-bold dark:font-light tracking-widest text-black dark:text-gray-300 uppercase flex items-center justify-center gap-3 transition-colors">
-                  Event Journey
+                  {tx.timelineHeading}
                 </h2>
-                <p className="text-gray-800 dark:text-gray-500 font-medium dark:font-light mt-4 transition-colors">Mark your calendar for these important dates.</p>
+                <p className="text-gray-800 dark:text-gray-500 font-medium dark:font-light mt-4 transition-colors">{tx.timelineSubheading}</p>
               </div>
 
               <MagicTimeline events={serializedTimelineEvents} glowColor="59, 130, 246" />
             </div>
           </section>
-
-          {/* --- TOTAL PRIZEPOOL SECTION --- */}
-          {/* <section className="py-32 relative overflow-hidden flex flex-col items-center justify-center"> */}
-          {/* Glow effect specific to Prizepool */}
-          {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[250px] bg-yellow-500/10 blur-[60px] rounded-full pointer-events-none z-0"></div>
-
-            <div className="relative z-10 text-center px-6">
-              <p className="text-sm font-medium tracking-[0.2em] text-yellow-500 uppercase mb-4">
-                Total Prizepool
-              </p>
-              <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 text-6xl md:text-8xl lg:text-9xl font-light text-white drop-shadow-[0_0_20px_rgba(234,179,8,0.4)]">
-                <span className="text-4xl md:text-6xl text-yellow-500">Rp</span>
-                <NumberTicker value={20000000} delay={0.5} />
-                <span className="text-4xl md:text-6xl text-yellow-500">+</span>
-              </div>
-              <p className="text-gray-400 mt-8 font-light max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-                Compete, innovate, and win your share of the massive prize pool along with exclusive opportunities from our industry partners.
-              </p>
-            </div>
-          </section> */}
 
           {/* --- FAQ SECTION --- */}
           <FAQ />
@@ -491,29 +567,14 @@ export default function LandingPage() {
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="mb-16 flex flex-col items-center text-center gap-6">
                 <h2 className="text-2xl md:text-3xl font-bold dark:font-light tracking-widest text-black dark:text-gray-300 uppercase flex items-center justify-center gap-3 transition-colors">
-                  <TextReveal text="Sponsored by" />
+                  <TextReveal text={tx.sponsorsHeading} />
                 </h2>
                 <Link href="/sponsorship" className="px-6 py-2.5 rounded-full bg-black/[0.02] dark:bg-white/[0.02] text-sm font-bold dark:font-light text-black dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 hover:border-blue-500/50 hover:text-blue-600 dark:hover:text-white transition-all duration-300 shadow-none dark:shadow-[0_0_15px_rgba(255,255,255,0.02)] hover:shadow-[0_4px_15px_rgba(0,0,0,0.05)] dark:hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-                  Become a sponsor
+                  {tx.becomeSponsort}
                 </Link>
               </div>
 
               <div className="flex flex-col gap-6">
-                {/* Case Collaborator / Main Sponsor (Full Width) */}
-                {/* <div className="bg-white dark:bg-white/[0.02] rounded-3xl p-8 md:p-12 flex flex-col xl:flex-row items-center justify-between gap-8 md:gap-12 hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-500 group relative overflow-hidden shadow-sm dark:shadow-none">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-100 to-blue-500/0 dark:via-blue-500/5 opacity-0 group-hover:opacity-100 transition-duration-700"></div>
-
-                  <div className="flex flex-col items-center xl:items-start text-center xl:text-left z-10 w-full xl:w-1/3">
-                    <span className="text-xs font-bold dark:font-medium tracking-[0.2em] text-blue-600 dark:text-blue-400 mb-4 transition-colors">Case Collaborator</span>
-                    <span className="text-4xl md:text-5xl lg:text-6xl font-black dark:font-bold tracking-tight text-black dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-500 mb-2">Coming Soon</span>
-                    <span className="text-sm text-gray-800 dark:text-gray-400 font-medium dark:font-light transition-colors">The grand reveal of our main case collaborator will unlock on May 1st, 2026.</span>
-                  </div>
-
-                  <div className="z-10 flex items-center justify-center bg-gray-100 dark:bg-[#03050a]/50 p-6 md:p-8 py-8 md:py-10 rounded-3xl shadow-inner w-full xl:w-auto overflow-x-auto transition-colors">
-                    <Countdown targetDate="2026-05-01T00:00:00" />
-                  </div>
-                </div> */}
-
                 {/* Grid Style for Tiered Sponsors */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
                   {/* Dicoding */}

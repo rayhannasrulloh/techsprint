@@ -4,6 +4,7 @@ import "./globals.css";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "../components/ThemeProvider";
+import { LanguageProvider } from "../components/LanguageContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,24 +37,26 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Toaster 
-            position="top-center"
-            toastOptions={{
-              style: {
-                background: 'var(--toast-bg, #0c122b)',
-                color: 'var(--toast-color, #fff)',
-                border: '1px solid rgba(150,150,150,0.1)',
-              },
-              success: {
-                iconTheme: { primary: '#10b981', secondary: '#fff' },
-              },
-              error: {
-                iconTheme: { primary: '#ef4444', secondary: '#fff' },
-              },
-            }} 
-          />
-          {children}
-          <SpeedInsights />
+          <LanguageProvider>
+            <Toaster 
+              position="top-center"
+              toastOptions={{
+                style: {
+                  background: 'var(--toast-bg, #0c122b)',
+                  color: 'var(--toast-color, #fff)',
+                  border: '1px solid rgba(150,150,150,0.1)',
+                },
+                success: {
+                  iconTheme: { primary: '#10b981', secondary: '#fff' },
+                },
+                error: {
+                  iconTheme: { primary: '#ef4444', secondary: '#fff' },
+                },
+              }} 
+            />
+            {children}
+            <SpeedInsights />
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>
