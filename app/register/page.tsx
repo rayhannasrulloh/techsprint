@@ -45,6 +45,11 @@ export default function RegisterPage() {
   const [twibbonFile, setTwibbonFile] = useState<File | null>(null);
   const [igStoryFile, setIgStoryFile] = useState<File | null>(null);
 
+  // File validation error states
+  const [idCardError, setIdCardError] = useState("");
+  const [igFollowError, setIgFollowError] = useState("");
+  const [twibbonError, setTwibbonError] = useState("");
+  const [igStoryError, setIgStoryError] = useState("");
 
   // UI State
   const [isLoading, setIsLoading] = useState(false);
@@ -86,6 +91,30 @@ export default function RegisterPage() {
   // Helper untuk validasi ukuran file (10MB = 10 * 1024 * 1024 bytes)
   const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
+  // Daftar MIME type PDF yang diizinkan
+  const ALLOWED_PDF_MIME = ["application/pdf"];
+
+  /**
+   * Validasi ketat: HANYA menerima file PDF.
+   * Mengecek ekstensi DAN MIME type untuk mencegah file berbahaya
+   * seperti .php, .sh, .exe dll yang disamarkan.
+   * Mengembalikan string pesan error, atau "" jika valid.
+   */
+  const validatePdfFile = (file: File | null): string => {
+    if (!file) return "";
+    const ext = file.name.split(".").pop()?.toLowerCase();
+    const isMimeValid = ALLOWED_PDF_MIME.includes(file.type);
+    const isExtValid = ext === "pdf";
+
+    if (!isMimeValid || !isExtValid) {
+      return `Format file "${file.name}" tidak diizinkan. Hanya file .pdf yang diterima.`;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      return `Ukuran file "${file.name}" terlalu besar. Maksimal 10MB.`;
+    }
+    return "";
+  };
+
   const validateFile = (file: File | null) => {
     if (file && file.size > MAX_FILE_SIZE) {
       toast.error(`File "${file.name}" is too large! Maximum 10MB.`);
@@ -99,6 +128,11 @@ export default function RegisterPage() {
     e.preventDefault();
     if (!paymentFile || !idCardFile || !igFollowFile || !twibbonFile || !igStoryFile) {
       toast.error("Harap unggah seluruh bukti pembayaran dan dokumen media sosial!");
+      return;
+    }
+    // Blokir submit jika masih ada error validasi file
+    if (idCardError || igFollowError || twibbonError || igStoryError) {
+      toast.error("Harap perbaiki file yang tidak valid sebelum melanjutkan.");
       return;
     }
     setShowConfirmModal(true);
@@ -304,27 +338,35 @@ export default function RegisterPage() {
                 <p className="text-[11px] text-gray-500 mb-3 leading-relaxed">
                   Gabungkan Kartu Identitas semua anggota tim dalam <strong>satu file PDF</strong>.
                 </p>
-                <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
-                  <span className="text-xs text-gray-400 truncate max-w-[200px]">
+                <label className={`flex items-center justify-between w-full bg-[#050814] border rounded-lg p-3 cursor-pointer transition-colors ${idCardError ? "border-red-500/60 hover:border-red-500" : "border-white/10 hover:border-blue-500/50"}`}>
+                  <span className={`text-xs truncate max-w-[200px] ${idCardError ? "text-red-400" : "text-gray-400"}`}>
                     {idCardFile ? idCardFile.name : "Unggah Kartu Id (.pdf - Maks 10MB)"}
                   </span>
-                  <Upload className="w-4 h-4 text-gray-400" />
+                  <Upload className={`w-4 h-4 ${idCardError ? "text-red-400" : "text-gray-400"}`} />
                   <input
                     type="file"
                     accept=".pdf"
                     required
                     onChange={(e) => {
                       const file = e.target.files?.[0] || null;
-                      if (file && file.size > 10 * 1024 * 1024) {
-                        toast.error("File terlalu besar! Maksimal 10MB.");
-                        e.target.value = "";
-                      } else {
+                      const err = validatePdfFile(file);
+                      setIdCardError(err);
+                      if (!err) {
                         setIdCardFile(file);
+                      } else {
+                        setIdCardFile(null);
+                        e.target.value = "";
                       }
                     }}
                     className="hidden"
                   />
                 </label>
+                {idCardError && (
+                  <p className="flex items-center gap-1.5 mt-2 text-xs text-red-400">
+                    <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                    {idCardError}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -343,24 +385,33 @@ export default function RegisterPage() {
                 <div className="bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl p-4">
                   <p className="text-sm text-gray-200 mb-1 font-medium">1. Bukti Follow Instagram</p>
                   <p className="text-xs text-gray-500 mb-3">Semua anggota tim wajib follow akun Instagram resmi kami, @techsprint26. Maks 10MB</p>
-                  <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
-                    <span className="text-xs text-gray-300 truncate max-w-[200px]">{igFollowFile ? igFollowFile.name : "Unggah File (.pdf)"}</span>
-                    <Upload className="w-4 h-4 text-gray-400" />
+                  <label className={`flex items-center justify-between w-full bg-[#050814] border rounded-lg p-3 cursor-pointer transition-colors ${igFollowError ? "border-red-500/60 hover:border-red-500" : "border-white/10 hover:border-blue-500/50"}`}>
+                    <span className={`text-xs truncate max-w-[200px] ${igFollowError ? "text-red-400" : "text-gray-300"}`}>{igFollowFile ? igFollowFile.name : "Unggah File (.pdf)"}</span>
+                    <Upload className={`w-4 h-4 ${igFollowError ? "text-red-400" : "text-gray-400"}`} />
                     <input
                       type="file"
                       accept=".pdf"
                       required
                       onChange={(e) => {
                         const file = e.target.files?.[0] || null;
-                        if (validateFile(file)) {
+                        const err = validatePdfFile(file);
+                        setIgFollowError(err);
+                        if (!err) {
                           setIgFollowFile(file);
                         } else {
-                          e.target.value = ""; // Reset input jika gagal
+                          setIgFollowFile(null);
+                          e.target.value = "";
                         }
                       }}
                       className="hidden"
                     />
                   </label>
+                  {igFollowError && (
+                    <p className="flex items-center gap-1.5 mt-2 text-xs text-red-400">
+                      <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                      {igFollowError}
+                    </p>
+                  )}
                 </div>
 
                 {/* 2. Upload Twibbon */}
@@ -368,38 +419,56 @@ export default function RegisterPage() {
                   <p className="text-sm text-gray-200 mb-1 font-medium">2. Bukti Unggah Twibbon</p>
                   <p className="text-xs text-gray-500 mb-3">Tangkapan layar postingan Twibbon di feed Instagram masing-masing anggota. Maks 10MB</p>
                   <p className="text-xs text-gray-500 mb-3">Link Twibbon: <Link href="https://bit.ly/TECHSPRINT3IN1TWIBBONLINK" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400">TECH SPRINT 2026 TWIBBON</Link></p>
-                  <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
-                    <span className="text-xs text-gray-300 truncate max-w-[200px]">{twibbonFile ? twibbonFile.name : "Unggah File (.pdf)"}</span>
-                    <Upload className="w-4 h-4 text-gray-400" />
+                  <label className={`flex items-center justify-between w-full bg-[#050814] border rounded-lg p-3 cursor-pointer transition-colors ${twibbonError ? "border-red-500/60 hover:border-red-500" : "border-white/10 hover:border-blue-500/50"}`}>
+                    <span className={`text-xs truncate max-w-[200px] ${twibbonError ? "text-red-400" : "text-gray-300"}`}>{twibbonFile ? twibbonFile.name : "Unggah File (.pdf)"}</span>
+                    <Upload className={`w-4 h-4 ${twibbonError ? "text-red-400" : "text-gray-400"}`} />
                     <input type="file" accept=".pdf"
                       required onChange={(e) => {
                         const file = e.target.files?.[0] || null;
-                        if (validateFile(file)) {
+                        const err = validatePdfFile(file);
+                        setTwibbonError(err);
+                        if (!err) {
                           setTwibbonFile(file);
                         } else {
-                          e.target.value = ""; // Reset input jika gagal
+                          setTwibbonFile(null);
+                          e.target.value = "";
                         }
                       }} className="hidden" />
                   </label>
+                  {twibbonError && (
+                    <p className="flex items-center gap-1.5 mt-2 text-xs text-red-400">
+                      <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                      {twibbonError}
+                    </p>
+                  )}
                 </div>
 
                 {/* 3. Story, Comment & Tag */}
                 <div className="bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl p-4">
                   <p className="text-sm text-gray-200 mb-1 font-medium">3. Bukti Instagram Story</p>
                   <p className="text-xs text-gray-500 mb-3">Tangkapan layar membagikan poster acara ke Instagram Story Anda. Maks 10MB</p>
-                  <label className="flex items-center justify-between w-full bg-[#050814] border border-white/10 hover:border-blue-500/50 rounded-lg p-3 cursor-pointer transition-colors">
-                    <span className="text-xs text-gray-300 truncate max-w-[200px]">{igStoryFile ? igStoryFile.name : "Unggah File (.pdf)"}</span>
-                    <Upload className="w-4 h-4 text-gray-400" />
+                  <label className={`flex items-center justify-between w-full bg-[#050814] border rounded-lg p-3 cursor-pointer transition-colors ${igStoryError ? "border-red-500/60 hover:border-red-500" : "border-white/10 hover:border-blue-500/50"}`}>
+                    <span className={`text-xs truncate max-w-[200px] ${igStoryError ? "text-red-400" : "text-gray-300"}`}>{igStoryFile ? igStoryFile.name : "Unggah File (.pdf)"}</span>
+                    <Upload className={`w-4 h-4 ${igStoryError ? "text-red-400" : "text-gray-400"}`} />
                     <input type="file" accept=".pdf"
                       required onChange={(e) => {
                         const file = e.target.files?.[0] || null;
-                        if (validateFile(file)) {
+                        const err = validatePdfFile(file);
+                        setIgStoryError(err);
+                        if (!err) {
                           setIgStoryFile(file);
                         } else {
-                          e.target.value = ""; // Reset input jika gagal
+                          setIgStoryFile(null);
+                          e.target.value = "";
                         }
                       }} className="hidden" />
                   </label>
+                  {igStoryError && (
+                    <p className="flex items-center gap-1.5 mt-2 text-xs text-red-400">
+                      <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                      {igStoryError}
+                    </p>
+                  )}
                 </div>
               </div>
 
