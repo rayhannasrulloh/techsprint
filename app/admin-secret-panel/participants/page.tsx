@@ -269,7 +269,7 @@ export default function ParticipantsPage() {
                         <div className="p-1 px-2 text-sm border-b border-white/5 text-gray-400 mt-1 flex items-center gap-1"><User className="w-3 h-3" /> {team.leader_name} <span className="text-gray-600">({team.leader_nim})</span></div>
                         <div className="p-1 px-2 text-sm border-b border-white/5 text-gray-500 flex items-center gap-1"><Mail className="w-3 h-3" /> {team.leader_email || <span className="italic">No email</span>}</div>
                         <div className="p-1 px-2 text-sm border-b border-white/5 text-gray-500 flex items-center gap-1"><Phone className="w-3 h-3" /> {team.leader_phone || <span className="italic">No phone</span>}</div>
-                        <div className="p-1 px-2 text-sm border-b border-white/5 text-indigo-400 flex items-center gap-1"><MessageSquare className="w-3 h-3" /> {team.discord_username || <span className="italic text-gray-600">No Discord</span>}</div>
+                        <div className="p-1 px-2 text-sm border-b border-white/5 text-indigo-400 flex items-center gap-1"><img src="/discord_64px.png" className="w-4 h-4" alt="" /> {team.discord_username || <span className="italic text-gray-600">No Discord</span>}</div>
                         <div className="p-1 px-2 text-xs border-b border-white/5 mt-1">
                           <span className="text-gray-600 uppercase tracking-widest text-[10px]">Members</span>
                           <div className="flex flex-col gap-0.5 mt-1">
