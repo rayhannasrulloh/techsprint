@@ -63,8 +63,8 @@ export default function AdminDashboardOverview() {
   return (
     <div className="p-6 md:p-8 max-w-7xl mx-auto animate-in fade-in duration-500">
       <div className="mb-6 flex flex-col gap-1">
-        <h1 className="text-2xl font-medium tracking-wide flex items-center gap-2">Dashboard Overview</h1>
-        <p className="text-gray-400 text-sm">Here is the real-time statistics of the competition</p>
+        <h1 className="text-3xl font-medium flex items-center gap-2">Dashboard Overview</h1>
+        <p className="text-sm text-gray-400 mt-1">Here is the real-time statistics of the competition</p>
       </div>
 
       {/* GLOBAL TIMELINE & COUNTDOWN */}

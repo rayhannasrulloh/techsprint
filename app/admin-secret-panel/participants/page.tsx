@@ -164,8 +164,8 @@ export default function ParticipantsPage() {
       {/* HEADER CONTROLS */}
       <div className="flex flex-col md:flex-row justify-between items-center border-b border-white/10 p-6 gap-4">
         <div>
-          <h1 className="text-3xl font-medium tracking-wider flex items-center gap-3">Participants Data</h1>
-          <p className="text-sm text-gray-500">Manage participant data and submissions</p>
+          <h1 className="text-3xl font-medium flex items-center gap-3">Participants Data</h1>
+          <p className="text-sm text-gray-400 mt-1">Manage participant data and submissions</p>
         </div>
 
         <div className="flex mb-4">
@@ -206,7 +206,7 @@ export default function ParticipantsPage() {
       {/* FILTERS */}
       <div className="flex flex-col md:flex-row gap-4 bg-[#1c1c1c] p-4 border-b border-white/10">
         <div className="flex flex-col gap-1.5 w-full md:w-1/2">
-          <label className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Track Filter</label>
+          <label className="text-xs text-gray-400 font-medium tracking-wider">Track Filter</label>
           <select
             value={activeTrackTab}
             onChange={(e) => setActiveTrackTab(e.target.value)}
@@ -219,7 +219,7 @@ export default function ParticipantsPage() {
         </div>
 
         <div className="flex flex-col gap-1.5 w-full md:w-1/2">
-          <label className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Status Filter</label>
+          <label className="text-xs text-gray-400 font-medium tracking-wider">Status Filter</label>
           <select
             value={activeStatusTab}
             onChange={(e) => setActiveStatusTab(e.target.value)}
@@ -287,38 +287,38 @@ export default function ParticipantsPage() {
                     <td className="p-5 border-r border-white/10">
                       <div className="flex flex-col gap-2 items-start">
                         {/* Status Label */}
-                        <span className={`flex items-center text-xs w-full py-1 rounded-md border border-white/10 justify-center ${team.status === 'approved' ? 'text-emerald-400 bg-emerald-400/10' : team.status === 'pending' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-400 bg-red-400/10'}`}>
+                        <span className={`flex items-center text-xs w-full py-2 rounded-md border border-white/10 justify-center ${team.status === 'approved' ? 'text-emerald-400 bg-emerald-400/10' : team.status === 'pending' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-400 bg-red-400/10'}`}>
                           {team.status.toUpperCase()}
                         </span>
-
-                        {/* Bukti Pembayaran */}
-                        {team.payment_proof_url && (
-                          <a href={team.payment_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-blue-400 hover:text-blue-300 bg-blue-500/10 px-2 py-1 rounded-md border border-blue-500/20 w-full justify-center">
-                            <Receipt className="w-3 h-3" /> Payment Receipt
+                        
+                        {/* Bukti ID Card */}
+                        {team.id_card_proof_url && (
+                          <a href={team.id_card_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-amber-400 hover:text-amber-300 bg-amber-500/10 px-2 py-1 rounded-md border border-amber-500/20 w-full">
+                            <User className="w-3 h-3" /> ID Cards
                           </a>
                         )}
 
-                        {/* Bukti ID Card */}
-                        {team.id_card_proof_url && (
-                          <a href={team.id_card_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-amber-400 hover:text-amber-300 bg-amber-500/10 px-2 py-1 rounded-md border border-amber-500/20 w-full justify-center mb-1">
-                            <User className="w-3 h-3" /> View ID Cards
+                        {/* Bukti Pembayaran */}
+                        {team.payment_proof_url && (
+                          <a href={team.payment_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-blue-400 hover:text-blue-300 bg-blue-500/10 px-2 py-1 rounded-md border border-blue-500/20 w-full">
+                            <Receipt className="w-3 h-3" /> Payment Receipt
                           </a>
                         )}
 
                         {/* --- BUKTI SOSIAL MEDIA (NEW) --- */}
                         <div className="grid grid-cols-1 gap-1 w-full">
                           {team.ig_follow_proof_url && (
-                            <a href={team.ig_follow_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[9px] text-pink-400 hover:text-pink-300 bg-pink-500/10 px-2 py-1 rounded-md border border-pink-500/20">
+                            <a href={team.ig_follow_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-pink-400 hover:text-pink-300 bg-pink-500/10 px-2 py-1 rounded-md border border-pink-500/20 w-full">
                               <Instagram className="w-3 h-3" /> Follow Proof
                             </a>
                           )}
                           {team.twibbon_proof_url && (
-                            <a href={team.twibbon_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[9px] text-emerald-400 hover:text-emerald-300 bg-emerald-400/10 px-2 py-1 rounded-md border border-emerald-500/20">
+                            <a href={team.twibbon_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-emerald-400 hover:text-emerald-300 bg-emerald-400/10 px-2 py-1 rounded-md border border-emerald-500/20 w-full">
                               <Image className="w-3 h-3" /> Twibbon Proof
                             </a>
                           )}
                           {team.ig_story_proof_url && (
-                            <a href={team.ig_story_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[9px] text-purple-400 hover:text-purple-300 bg-purple-500/10 px-2 py-1 rounded-md border border-purple-500/20">
+                            <a href={team.ig_story_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-purple-400 hover:text-purple-300 bg-purple-500/10 px-2 py-1 rounded-md border border-purple-500/20">
                               <MessageSquare className="w-3 h-3" /> Story & Tag
                             </a>
                           )}

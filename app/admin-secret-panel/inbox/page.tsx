@@ -51,17 +51,17 @@ export default function AdminInboxPage() {
   if (isLoading) return <div className="min-h-screen flex items-center justify-center text-emerald-500">Loading Secure Inbox...</div>;
 
   return (
-    <div className="max-w-[90rem] mx-auto animate-in fade-in duration-500 p-6 flex flex-col h-[calc(100vh-2rem)]">
+    <div className="max-w-[90rem] mx-auto p-6 flex flex-col h-[calc(100vh-2rem)]">
       <div className="w-full flex-1 flex flex-col">
 
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <div>
-              <h1 className="text-3xl font-light tracking-wider flex items-center gap-3">
+              <h1 className="text-3xl font-medium flex items-center gap-3">
                 Support Inbox
               </h1>
-              <p className="text-gray-400 text-sm mt-1">academic@techsprint.web.id</p>
+              <p className="text-sm text-gray-400 mt-1">academic@techsprint.web.id</p>
             </div>
           </div>
         </div>

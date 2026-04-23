@@ -114,8 +114,8 @@ export default function AnnouncementsPage() {
       
       {/* HEADER */}
       <div className="mb-6 flex flex-col gap-1">
-        <h1 className="text-2xl font-medium tracking-wide flex items-center gap-2">Announcements</h1>
-        <p className="text-gray-400 text-sm">Manage global updates sent to all participant dashboards.</p>
+        <h1 className="text-3xl font-medium flex items-center gap-2">Announcements</h1>
+        <p className="text-sm text-gray-400 mt-1">Manage global updates sent to all participant dashboards.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
