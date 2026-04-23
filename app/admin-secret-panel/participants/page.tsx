@@ -165,6 +165,7 @@ export default function ParticipantsPage() {
       <div className="flex flex-col md:flex-row justify-between items-center border-b border-white/10 p-6 gap-4">
         <div>
           <h1 className="text-3xl font-medium tracking-wider flex items-center gap-3">Participants Data</h1>
+          <p className="text-sm text-gray-500">Manage participant data and submissions</p>
         </div>
 
         <div className="flex mb-4">
@@ -202,30 +203,33 @@ export default function ParticipantsPage() {
         </div>
       </div>
 
-      {/* TRACK TABS */}
-      <div className="flex gap-1.5 bg-[#1c1c1c] p-1.5 border-b border-white/10 rounded-md">
-        {["All", "UI/UX", "Data Automation", "System Analyst"].map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTrackTab(tab)}
-            className={`px-4 py-1.5 text-sm font-medium transition-all rounded-md ${activeTrackTab === tab ? "bg-[#2e2e2e] text-white border border-[#3e3e3e] shadow-sm" : "text-gray-400 hover:text-gray-200 border border-transparent"}`}
+      {/* FILTERS */}
+      <div className="flex flex-col md:flex-row gap-4 bg-[#1c1c1c] p-4 border-b border-white/10">
+        <div className="flex flex-col gap-1.5 w-full md:w-1/2">
+          <label className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Track Filter</label>
+          <select
+            value={activeTrackTab}
+            onChange={(e) => setActiveTrackTab(e.target.value)}
+            className="w-full bg-[#2a2a2a] border border-white/10 rounded-md py-2 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
           >
-            {tab}
-          </button>
-        ))}
-      </div>
+            {["All", "UI/UX", "Data Automation", "System Analyst"].map((tab) => (
+              <option key={tab} value={tab}>{tab}</option>
+            ))}
+          </select>
+        </div>
 
-      {/* STATUS TABS */}
-      <div className="flex gap-1.5 bg-[#1c1c1c] p-1.5 border-b border-white/10">
-        {["All", "Approved", "Pending", "Rejected"].map(tab => (
-          <button
-            key={tab}
-            onClick={() => setActiveStatusTab(tab)}
-            className={`px-4 py-1.5 text-sm font-medium transition-all rounded-md ${activeStatusTab === tab ? "bg-[#2e2e2e] text-white border border-[#3e3e3e] shadow-sm" : "text-gray-400 hover:text-gray-200 border border-transparent"}`}
+        <div className="flex flex-col gap-1.5 w-full md:w-1/2">
+          <label className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Status Filter</label>
+          <select
+            value={activeStatusTab}
+            onChange={(e) => setActiveStatusTab(e.target.value)}
+            className="w-full bg-[#2a2a2a] border border-white/10 rounded-md py-2 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
           >
-            {tab}
-          </button>
-        ))}
+            {["All", "Approved", "Pending", "Rejected"].map((tab) => (
+              <option key={tab} value={tab}>{tab}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {/* TABEL DATA */}
