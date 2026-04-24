@@ -6,7 +6,7 @@ import { supabase } from "@/lib/supabase";
 import {
   Search, Database, CheckCircle2, XCircle,
   Trash2, UserCheck, UserX, AlertTriangle, Download, ExternalLink, User,
-  Clock, Eye, CircleDashed, Receipt, Phone, Instagram, Image, MessageSquare, Mail
+  Clock, Eye, CircleDashed, Receipt, Phone, Instagram, Image, MessageSquare, Mail, Columns
 } from "lucide-react";
 
 // Import Modal
@@ -38,6 +38,15 @@ export default function ParticipantsPage() {
   // Modal State
   const [isCpModalOpen, setIsCpModalOpen] = useState(false);
   const [selectedCp, setSelectedCp] = useState<any>(null);
+
+  // Column Visibility State
+  const [isColumnDropdownOpen, setIsColumnDropdownOpen] = useState(false);
+  const [visibleColumns, setVisibleColumns] = useState({
+    teamInfo: true,
+    statusPayment: true,
+    checkpoints: true,
+    finalSubmission: true,
+  });
 
 
   // Real-time clock untuk status Checkpoint
@@ -210,12 +219,43 @@ export default function ParticipantsPage() {
             />
           </div>
           {accountType === "Participants" && (
-            <button
-              onClick={handleExportCSV}
-              className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors text-sm font-medium shadow-sm"
-            >
-              <Download className="w-4 h-4" /> Export CSV
-            </button>
+            <>
+              <div className="relative">
+                <button
+                  onClick={() => setIsColumnDropdownOpen(!isColumnDropdownOpen)}
+                  className="flex items-center gap-2 px-4 py-2 bg-[#2a2a2a] border border-white/10 text-white rounded-md hover:bg-[#333] transition-colors text-sm font-medium shadow-sm"
+                >
+                  <Columns className="w-4 h-4" /> Columns
+                </button>
+
+                {isColumnDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-[#1c1c1c] border border-white/10 rounded-md shadow-xl z-50 p-2 flex flex-col gap-1">
+                    <label className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded cursor-pointer text-sm text-gray-300">
+                      <input type="checkbox" checked={visibleColumns.teamInfo} onChange={() => setVisibleColumns({...visibleColumns, teamInfo: !visibleColumns.teamInfo})} className="rounded bg-black border-white/20 text-emerald-500 focus:ring-emerald-500" />
+                      Team Info
+                    </label>
+                    <label className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded cursor-pointer text-sm text-gray-300">
+                      <input type="checkbox" checked={visibleColumns.statusPayment} onChange={() => setVisibleColumns({...visibleColumns, statusPayment: !visibleColumns.statusPayment})} className="rounded bg-black border-white/20 text-emerald-500 focus:ring-emerald-500" />
+                      Status & Payment
+                    </label>
+                    <label className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded cursor-pointer text-sm text-gray-300">
+                      <input type="checkbox" checked={visibleColumns.checkpoints} onChange={() => setVisibleColumns({...visibleColumns, checkpoints: !visibleColumns.checkpoints})} className="rounded bg-black border-white/20 text-emerald-500 focus:ring-emerald-500" />
+                      Checkpoints
+                    </label>
+                    <label className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded cursor-pointer text-sm text-gray-300">
+                      <input type="checkbox" checked={visibleColumns.finalSubmission} onChange={() => setVisibleColumns({...visibleColumns, finalSubmission: !visibleColumns.finalSubmission})} className="rounded bg-black border-white/20 text-emerald-500 focus:ring-emerald-500" />
+                      Final Submission
+                    </label>
+                  </div>
+                )}
+              </div>
+              <button
+                onClick={handleExportCSV}
+                className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors text-sm font-medium shadow-sm"
+              >
+                <Download className="w-4 h-4" /> Export CSV
+              </button>
+            </>
           )}
         </div>
       </div>
@@ -266,10 +306,10 @@ export default function ParticipantsPage() {
             <thead>
               <tr className="bg-white/5 text-center tracking-widest text-gray-400 border-b border-white/10">
                 <th className="p-5 font-medium w-12">No.</th>
-                <th className="p-5 font-medium">Team Info</th>
-                <th className="p-5 font-medium">Status & Payment</th>
-                <th className="p-5 font-medium">Checkpoints</th>
-                <th className="p-5 font-medium">Final Submission</th>
+                {visibleColumns.teamInfo && <th className="p-5 font-medium">Team Info</th>}
+                {visibleColumns.statusPayment && <th className="p-5 font-medium">Status & Payment</th>}
+                {visibleColumns.checkpoints && <th className="p-5 font-medium">Checkpoints</th>}
+                {visibleColumns.finalSubmission && <th className="p-5 font-medium">Final Submission</th>}
                 <th className="p-5 font-medium">Actions</th>
               </tr>
             </thead>
@@ -283,115 +323,123 @@ export default function ParticipantsPage() {
                       <td className="p-4 border-r border-white/10 text-center text-gray-400 font-medium">
                         {index + 1}
                       </td>
-                      <td className="border-r border-white/10">
-                        <div className="flex flex-col gap-1">
-                          <div className="p-1 px-2 text-lg border-b border-white/5 flex items-center gap-2">
-                            <p className="font-medium">{team.team_name}</p>
-                          </div>
-                          <div className="p-1 px-2 text-xs border-b border-white/5">{team.track}</div>
-                          <div className="p-1 px-2 text-xs border-b border-white/5 font-medium mt-1">{team.institution}</div>
-                          <div className="p-1 px-2 text-sm border-b border-white/5 text-gray-400 mt-1 flex items-center gap-1"><User className="w-3 h-3" /> {team.leader_name} <span className="text-gray-600">({team.leader_nim})</span></div>
-                          <div className="p-1 px-2 text-sm border-b border-white/5 text-gray-500 flex items-center gap-1"><Mail className="w-3 h-3" /> {team.leader_email || <span className="italic">No email</span>}</div>
-                          <div className="p-1 px-2 text-sm border-b border-white/5 text-gray-500 flex items-center gap-1"><Phone className="w-3 h-3" /> {team.leader_phone || <span className="italic">No phone</span>}</div>
-                          <div className="p-1 px-2 text-sm border-b border-white/5 text-indigo-400 flex items-center gap-1"><img src="/discord_64px.png" className="w-4 h-4" alt="" /> {team.discord_username || <span className="italic text-gray-600">No Discord</span>}</div>
-                          <div className="p-1 px-2 text-xs border-b border-white/5 mt-1">
-                            <span className="text-gray-600 uppercase tracking-widest text-[10px]">Members</span>
-                            <div className="flex flex-col gap-0.5 mt-1">
-                              <span className="text-gray-400 flex items-center gap-1"><User className="w-2.5 h-2.5 text-gray-600" /> {team.member1_name || <span className="italic text-gray-600">—</span>}</span>
-                              <span className="text-gray-400 flex items-center gap-1"><User className="w-2.5 h-2.5 text-gray-600" /> {team.member2_name || <span className="italic text-gray-600">—</span>}</span>
+                      {visibleColumns.teamInfo && (
+                        <td className="border-r border-white/10">
+                          <div className="flex flex-col gap-1">
+                            <div className="p-1 px-2 text-lg border-b border-white/5 flex items-center gap-2">
+                              <p className="font-medium">{team.team_name}</p>
+                            </div>
+                            <div className="p-1 px-2 text-xs border-b border-white/5">{team.track}</div>
+                            <div className="p-1 px-2 text-xs border-b border-white/5 font-medium mt-1">{team.institution}</div>
+                            <div className="p-1 px-2 text-sm border-b border-white/5 text-gray-400 mt-1 flex items-center gap-1"><User className="w-3 h-3" /> {team.leader_name} <span className="text-gray-600">({team.leader_nim})</span></div>
+                            <div className="p-1 px-2 text-sm border-b border-white/5 text-gray-500 flex items-center gap-1"><Mail className="w-3 h-3" /> {team.leader_email || <span className="italic">No email</span>}</div>
+                            <div className="p-1 px-2 text-sm border-b border-white/5 text-gray-500 flex items-center gap-1"><Phone className="w-3 h-3" /> {team.leader_phone || <span className="italic">No phone</span>}</div>
+                            <div className="p-1 px-2 text-sm border-b border-white/5 text-indigo-400 flex items-center gap-1"><img src="/discord_64px.png" className="w-4 h-4" alt="" /> {team.discord_username || <span className="italic text-gray-600">No Discord</span>}</div>
+                            <div className="p-1 px-2 text-xs border-b border-white/5 mt-1">
+                              <span className="text-gray-600 uppercase tracking-widest text-[10px]">Members</span>
+                              <div className="flex flex-col gap-0.5 mt-1">
+                                <span className="text-gray-400 flex items-center gap-1"><User className="w-2.5 h-2.5 text-gray-600" /> {team.member1_name || <span className="italic text-gray-600">—</span>}</span>
+                                <span className="text-gray-400 flex items-center gap-1"><User className="w-2.5 h-2.5 text-gray-600" /> {team.member2_name || <span className="italic text-gray-600">—</span>}</span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </td>
+                        </td>
+                      )}
 
-                      <td className="p-5 border-r border-white/10">
-                        <div className="flex flex-col gap-2 items-start">
-                          {/* Status Label */}
-                          <span className={`flex items-center text-xs w-full py-2 rounded-md border border-white/10 justify-center ${team.status === 'approved' ? 'text-emerald-400 bg-emerald-400/10' : team.status === 'pending' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-400 bg-red-400/10'}`}>
-                            {team.status.toUpperCase()}
-                          </span>
+                      {visibleColumns.statusPayment && (
+                        <td className="p-5 border-r border-white/10">
+                          <div className="flex flex-col gap-2 items-start">
+                            {/* Status Label */}
+                            <span className={`flex items-center text-xs w-full py-2 rounded-md border border-white/10 justify-center ${team.status === 'approved' ? 'text-emerald-400 bg-emerald-400/10' : team.status === 'pending' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-400 bg-red-400/10'}`}>
+                              {team.status.toUpperCase()}
+                            </span>
 
-                          {/* Bukti ID Card */}
-                          {team.id_card_proof_url && (
-                            <a href={team.id_card_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-amber-400 hover:text-amber-300 bg-amber-500/10 px-2 py-1 rounded-md border border-amber-500/20 w-full">
-                              <User className="w-3 h-3" /> ID Cards
-                            </a>
-                          )}
-
-                          {/* Bukti Pembayaran */}
-                          {team.payment_proof_url && (
-                            <a href={team.payment_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-blue-400 hover:text-blue-300 bg-blue-500/10 px-2 py-1 rounded-md border border-blue-500/20 w-full">
-                              <Receipt className="w-3 h-3" /> Payment Receipt
-                            </a>
-                          )}
-
-                          {/* --- BUKTI SOSIAL MEDIA (NEW) --- */}
-                          <div className="grid grid-cols-1 gap-1 w-full">
-                            {team.ig_follow_proof_url && (
-                              <a href={team.ig_follow_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-pink-400 hover:text-pink-300 bg-pink-500/10 px-2 py-1 rounded-md border border-pink-500/20 w-full">
-                                <Instagram className="w-3 h-3" /> Follow Proof
+                            {/* Bukti ID Card */}
+                            {team.id_card_proof_url && (
+                              <a href={team.id_card_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-amber-400 hover:text-amber-300 bg-amber-500/10 px-2 py-1 rounded-md border border-amber-500/20 w-full">
+                                <User className="w-3 h-3" /> ID Cards
                               </a>
                             )}
-                            {team.twibbon_proof_url && (
-                              <a href={team.twibbon_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-emerald-400 hover:text-emerald-300 bg-emerald-400/10 px-2 py-1 rounded-md border border-emerald-500/20 w-full">
-                                <Image className="w-3 h-3" /> Twibbon Proof
+
+                            {/* Bukti Pembayaran */}
+                            {team.payment_proof_url && (
+                              <a href={team.payment_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-blue-400 hover:text-blue-300 bg-blue-500/10 px-2 py-1 rounded-md border border-blue-500/20 w-full">
+                                <Receipt className="w-3 h-3" /> Payment Receipt
                               </a>
                             )}
-                            {team.ig_story_proof_url && (
-                              <a href={team.ig_story_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-purple-400 hover:text-purple-300 bg-purple-500/10 px-2 py-1 rounded-md border border-purple-500/20">
-                                <MessageSquare className="w-3 h-3" /> Story & Tag
-                              </a>
-                            )}
+
+                            {/* --- BUKTI SOSIAL MEDIA (NEW) --- */}
+                            <div className="grid grid-cols-1 gap-1 w-full">
+                              {team.ig_follow_proof_url && (
+                                <a href={team.ig_follow_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-pink-400 hover:text-pink-300 bg-pink-500/10 px-2 py-1 rounded-md border border-pink-500/20 w-full">
+                                  <Instagram className="w-3 h-3" /> Follow Proof
+                                </a>
+                              )}
+                              {team.twibbon_proof_url && (
+                                <a href={team.twibbon_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-emerald-400 hover:text-emerald-300 bg-emerald-400/10 px-2 py-1 rounded-md border border-emerald-500/20 w-full">
+                                  <Image className="w-3 h-3" /> Twibbon Proof
+                                </a>
+                              )}
+                              {team.ig_story_proof_url && (
+                                <a href={team.ig_story_proof_url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] text-purple-400 hover:text-purple-300 bg-purple-500/10 px-2 py-1 rounded-md border border-purple-500/20">
+                                  <MessageSquare className="w-3 h-3" /> Story & Tag
+                                </a>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </td>
+                        </td>
+                      )}
 
-                      <td className="p-5 border-r border-white/10">
-                        <div className="flex gap-4 items-center justify-center">
-                          {[1, 2, 3].map((cpNum) => {
-                            const cp = team.checkpoints?.find((c: any) => c.checkpoint_number === cpNum);
-                            let statusColor = ""; let Icon = null;
-                            if (cp) {
-                              const isLate = new Date(cp.created_at).getTime() > CP_DEADLINES[cpNum];
-                              if (!cp.is_reviewed) { statusColor = "text-yellow-400 bg-yellow-400/10 border-yellow-500/30 hover:bg-yellow-400/20"; Icon = Clock; }
-                              else { statusColor = isLate ? "text-red-400 bg-red-400/10 border-red-500/30 hover:bg-red-400/20" : "text-emerald-400 bg-emerald-400/10 border-emerald-500/30 hover:bg-emerald-400/20"; Icon = isLate ? AlertTriangle : CheckCircle2; }
-                            } else {
-                              if (now > CP_DEADLINES[cpNum]) { statusColor = "text-gray-600 bg-gray-900 border-gray-800"; Icon = XCircle; }
-                              else { statusColor = "text-gray-500 bg-white/5 border-white/10"; Icon = CircleDashed; }
-                            }
-                            return (
-                              <div key={cpNum} className="flex flex-col items-center gap-1">
-                                <span className="text-[10px] text-gray-500 uppercase font-semibold">CP {cpNum}</span>
-                                {cp ? (
-                                  <button onClick={() => openCpModal(team, cp, cpNum)} className={`p-2 rounded-xl border transition-all hover:scale-105 ${statusColor} group relative`}>
-                                    <Icon className="w-5 h-5" />
-                                    <span className="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                      <Eye className="w-3 h-3" />
-                                    </span>
-                                  </button>
-                                ) : (
-                                  <div className={`p-2 rounded-xl border ${statusColor}`}><Icon className="w-5 h-5 opacity-50" /></div>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </td>
-
-                      <td className="p-5 border-r border-white/10">
-                        {finalSub ? (
-                          <div className="flex flex-col gap-2">
-                            <a href={finalSub.final_repo_link} target="_blank" rel="noreferrer" className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1">
-                              <ExternalLink className="w-3 h-3" /> Repo Link
-                            </a>
-                            <a href={finalSub.presentation_link} target="_blank" rel="noreferrer" className="text-sm text-purple-400 hover:text-purple-300 flex items-center gap-1">
-                              <ExternalLink className="w-3 h-3" /> Pitch Deck
-                            </a>
+                      {visibleColumns.checkpoints && (
+                        <td className="p-5 border-r border-white/10">
+                          <div className="flex gap-4 items-center justify-center">
+                            {[1, 2, 3].map((cpNum) => {
+                              const cp = team.checkpoints?.find((c: any) => c.checkpoint_number === cpNum);
+                              let statusColor = ""; let Icon = null;
+                              if (cp) {
+                                const isLate = new Date(cp.created_at).getTime() > CP_DEADLINES[cpNum];
+                                if (!cp.is_reviewed) { statusColor = "text-yellow-400 bg-yellow-400/10 border-yellow-500/30 hover:bg-yellow-400/20"; Icon = Clock; }
+                                else { statusColor = isLate ? "text-red-400 bg-red-400/10 border-red-500/30 hover:bg-red-400/20" : "text-emerald-400 bg-emerald-400/10 border-emerald-500/30 hover:bg-emerald-400/20"; Icon = isLate ? AlertTriangle : CheckCircle2; }
+                              } else {
+                                if (now > CP_DEADLINES[cpNum]) { statusColor = "text-gray-600 bg-gray-900 border-gray-800"; Icon = XCircle; }
+                                else { statusColor = "text-gray-500 bg-white/5 border-white/10"; Icon = CircleDashed; }
+                              }
+                              return (
+                                <div key={cpNum} className="flex flex-col items-center gap-1">
+                                  <span className="text-[10px] text-gray-500 uppercase font-semibold">CP {cpNum}</span>
+                                  {cp ? (
+                                    <button onClick={() => openCpModal(team, cp, cpNum)} className={`p-2 rounded-xl border transition-all hover:scale-105 ${statusColor} group relative`}>
+                                      <Icon className="w-5 h-5" />
+                                      <span className="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <Eye className="w-3 h-3" />
+                                      </span>
+                                    </button>
+                                  ) : (
+                                    <div className={`p-2 rounded-xl border ${statusColor}`}><Icon className="w-5 h-5 opacity-50" /></div>
+                                  )}
+                                </div>
+                              );
+                            })}
                           </div>
-                        ) : (
-                          <span className="text-sm text-gray-600 italic">No submission yet</span>
-                        )}
-                      </td>
+                        </td>
+                      )}
+
+                      {visibleColumns.finalSubmission && (
+                        <td className="p-5 border-r border-white/10">
+                          {finalSub ? (
+                            <div className="flex flex-col gap-2">
+                              <a href={finalSub.final_repo_link} target="_blank" rel="noreferrer" className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                                <ExternalLink className="w-3 h-3" /> Repo Link
+                              </a>
+                              <a href={finalSub.presentation_link} target="_blank" rel="noreferrer" className="text-sm text-purple-400 hover:text-purple-300 flex items-center gap-1">
+                                <ExternalLink className="w-3 h-3" /> Pitch Deck
+                              </a>
+                            </div>
+                          ) : (
+                            <span className="text-sm text-gray-600 italic">No submission yet</span>
+                          )}
+                        </td>
+                      )}
 
                       <td className="p-5">
                         <div className="flex justify-start gap-2">
@@ -405,7 +453,7 @@ export default function ParticipantsPage() {
                 })
               ) : (
                 <tr>
-                  <td colSpan={6} className="p-16 text-center text-gray-500">
+                  <td colSpan={2 + [visibleColumns.teamInfo, visibleColumns.statusPayment, visibleColumns.checkpoints, visibleColumns.finalSubmission].filter(Boolean).length} className="p-16 text-center text-gray-500">
                     <Database className="w-12 h-12 mx-auto mb-4 opacity-20" />
                     <p className="text-lg">No Teams Found</p>
                     <p className="text-sm mt-1 font-light">
