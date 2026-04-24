@@ -61,9 +61,9 @@ export default function AdminDashboardOverview() {
   const saCount = teamsData.filter(t => t.track === 'System Analyst').length;
 
   return (
-    <div className="p-6 md:p-8 max-w-7xl mx-auto animate-in fade-in duration-500">
+    <div className="p-6 max-w-7xl mx-auto animate-in fade-in duration-500">
       <div className="mb-6 flex flex-col gap-1">
-        <h1 className="text-3xl font-medium flex items-center gap-2">Dashboard Overview</h1>
+        <h1 className="text-3xl font-medium flex items-center gap-3">Dashboard Overview</h1>
         <p className="text-sm text-gray-400 mt-1">Here is the real-time statistics of the competition</p>
       </div>
 

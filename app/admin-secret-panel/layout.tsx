@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import { ShieldAlert, ArrowRight } from "lucide-react";
@@ -13,6 +13,13 @@ export const ADMIN_EMAILS = ["rayhan.nasrulloh@student.president.ac.id", "academ
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
+  const isRegisterPage = pathname === "/admin-secret-panel/register";
+
+  // Jika halaman registrasi, langsung tampilkan tanpa proteksi
+  if (isRegisterPage) {
+    return <>{children}</>;
+  }
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [sessionExists, setSessionExists] = useState(false);
@@ -22,36 +29,46 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [password, setPassword] = useState("");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const checkAdminClearance = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    if (!session) {
-      setSessionExists(false);
-      setIsAdmin(false);
-      setIsLoading(false);
-      return;
-    }
-    
-    setSessionExists(true);
-    
-    // 🔥 CEK KE TABEL admin_profiles (Bukan hardcoded email lagi)
-    const { data: adminData, error } = await supabase
-      .from('admin_profiles')
-      .select('*')
-      .eq('id', session.user.id)
-      .single();
-
-    if (adminData && !error) {
-      setIsAdmin(true);
-    } else {
-      setIsAdmin(false);
-    }
-    setIsLoading(false);
-  };
-
   useEffect(() => {
-    checkAdminClearance();
+    // 1. Pantau perubahan status auth secara real-time
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("Auth Event:", event);
+      
+      if (session) {
+        setSessionExists(true);
+        // Panggil fungsi pengecekan admin dengan mengirimkan session yang ada
+        checkAdminClearance(session);
+      } else {
+        setSessionExists(false);
+        setIsAdmin(false);
+        setIsLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, [router]);
+
+  // Perbarui fungsi checkAdmin agar menerima parameter session
+  const checkAdminClearance = async (currentSession: any) => {
+    try {
+      const { data: adminData, error } = await supabase
+        .from('admin_profiles')
+        .select('status')
+        .eq('id', currentSession.user.id)
+        .single();
+
+      if (adminData && adminData.status === 'approved') {
+        setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
+    } catch (err) {
+      console.error("Error checking clearance:", err);
+      setIsAdmin(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,19 +79,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
 
-      // Cek apakah user ID ada di tabel admin_profiles
+      // Cek apakah user ID ada di tabel admin_profiles dan sudah di-approve
       const { data: adminCheck } = await supabase
         .from('admin_profiles')
-        .select('id')
+        .select('id, status')
         .eq('id', data.user.id)
         .single();
 
-      if (adminCheck) {
+      if (adminCheck && adminCheck.status === 'approved') {
         toast.success("Access Granted", { id: toastId });
-        checkAdminClearance(); 
+        // checkAdminClearance dipanggil otomatis via onAuthStateChange
       } else {
         await supabase.auth.signOut();
-        toast.error("Access Denied: You are not an Admin.", { id: toastId });
+        toast.error("Access Denied: You are not an approved Admin.", { id: toastId });
       }
     } catch (error: any) {
       toast.error(error.message, { id: toastId });
@@ -132,7 +149,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <h1 className="text-3xl font-light text-white mb-2">Security Clearance Required</h1>
         <p className="text-gray-400 mb-8 max-w-md">Your current account does not have administrator privileges to access the Command Center.</p>
         <button 
-          onClick={async () => { await supabase.auth.signOut(); checkAdminClearance(); }} 
+          onClick={async () => { await supabase.auth.signOut(); }} 
           className="px-8 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-white transition-colors text-sm font-medium"
         >
           Sign Out & Return

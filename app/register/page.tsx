@@ -58,6 +58,30 @@ export default function RegisterPage() {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [message, setMessage] = useState("");
 
+  const [trackCounts, setTrackCounts] = useState({
+    "UI/UX": 0,
+    "Data Automation": 0,
+    "System Analyst": 0
+  });
+
+  useEffect(() => {
+    const checkQuotas = async () => {
+      const { data } = await supabase
+        .from('teams')
+        .select('track')
+        .neq('status', 'rejected'); // Hitung yang approved dan pending
+
+      const counts = { "UI/UX": 0, "Data Automation": 0, "System Analyst": 0 };
+      data?.forEach(team => {
+        if (counts.hasOwnProperty(team.track)) {
+          counts[team.track as keyof typeof counts]++;
+        }
+      });
+      setTrackCounts(counts);
+    };
+    checkQuotas();
+  }, []);
+
 
   // --- MAINTENANCE MODE TOGGLE ---
   const isMaintenanceMode = false;
@@ -301,9 +325,15 @@ export default function RegisterPage() {
                 <div className="relative">
                   <Zap className="absolute left-4 top-4 w-5 h-5 text-gray-500" />
                   <select value={track} onChange={(e) => setTrack(e.target.value)} className="w-full bg-gradient-to-b from-black/30 to-blue-200/5 border border-white/10 rounded-xl py-3 pl-12 pr-10 text-sm text-gray-200 focus:border-blue-300/50 outline-none appearance-none">
-                    <option value="UI/UX">UI/UX Design</option>
-                    <option value="Data Automation">Data Automation</option>
-                    <option value="System Analyst">System Analyst</option>
+                    <option value="UI/UX" disabled={trackCounts["UI/UX"] >= 8}>
+                      UI/UX Design {trackCounts["UI/UX"] >= 8 ? "(FULL)" : ""}
+                    </option>
+                    <option value="Data Automation" disabled={trackCounts["Data Automation"] >= 8}>
+                      Data Automation {trackCounts["Data Automation"] >= 8 ? "(FULL)" : ""}
+                    </option>
+                    <option value="System Analyst" disabled={trackCounts["System Analyst"] >= 8}>
+                      System Analyst {trackCounts["System Analyst"] >= 8 ? "(FULL)" : ""}
+                    </option>
                   </select>
                   <ChevronDown className="absolute right-4 top-4 w-5 h-5 text-gray-500 pointer-events-none" />
                 </div>

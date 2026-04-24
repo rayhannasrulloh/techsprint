@@ -110,7 +110,7 @@ export default function AnnouncementsPage() {
   };
 
   return (
-    <div className="p-6 md:p-8 max-w-7xl mx-auto animate-in fade-in duration-500">
+    <div className="p-6 max-w-7xl mx-auto animate-in fade-in duration-500">
       
       {/* HEADER */}
       <div className="mb-6 flex flex-col gap-1">
