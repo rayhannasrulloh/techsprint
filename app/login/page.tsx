@@ -53,7 +53,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-b from-[#0a0f24] via-[#050814] to-black flex flex-col items-center justify-center p-6 text-white font-sans">
       
       <Link href="/" className="-mt-20 flex items-center justify-center">
-        <img src="/logo-techsprint-2026.png" alt="Logo" className="w-30 h-30" />
+        <img src="/logo-techsprint-2026.webp" alt="Logo" className="w-30 h-30" />
       </Link>
 
       <div className="max-w-md w-full bg-white/[0.02] border border-white/10 rounded-3xl p-10 shadow-2xl backdrop-blur-md">

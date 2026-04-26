@@ -12,7 +12,7 @@ export default function NotFound() {
           <Link href="/" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm font-light">
             <ArrowLeft className="w-4 h-4" /> Back to Home
           </Link>
-          <img src="/logo-techsprint-2026.png" alt="3IN1 Tech Sprint 2026" className="h-20 w-auto object-contain" />
+          <img src="/logo-techsprint-2026.webp" alt="3IN1 Tech Sprint 2026" className="h-20 w-auto object-contain" />
         </div>
       </nav>
 

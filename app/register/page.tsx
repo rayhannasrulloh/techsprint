@@ -93,7 +93,7 @@ export default function RegisterPage() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
 
         <Link href="/" className="z-10 -mt-20 mb-10 flex items-center justify-center transition-transform hover:scale-105 duration-300">
-          <img src="/logo-techsprint-2026.png" alt="Logo" className="w-32 h-32 object-contain" />
+          <img src="/logo-techsprint-2026.webp" alt="Logo" className="w-32 h-32 object-contain" />
         </Link>
 
         <div className="z-10 max-w-xl w-full bg-gradient-to-b from-gray-900/40 to-gray-800/10 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl backdrop-blur-md flex flex-col items-center text-center">
@@ -272,7 +272,7 @@ export default function RegisterPage() {
       )}
 
       <Link href="/" className="-mt-20 flex items-center justify-center">
-        <img src="/logo-techsprint-2026.png" alt="Logo" className="w-30 h-30" />
+        <img src="/logo-techsprint-2026.webp" alt="Logo" className="w-30 h-30" />
       </Link>
 
       <div className="max-w-4xl w-full bg-gradient-to-b from-gray-900/30 to-gray-700/10 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl backdrop-blur-md">
