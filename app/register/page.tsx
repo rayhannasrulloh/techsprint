@@ -64,6 +64,30 @@ export default function RegisterPage() {
     "System Analyst": 0
   });
 
+  const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
+  const [isCheckingMaintenance, setIsCheckingMaintenance] = useState(true);
+
+  useEffect(() => {
+    const fetchMaintenanceStatus = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("app_settings")
+          .select("value")
+          .eq("key", "maintenance_mode")
+          .single();
+        
+        if (data) {
+          setIsMaintenanceMode(data.value === true || data.value === "true");
+        }
+      } catch (err) {
+        console.error("Error fetching maintenance status:", err);
+      } finally {
+        setIsCheckingMaintenance(false);
+      }
+    };
+    fetchMaintenanceStatus();
+  }, []);
+
   useEffect(() => {
     const checkQuotas = async () => {
       const { data } = await supabase
@@ -83,8 +107,14 @@ export default function RegisterPage() {
   }, []);
 
 
-  // --- MAINTENANCE MODE TOGGLE ---
-  const isMaintenanceMode = true;
+  if (isCheckingMaintenance) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#0a0f24] via-[#050814] to-black flex flex-col items-center justify-center p-6 text-white font-sans py-20 relative overflow-hidden">
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p className="text-blue-400 animate-pulse text-sm font-light">Mengecek status pendaftaran...</p>
+      </div>
+    );
+  }
 
   if (isMaintenanceMode) {
     return (

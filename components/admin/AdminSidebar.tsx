@@ -4,7 +4,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Users, Megaphone, Mail, LogOut, ShieldAlert, Menu, X, ShieldCheck } from "lucide-react";
+import { LayoutDashboard, Users, Megaphone, Mail, LogOut, ShieldAlert, Menu, X, ShieldCheck, Settings } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export default function AdminSidebar() {
@@ -27,6 +27,7 @@ export default function AdminSidebar() {
     { name: "Manage Admins", path: "/admin-secret-panel/admins", icon: ShieldCheck }, // Menu Baru
     { name: "Announcements", path: "/admin-secret-panel/announcements", icon: Megaphone },
     { name: "Inbox", path: "/admin-secret-panel/inbox", icon: Mail },
+    { name: "Settings", path: "/admin-secret-panel/settings", icon: Settings },
   ];
 
   return (
