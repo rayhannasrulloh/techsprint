@@ -35,9 +35,9 @@ const translations = {
     // Hero
     typewriterLines: [
       "Early Bird Registration is Closed!",
-      "Normal Batch Registration is Open!",
+      "Normal Batch Registration is Closed",
     ],
-    typewriterMobile: "Normal Registration is Open!",
+    typewriterMobile: "Normal Registration is Closed",
     heroPrimary: "Register Now!",
     heroSecondary: "Learn More",
 
@@ -105,9 +105,9 @@ const translations = {
     // Hero
     typewriterLines: [
       "Pendaftaran Early Bird Telah Ditutup!",
-      "Pendaftaran Batch Normal Kini Dibuka!",
+      "Pendaftaran Batch Normal Telah Ditutup",
     ],
-    typewriterMobile: "Pendaftaran Normal Kini Dibuka!",
+    typewriterMobile: "Pendaftaran Normal Telah Ditutup",
     heroPrimary: "Daftar Sekarang!",
     heroSecondary: "Pelajari Lebih Lanjut",
 
