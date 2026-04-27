@@ -128,13 +128,13 @@ export default function RegisterPage() {
 
         <div className="z-10 max-w-xl w-full bg-gradient-to-b from-gray-900/40 to-gray-800/10 border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl backdrop-blur-md flex flex-col items-center text-center">
           <div className="w-20 h-20 bg-yellow-500/10 rounded-full flex items-center justify-center mb-6 animate-pulse">
-            <AlertTriangle className="w-10 h-10 text-yellow-500 drop-shadow-[0_0_10px_rgba(234,179,8,0.5)]" />
+            <AlertTriangle className="w-10 h-10 text-yellow-500" />
           </div>
           <h2 className="text-3xl font-light tracking-wide mb-3 text-white uppercase">Mode Pemeliharaan</h2>
           <p className="text-gray-400 font-light leading-relaxed mb-8">
             Layanan pendaftaran kami saat ini sedang luring untuk pemeliharaan dan peningkatan sistem. Silakan periksa kembali nanti.
           </p>
-          <Link href="/" className="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 text-white transition-all duration-300 text-sm font-medium shadow-[0_0_20px_rgba(37,99,235,0.3)]">
+          <Link href="/" className="px-8 py-3 rounded-xl bg-gradient-to-b from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700 text-white transition-all duration-300 text-sm font-medium">
             Kembali ke Beranda
           </Link>
         </div>
