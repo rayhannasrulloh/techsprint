@@ -84,7 +84,7 @@ export default function RegisterPage() {
 
 
   // --- MAINTENANCE MODE TOGGLE ---
-  const isMaintenanceMode = false;
+  const isMaintenanceMode = true;
 
   if (isMaintenanceMode) {
     return (
