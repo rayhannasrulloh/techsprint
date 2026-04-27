@@ -18,7 +18,7 @@ import { useLang } from "../components/LanguageContext";
 import {
   ArrowUpRight, ArrowRight, MonitorSmartphone, DatabaseZap, Cpu, Calendar,
   UserPlus, Timer, MonitorPlay, Rocket,
-  Mail, MapPin, MessageSquare, Instagram, Twitter, Linkedin
+  Mail, MapPin, MessageSquare, Instagram, Twitter, Linkedin, X
 } from "lucide-react";
 
 // ─── Translation strings ────────────────────────────────────────────────────
@@ -168,6 +168,7 @@ export default function LandingPage() {
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const { resolvedTheme } = useTheme();
   const { lang } = useLang();
 
@@ -177,6 +178,13 @@ export default function LandingPage() {
     setMounted(true);
     const checkIsMobile = () => setIsMobile(window.innerWidth < 768);
     checkIsMobile();
+
+    // Show popup after a short delay if not seen in this session
+    const hasSeenPopup = sessionStorage.getItem('techsprint_popup_seen');
+    if (!hasSeenPopup) {
+      const timer = setTimeout(() => setShowPopup(true), 1500);
+      return () => clearTimeout(timer);
+    }
 
     const checkUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -228,6 +236,53 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-transparent dark:bg-gradient-to-b dark:from-[#0a0f24] dark:via-[#050814] dark:to-black text-gray-900 dark:text-white font-sans selection:bg-blue-500 selection:text-white overflow-x-hidden relative transition-colors duration-500">
+
+      {/* --- ANNOUNCEMENT POPUP --- */}
+      {mounted && showPopup && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-md p-4 animate-in fade-in zoom-in-95 duration-300">
+          <div className="relative bg-[#1c1c1c] rounded-2xl max-w-[360px] md:max-w-[400px] w-full overflow-hidden flex flex-col">
+
+            {/* Close Button */}
+            <button
+              onClick={() => {
+                setShowPopup(false);
+                sessionStorage.setItem('techsprint_popup_seen', 'true');
+              }}
+              className="absolute top-3 right-3 p-2 bg-black/40 hover:bg-white/70 backdrop-blur-md rounded-full text-white/80 hover:text-blue-500 transition-all z-20"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Image (4:5 Aspect Ratio) */}
+            <div className="w-full aspect-[4/5] bg-gray-900 relative">
+              <img
+                src="/feeds/feed1.webp"
+                alt="Announcement"
+                className="w-full h-full object-cover"
+              />
+              {/* Overlay gradient for bottom button readability */}
+              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/90 to-transparent pointer-events-none"></div>
+            </div>
+
+            {/* Action Bar (Instagram Link) */}
+            <div className="absolute bottom-6 left-0 w-full flex justify-center z-10">
+              <a
+                href="https://www.instagram.com/techsprint26/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  setShowPopup(false);
+                  sessionStorage.setItem('techsprint_popup_seen', 'true');
+                }}
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-b from-blue-600 to-blue-800 text-white rounded-full font-medium hover:from-blue-800 hover:to-blue-900 transition-transform"
+              >
+                <Instagram className="w-5 h-5" />
+                <span>Follow @techsprint26</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Unified Faulty Terminal Background Layer (Dark Mode Only) */}
       {mounted && resolvedTheme === 'dark' && !isMobile && (
