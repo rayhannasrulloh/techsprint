@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { Mail, ArrowLeft, Search, Trash2, CheckCircle2 } from "lucide-react";
+import { Mail, ArrowLeft, Search, Trash2, CheckCircle2, Send, Pencil, Users, User, Type } from "lucide-react";
 import Link from "next/link";
 
 const ADMIN_EMAILS = ["rayhan.nasrulloh@student.president.ac.id", "academic@techsprint.web.id"];
@@ -15,6 +15,17 @@ export default function AdminInboxPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [emails, setEmails] = useState<any[]>([]);
   const [selectedEmail, setSelectedEmail] = useState<any>(null);
+
+  // Compose states
+  const [isComposing, setIsComposing] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [recipientMode, setRecipientMode] = useState<'all' | 'team' | 'custom'>('all');
+  const [composeData, setComposeData] = useState({
+    to: '',
+    subject: '',
+    message: ''
+  });
+  const [teams, setTeams] = useState<any[]>([]);
 
   const fetchEmails = async () => {
     const { data, error } = await supabase
@@ -33,6 +44,11 @@ export default function AdminInboxPage() {
       }
       setIsAdmin(true);
       await fetchEmails();
+      
+      // Fetch teams for broadcast selection
+      const { data: teamsData } = await supabase.from('teams').select('id, team_name, leader_email, track').order('team_name');
+      if (teamsData) setTeams(teamsData);
+      
       setIsLoading(false);
     };
     checkAdmin();
@@ -44,8 +60,60 @@ export default function AdminInboxPage() {
   };
 
   const handleSelectEmail = (email: any) => {
+    setIsComposing(false);
     setSelectedEmail(email);
     if (!email.is_read) markAsRead(email.id);
+  };
+
+  const handleSendEmail = async () => {
+    if (!composeData.subject || !composeData.message) {
+      alert("Subject and Message are required!");
+      return;
+    }
+
+    let recipients: string[] = [];
+    if (recipientMode === 'all') {
+      recipients = teams.map(t => t.leader_email).filter(Boolean);
+      if (!confirm(`Are you sure you want to broadcast this email to ${recipients.length} teams?`)) return;
+    } else if (recipientMode === 'team') {
+      if (!composeData.to) { alert("Please select a team!"); return; }
+      recipients = [composeData.to];
+    } else if (recipientMode === 'custom') {
+      if (!composeData.to) { alert("Please enter an email address!"); return; }
+      recipients = composeData.to.split(',').map(e => e.trim()).filter(Boolean);
+    }
+
+    if (recipients.length === 0) {
+      alert("No valid recipients found.");
+      return;
+    }
+
+    setIsSending(true);
+    try {
+      const res = await fetch("/api/admin/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          to: recipients,
+          subject: composeData.subject,
+          text: composeData.message, // Plain text fallback
+          html: composeData.message.replace(/\n/g, '<br/>') // Basic HTML
+        })
+      });
+
+      if (res.ok) {
+        alert("Email(s) sent successfully!");
+        setIsComposing(false);
+        setComposeData({ to: '', subject: '', message: '' });
+      } else {
+        const err = await res.json();
+        alert(`Failed to send email: ${err.error || err.message}`);
+      }
+    } catch (error: any) {
+      alert(`Error sending email: ${error.message}`);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   if (isLoading) return <div className="min-h-screen flex items-center justify-center text-emerald-500">Loading Secure Inbox...</div>;
@@ -64,6 +132,12 @@ export default function AdminInboxPage() {
               <p className="text-sm text-gray-400 mt-1">academic@techsprint.web.id</p>
             </div>
           </div>
+          <button 
+            onClick={() => { setIsComposing(true); setSelectedEmail(null); }}
+            className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md text-sm font-medium transition-colors shadow-sm"
+          >
+            <Pencil className="w-4 h-4" /> Compose Email
+          </button>
         </div>
 
         {/* Mailbox Container */}
@@ -105,9 +179,114 @@ export default function AdminInboxPage() {
             </div>
           </div>
 
-          {/* Right Panel: Email Content */}
+          {/* Right Panel: Email Content or Compose */}
           <div className="flex-1 flex flex-col bg-[#1c1c1c]">
-            {selectedEmail ? (
+            {isComposing ? (
+              <div className="flex-1 flex flex-col overflow-y-auto">
+                <div className="p-6 border-b border-white/10 flex justify-between items-center bg-[#252525]">
+                  <h2 className="text-xl font-medium text-white flex items-center gap-2">
+                    <Pencil className="w-5 h-5 text-emerald-500" /> New Email Message
+                  </h2>
+                  <button onClick={() => setIsComposing(false)} className="text-gray-400 hover:text-white transition-colors">
+                    Cancel
+                  </button>
+                </div>
+                
+                <div className="p-8 flex-1 flex flex-col gap-5">
+                  {/* Recipient Mode */}
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium text-gray-400">Recipient Mode</label>
+                    <div className="flex gap-3">
+                      <button onClick={() => setRecipientMode('all')} className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm transition-colors border ${recipientMode === 'all' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-[#2a2a2a] border-white/10 text-gray-300 hover:bg-[#333]'}`}>
+                        <Users className="w-4 h-4" /> Broadcast (All Teams)
+                      </button>
+                      <button onClick={() => setRecipientMode('team')} className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm transition-colors border ${recipientMode === 'team' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-[#2a2a2a] border-white/10 text-gray-300 hover:bg-[#333]'}`}>
+                        <User className="w-4 h-4" /> Specific Team
+                      </button>
+                      <button onClick={() => setRecipientMode('custom')} className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm transition-colors border ${recipientMode === 'custom' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-[#2a2a2a] border-white/10 text-gray-300 hover:bg-[#333]'}`}>
+                        <Type className="w-4 h-4" /> Custom Email
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* To Field */}
+                  {recipientMode === 'all' && (
+                    <div className="bg-emerald-500/10 text-emerald-400 p-3 rounded-md text-sm border border-emerald-500/20">
+                      This will send an email to all {teams.length} registered teams.
+                    </div>
+                  )}
+
+                  {recipientMode === 'team' && (
+                    <div className="flex flex-col gap-2">
+                      <label className="text-sm font-medium text-gray-400">Select Team</label>
+                      <select 
+                        value={composeData.to} 
+                        onChange={(e) => setComposeData({...composeData, to: e.target.value})}
+                        className="w-full bg-[#121212] border border-white/10 rounded-md py-2 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                      >
+                        <option value="">-- Select a Team --</option>
+                        {teams.map(t => (
+                          <option key={t.id} value={t.leader_email}>{t.team_name} ({t.track}) - {t.leader_email}</option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
+                  {recipientMode === 'custom' && (
+                    <div className="flex flex-col gap-2">
+                      <label className="text-sm font-medium text-gray-400">Email Address(es)</label>
+                      <input 
+                        type="text" 
+                        value={composeData.to} 
+                        onChange={(e) => setComposeData({...composeData, to: e.target.value})}
+                        placeholder="john@example.com, jane@example.com"
+                        className="w-full bg-[#121212] border border-white/10 rounded-md py-2 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                      />
+                    </div>
+                  )}
+
+                  {/* Subject Field */}
+                  <div className="flex flex-col gap-2">
+                    <label className="text-sm font-medium text-gray-400">Subject</label>
+                    <input 
+                      type="text" 
+                      value={composeData.subject} 
+                      onChange={(e) => setComposeData({...composeData, subject: e.target.value})}
+                      placeholder="Email Subject"
+                      className="w-full bg-[#121212] border border-white/10 rounded-md py-2 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                    />
+                  </div>
+
+                  {/* Message Field */}
+                  <div className="flex flex-col gap-2 flex-1">
+                    <label className="text-sm font-medium text-gray-400">Message</label>
+                    <textarea 
+                      value={composeData.message} 
+                      onChange={(e) => setComposeData({...composeData, message: e.target.value})}
+                      placeholder="Write your email message here..."
+                      className="w-full flex-1 bg-[#121212] border border-white/10 rounded-md py-3 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors resize-none min-h-[250px]"
+                    />
+                  </div>
+                </div>
+
+                <div className="p-4 border-t border-white/10 bg-[#121212] flex justify-end gap-3">
+                  <button onClick={() => setIsComposing(false)} className="px-4 py-2 border border-white/10 hover:bg-white/5 text-white rounded-md text-sm font-medium transition-colors">
+                    Discard
+                  </button>
+                  <button 
+                    onClick={handleSendEmail} 
+                    disabled={isSending}
+                    className="flex items-center gap-2 px-6 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-md text-sm font-medium transition-colors shadow-sm"
+                  >
+                    {isSending ? (
+                      <>Sending...</>
+                    ) : (
+                      <><Send className="w-4 h-4" /> Send Email</>
+                    )}
+                  </button>
+                </div>
+              </div>
+            ) : selectedEmail ? (
               <>
                 <div className="p-6 border-b border-white/10 flex justify-between items-start">
                   <div>
