@@ -6,11 +6,11 @@ import { Megaphone, Pin, Activity, AlertTriangle, XCircle, CheckCircle2, Timer }
 import { supabase } from "@/lib/supabase";
 
 // 🕒 KONFIGURASI WAKTU HACKATHON (WIB)
-const START_TIME = new Date("2026-05-09T12:00:00+07:00").getTime();
-const CP1_DEADLINE = new Date("2026-05-09T18:00:00+07:00").getTime();
-const CP2_DEADLINE = new Date("2026-05-10T00:00:00+07:00").getTime();
-const CP3_DEADLINE = new Date("2026-05-10T06:00:00+07:00").getTime();
-const FINAL_DEADLINE = new Date("2026-05-10T12:00:00+07:00").getTime();
+const START_TIME = new Date("2026-06-16T12:00:00+07:00").getTime();
+const CP1_DEADLINE = new Date("2026-06-16T18:00:00+07:00").getTime();
+const CP2_DEADLINE = new Date("2026-06-17T00:00:00+07:00").getTime();
+const CP3_DEADLINE = new Date("2026-06-17T06:00:00+07:00").getTime();
+const FINAL_DEADLINE = new Date("2026-06-17T12:00:00+07:00").getTime();
 
 export default function DashboardPage() {
   const [teamData, setTeamData] = useState<any>(null);

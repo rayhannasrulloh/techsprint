@@ -6,12 +6,12 @@ import { Send, CheckCircle2, AlertCircle, Lock, Clock } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 // KONFIGURASI WAKTU DEADLINE (+07.00)
-// cp 1 = 09 Mei 2026, 18.00
-// cp 2 = 10 Mei 2026, 00.00
-// cp 3 = 10 Mei 2026, 06.00
-const CP1_DEADLINE = new Date("2026-05-09T18:00:00+07:00").getTime();
-const CP2_DEADLINE = new Date("2026-05-10T00:00:00+07:00").getTime();
-const CP3_DEADLINE = new Date("2026-05-10T06:00:00+07:00").getTime();
+// cp 1 = 16 Juni 2026, 18.00
+// cp 2 = 17 Juni 2026, 00.00
+// cp 3 = 17 Juni 2026, 06.00
+const CP1_DEADLINE = new Date("2026-06-16T18:00:00+07:00").getTime();
+const CP2_DEADLINE = new Date("2026-06-17T00:00:00+07:00").getTime();
+const CP3_DEADLINE = new Date("2026-06-17T06:00:00+07:00").getTime();
 
 // WAKTU BUKA FORM (1 jam sebelum deadline)
 const ONE_HOUR = 60 * 60 * 1000;

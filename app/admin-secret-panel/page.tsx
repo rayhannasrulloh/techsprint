@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { Database, CheckCircle2, AlertTriangle, XCircle, Timer, Activity, Lock, Unlock } from "lucide-react";
 
-const START_TIME = new Date("2026-05-09T12:00:00+07:00").getTime();
-const END_TIME = new Date("2026-05-10T12:00:00+07:00").getTime();
+const START_TIME = new Date("2026-06-16T12:00:00+07:00").getTime();
+const END_TIME = new Date("2026-06-17T12:00:00+07:00").getTime();
 const CP_DEADLINES: Record<number, number> = {
   1: START_TIME + (6 * 60 * 60 * 1000),  
   2: START_TIME + (12 * 60 * 60 * 1000), 
@@ -80,11 +80,11 @@ export default function AdminDashboardOverview() {
           </div>
           <div className="lg:col-span-2">
             <div className="flex justify-between text-[10px] md:text-xs text-gray-500 mb-2 font-medium tracking-wider uppercase">
-              <span>Start<br/><span className="font-light text-gray-600">09 May 12:00</span></span>
-              <span className="text-center">CP1<br/><span className="font-light text-gray-600">09 May 18:00</span></span>
-              <span className="text-center">CP2<br/><span className="font-light text-gray-600">10 May 00:00</span></span>
-              <span className="text-center">CP3<br/><span className="font-light text-gray-600">10 May 06:00</span></span>
-              <span className="text-right">Final<br/><span className="font-light text-gray-600">10 May 12:00</span></span>
+              <span>Start<br/><span className="font-light text-gray-600">16 June 12:00</span></span>
+              <span className="text-center">CP1<br/><span className="font-light text-gray-600">16 June 18:00</span></span>
+              <span className="text-center">CP2<br/><span className="font-light text-gray-600">17 June 00:00</span></span>
+              <span className="text-center">CP3<br/><span className="font-light text-gray-600">17 June 06:00</span></span>
+              <span className="text-right">Final<br/><span className="font-light text-gray-600">17 June 12:00</span></span>
             </div>
             <div className="relative w-full h-3 rounded-full overflow-hidden border border-white/5">
               <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-600 to-cyan-400 transition-all duration-1000 ease-linear" style={{ width: `${progressPct}%` }}></div>

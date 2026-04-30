@@ -75,8 +75,8 @@ const translations = {
     timelineEvents: [
       { date: "6 – 12 April 2026", title: "Early Bird", desc: "Open registration for early birds. Gather your team of 3 and secure your spot early." },
       { date: "13 – 26 April 2026", title: "Normal Batch Registration", desc: "Last chance to join!" },
-      { date: "6 May 2026", title: "Technical Meeting", desc: "Mandatory briefing for all participants. We will discuss rules, submission guidelines, and judging criteria." },
-      { date: "9 – 10 May 2026", title: "Competition Day", desc: "The sprint begins! Starts at 12:00 PM and ends the next day at 12:00 PM. Build your solutions and conquer the checkpoints." },
+      { date: "12 June 2026", title: "Technical Meeting", desc: "Mandatory briefing for all participants. We will discuss rules, submission guidelines, and judging criteria." },
+      { date: "16 – 17 June 2026", title: "Competition Day", desc: "The sprint begins! Starts at 12:00 PM and ends the next day at 12:00 PM. Build your solutions and conquer the checkpoints." },
     ],
 
     // Tracks
@@ -145,8 +145,8 @@ const translations = {
     timelineEvents: [
       { date: "6 – 12 April 2026", title: "Early Bird", desc: "Pendaftaran dibuka untuk early bird. Kumpulkan tim beranggotakan 3 orang dan amankan tempatmu lebih awal." },
       { date: "13 – 26 April 2026", title: "Pendaftaran Batch Normal", desc: "Kesempatan terakhir untuk bergabung!" },
-      { date: "6 Mei 2026", title: "Technical Meeting", desc: "Briefing wajib bagi seluruh peserta. Kami akan membahas peraturan, panduan pengumpulan tugas, dan kriteria penilaian." },
-      { date: "9 – 10 Mei 2026", title: "Hari Kompetisi", desc: "Sprint dimulai! Mulai pukul 12.00 siang dan berakhir keesokan harinya pukul 12.00 siang. Kembangkan solusimu dan taklukkan setiap checkpoint." },
+      { date: "12 Juni 2026", title: "Technical Meeting", desc: "Briefing wajib bagi seluruh peserta. Kami akan membahas peraturan, panduan pengumpulan tugas, dan kriteria penilaian." },
+      { date: "16 – 17 Juni 2026", title: "Hari Kompetisi", desc: "Sprint dimulai! Mulai pukul 12.00 siang dan berakhir keesokan harinya pukul 12.00 siang. Kembangkan solusimu dan taklukkan setiap checkpoint." },
     ],
 
     // Tracks

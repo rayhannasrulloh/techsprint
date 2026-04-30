@@ -5,11 +5,11 @@ import { useState, useEffect } from "react";
 import { Flag, CheckCircle2, Clock, Map } from "lucide-react";
 
 // 🕒 KONFIGURASI WAKTU HACKATHON (WIB)
-const START_TIME = new Date("2026-05-09T12:00:00+07:00").getTime();
-const CP1_DEADLINE = new Date("2026-05-09T18:00:00+07:00").getTime();
-const CP2_DEADLINE = new Date("2026-05-10T00:00:00+07:00").getTime();
-const CP3_DEADLINE = new Date("2026-05-10T06:00:00+07:00").getTime();
-const FINAL_DEADLINE = new Date("2026-05-10T12:00:00+07:00").getTime();
+const START_TIME = new Date("2026-06-16T12:00:00+07:00").getTime();
+const CP1_DEADLINE = new Date("2026-06-16T18:00:00+07:00").getTime();
+const CP2_DEADLINE = new Date("2026-06-17T00:00:00+07:00").getTime();
+const CP3_DEADLINE = new Date("2026-06-17T06:00:00+07:00").getTime();
+const FINAL_DEADLINE = new Date("2026-06-17T12:00:00+07:00").getTime();
 
 export default function TimelinePage() {
   const [now, setNow] = useState<number>(new Date().getTime());
@@ -38,11 +38,11 @@ export default function TimelinePage() {
 
   // Data Visual Roadmap
   const roadmapSteps = [
-    { title: "Hackathon Starts", time: "09 May, 12:00 WIB", desc: "The 24h sprint begins.", idx: 0 },
-    { title: "Checkpoint 1", time: "09 May, 18:00 WIB", desc: "Initial progress", idx: 1 },
-    { title: "Checkpoint 2", time: "10 May, 00:00 WIB", desc: "Midnight check-in", idx: 2 },
-    { title: "Checkpoint 3", time: "10 May, 06:00 WIB", desc: "Morning sprint", idx: 3 },
-    { title: "Final Submission", time: "10 May, 12:00 WIB", desc: "Times up!", idx: 4 },
+    { title: "Hackathon Starts", time: "16 June, 12:00 WIB", desc: "The 24h sprint begins.", idx: 0 },
+    { title: "Checkpoint 1", time: "16 June, 18:00 WIB", desc: "Initial progress", idx: 1 },
+    { title: "Checkpoint 2", time: "17 June, 00:00 WIB", desc: "Midnight check-in", idx: 2 },
+    { title: "Checkpoint 3", time: "17 June, 06:00 WIB", desc: "Morning sprint", idx: 3 },
+    { title: "Final Submission", time: "17 June, 12:00 WIB", desc: "Times up!", idx: 4 },
   ];
 
   return (

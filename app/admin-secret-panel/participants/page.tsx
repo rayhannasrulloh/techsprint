@@ -15,7 +15,7 @@ import CheckpointModal from "@/components/admin/CheckpointModal";
 import { ADMIN_EMAILS } from "@/app/admin-secret-panel/layout";
 
 // KONFIGURASI WAKTU HACKATHON (WIB)
-const START_TIME = new Date("2026-05-09T12:00:00+07:00").getTime();
+const START_TIME = new Date("2026-06-16T12:00:00+07:00").getTime();
 const CP_DEADLINES: Record<number, number> = {
   1: START_TIME + (6 * 60 * 60 * 1000),
   2: START_TIME + (12 * 60 * 60 * 1000),

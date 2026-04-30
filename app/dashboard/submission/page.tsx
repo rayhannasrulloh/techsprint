@@ -6,7 +6,7 @@ import { Rocket, CheckCircle2, AlertCircle, Lock, Clock } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 // 🕒 KONFIGURASI WAKTU FINAL (WIB)
-const FINAL_DEADLINE = new Date("2026-05-10T12:00:00+07:00").getTime();
+const FINAL_DEADLINE = new Date("2026-06-17T12:00:00+07:00").getTime();
 const FINAL_OPEN = FINAL_DEADLINE - (60 * 60 * 1000); // buka submission form jam 11:00 WIB
 
 export default function SubmissionPage() {
@@ -86,13 +86,13 @@ export default function SubmissionPage() {
           </div>
         )}
 
-        {/* LOCK SCREEN: Jika Waktu Belum Jam 11 Siang (10 Mei) */}
+        {/* LOCK SCREEN: Jika Waktu Belum Jam 11 Siang (17 Juni) */}
         {teamStatus === 'approved' && !isFinalOpen && (
           <div className="absolute inset-0 bg-[#050814]/80 backdrop-blur-sm flex flex-col items-center justify-center z-20">
              <div className="bg-emerald-900/30 p-4 rounded-2xl mb-4 border border-emerald-500/30"><Clock className="w-8 h-8 text-emerald-400 animate-pulse" /></div>
              <h2 className="text-xl font-normal text-gray-200 mb-2">Final Gate is Closed</h2>
              <p className="text-sm font-light text-gray-400 text-center max-w-xs">
-               Final submission will officially open on <strong className="text-white">10 May at 11:00 WIB</strong>. Focus on finishing your product!
+               Final submission will officially open on <strong className="text-white">17 June at 11:00 WIB</strong>. Focus on finishing your product!
              </p>
           </div>
         )}
