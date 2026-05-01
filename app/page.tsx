@@ -34,10 +34,10 @@ const translations = {
 
     // Hero
     typewriterLines: [
-      "Early Bird Registration is Closed!",
-      "Normal Batch Registration is Closed",
+      "Registration is Extended Until 31 May!",
+      "Register Now!",
     ],
-    typewriterMobile: "Normal Registration is Closed",
+    typewriterMobile: "Registration is Extended Until 31 May!",
     heroPrimary: "Register Now!",
     heroSecondary: "Learn More",
 
@@ -104,10 +104,10 @@ const translations = {
 
     // Hero
     typewriterLines: [
-      "Pendaftaran Early Bird Telah Ditutup!",
-      "Pendaftaran Batch Normal Telah Ditutup",
+      "Pendaftaran di perpanjang sampai tanggal 31 Mei!",
+      "Daftar Sekarang!",
     ],
-    typewriterMobile: "Pendaftaran Normal Telah Ditutup",
+    typewriterMobile: "Pendaftaran di perpanjang sampai tanggal 31 Mei!",
     heroPrimary: "Daftar Sekarang!",
     heroSecondary: "Pelajari Lebih Lanjut",
 
@@ -256,7 +256,7 @@ export default function LandingPage() {
             {/* Image (4:5 Aspect Ratio) */}
             <div className="w-full aspect-[4/5] bg-gray-900 relative">
               <img
-                src="/feeds/feed1.webp"
+                src="/feeds/feed2.webp"
                 alt="Announcement"
                 className="w-full h-full object-cover"
               />
@@ -378,7 +378,7 @@ export default function LandingPage() {
                 ) : (
                   <span className="inline-block mb-6 text-xl md:text-2xl text-center md:text-left h-8">{tx.typewriterMobile}</span>
                 )}
-                <Countdown targetDate="2026-04-26T23:59:59" />
+                <Countdown targetDate="2026-05-31T23:59:59" />
               </div>
 
               <div className="flex flex-col sm:flex-row justify-center md:justify-start items-center gap-6 mt-4">
