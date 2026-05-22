@@ -58,32 +58,32 @@ export default function ManageAdminsPage() {
       {/* HEADER CONTROLS */}
       <div className="flex flex-col md:flex-row justify-between items-center border-b border-white/10 p-6 gap-4">
         <div>
-          <h1 className="text-3xl font-medium flex items-center gap-3">Admins Data</h1>
-          <p className="text-sm text-gray-400 mt-1">Review and approve access requests for committee members.</p>
+          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">Admins Data</h1>
+          <p className="text-sm text-gray-400/80 mt-1.5 font-light tracking-wide">Review and approve access requests for committee members.</p>
         </div>
 
         <div className="flex items-center gap-3 w-full md:w-auto">
           <div className="relative w-full md:w-64">
-            <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-500" />
+            <Search className="absolute left-3 top-2.5 w-4 h-4 text-blue-400" />
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search admins..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#1c1c1c] border border-white/10 rounded-md py-2 pl-9 pr-4 text-sm focus:outline-none focus:border-emerald-500 transition-colors text-white"
+              className="w-full bg-[#111827] border border-[#1F2937] rounded-full py-2 pl-9 pr-4 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all text-white"
             />
           </div>
         </div>
       </div>
 
       {/* FILTERS */}
-      <div className="flex flex-col md:flex-row gap-4 bg-[#1c1c1c] p-4 border-b border-white/10">
+      <div className="flex flex-col md:flex-row gap-4 bg-[#111827] p-4 border-b border-[#1F2937]">
         <div className="flex flex-col gap-1.5 w-full md:w-1/2">
           <label className="text-xs text-gray-400 font-medium tracking-wider">Status</label>
           <select
             value={activeStatusTab}
             onChange={(e) => setActiveStatusTab(e.target.value)}
-            className="w-full bg-[#2a2a2a] border border-white/10 rounded-md py-2 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
+            className="w-full bg-[#1F2937] border border-[#374151] rounded-xl py-2 px-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           >
             {["All", "Approved", "Pending", "Rejected"].map((tab) => (
               <option key={tab} value={tab}>{tab}</option>
@@ -93,17 +93,17 @@ export default function ManageAdminsPage() {
       </div>
 
       {/* TABEL DATA */}
-      <div className="bg-[#1c1c1c] border border-white/10 overflow-hidden shadow-sm overflow-x-auto relative min-h-[400px]">
+      <div className="bg-[#111827] border border-[#1F2937] rounded-2xl mx-4 lg:mx-6 mb-6 overflow-hidden overflow-x-auto relative min-h-[400px]">
         {isLoading ? (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#1c1c1c]/80 z-10 backdrop-blur-sm">
-            <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p className="text-emerald-400 text-sm animate-pulse">Loading data...</p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#111827]/80 z-10 backdrop-blur-sm">
+            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+            <p className="text-blue-500 text-sm animate-pulse">Loading data...</p>
           </div>
         ) : null}
 
         <table className="w-full text-left whitespace-nowrap">
           <thead>
-            <tr className="bg-white/5 text-center tracking-widest text-gray-400 border-b border-white/10">
+            <tr className="bg-[#101A35]/50 text-center tracking-widest text-blue-300 border-b border-white/5 text-xs">
               <th className="p-5 font-medium w-12">No.</th>
               <th className="p-5 font-medium">Admin Info</th>
               <th className="p-5 font-medium">Status</th>
@@ -113,24 +113,24 @@ export default function ManageAdminsPage() {
           <tbody className="divide-y divide-white/5">
             {filteredAdmins.length > 0 ? (
               filteredAdmins.map((admin, index) => (
-                <tr key={admin.id} className="hover:bg-white/[0.02] transition-colors">
-                  <td className="p-4 border-r border-white/10 text-center text-gray-400 font-medium">{index + 1}</td>
-                  <td className="p-4 border-r border-white/10">
+                <tr key={admin.id} className="even:bg-white/[0.02] odd:bg-transparent hover:bg-white/[0.05] transition-colors">
+                  <td className="p-4 border-r border-[#1F2937] text-center text-gray-400 font-medium">{index + 1}</td>
+                  <td className="p-4 border-r border-[#1F2937]">
                     <div className="flex flex-col gap-1">
                       <div className="text-lg font-medium text-white">{admin.full_name}</div>
                       <div className="text-sm text-gray-400 flex items-center gap-1"><Mail className="w-3 h-3" /> {admin.email}</div>
                     </div>
                   </td>
-                  <td className="p-5 border-r border-white/10 text-center">
-                    <span className={`inline-flex items-center text-xs px-3 py-1.5 rounded-md border border-white/10 justify-center w-32 ${admin.status === 'approved' ? 'text-emerald-400 bg-emerald-400/10' : admin.status === 'pending' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-400 bg-red-400/10'}`}>
-                      {admin.status?.toUpperCase() || 'UNKNOWN'}
+                  <td className="p-5 border-r border-[#1F2937] text-center">
+                    <span className={`inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-md justify-center w-32 ${admin.status === 'approved' ? 'text-white bg-green-600' : admin.status === 'pending' ? 'text-white bg-yellow-600' : 'text-white bg-red-600'}`}>
+                      {admin.status || 'UNKNOWN'}
                     </span>
                   </td>
                   <td className="p-5">
                     <div className="flex justify-center gap-2">
-                      {admin.status !== 'approved' && <button onClick={() => handleUpdateAdminStatus(admin.id, 'approved')} className="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg hover:bg-emerald-500/20" title="Approve"><UserCheck className="w-5 h-5" /></button>}
-                      {admin.status !== 'rejected' && <button onClick={() => handleUpdateAdminStatus(admin.id, 'rejected')} className="p-2 bg-orange-500/10 text-orange-400 rounded-lg hover:bg-orange-500/20" title="Reject"><UserX className="w-5 h-5" /></button>}
-                      <button onClick={() => handleDeleteAdmin(admin.id, admin.full_name)} className="p-2 bg-red-500/10 text-red-500 rounded-lg ml-2 hover:bg-red-500/20" title="Delete"><Trash2 className="w-5 h-5" /></button>
+                      {admin.status !== 'approved' && <button onClick={() => handleUpdateAdminStatus(admin.id, 'approved')} className="p-2 bg-green-600 text-white rounded-lg hover:bg-green-700" title="Approve"><UserCheck className="w-5 h-5" /></button>}
+                      {admin.status !== 'rejected' && <button onClick={() => handleUpdateAdminStatus(admin.id, 'rejected')} className="p-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700" title="Reject"><UserX className="w-5 h-5" /></button>}
+                      <button onClick={() => handleDeleteAdmin(admin.id, admin.full_name)} className="p-2 bg-red-600 text-white rounded-lg ml-2 hover:bg-red-700" title="Delete"><Trash2 className="w-5 h-5" /></button>
                     </div>
                   </td>
                 </tr>

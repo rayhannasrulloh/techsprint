@@ -33,9 +33,8 @@ export default function AdminSidebar() {
   return (
     <>
       {/* --- MOBILE HEADER (Hanya Muncul di Layar HP) --- */}
-      <div className="md:hidden flex items-center justify-between p-4 bg-[#1c1c1c] border-b border-white/10 sticky top-0 z-40 shadow-sm">
+      <div className="md:hidden flex items-center justify-between p-4 bg-[#0A1020]">
         <div className="flex items-center gap-2">
-          <ShieldAlert className="w-5 h-5 text-emerald-500" />
           <div>
             <h2 className="text-sm font-semibold text-white tracking-wide">Admin Panel</h2>
           </div>
@@ -60,13 +59,13 @@ export default function AdminSidebar() {
       {/* Di Desktop (md:): Selalu muncul (translate-x-0), posisi relative
         Di Mobile: Posisi fixed, melayang dari kiri, bisa di toggle buka-tutup 
       */}
-      <div className={`fixed inset-y-0 left-0 z-[70] w-64 bg-[#1c1c1c] border-r border-white/10 flex flex-col transition-transform duration-300 md:relative md:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <div className={`fixed inset-y-0 left-0 z-[70] w-64 bg-[#0A1020] flex flex-col transition-transform duration-300 md:relative md:translate-x-0 md:h-screen ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
         
         {/* Header Sidebar */}
-        <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between">
-          <div className="flex items-center gap-2 mt-12">
+        <div className="px-6 py-6 flex items-center justify-between">
+          <div className="flex items-center gap-3 md:mt-4">
             <div>
-              <h2 className="text-sm font-medium text-gray-200">Admin Panel</h2>
+              <h2 className="text-lg font-medium text-gray-200">Admin Panel</h2>
             </div>
           </div>
           
@@ -85,23 +84,25 @@ export default function AdminSidebar() {
                 key={item.name} 
                 href={item.path}
                 onClick={() => setIsOpen(false)} 
-                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-all text-sm font-normal ${
-                  isActive ? "bg-white/10 text-white" : "text-gray-400 hover:text-gray-200"
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 text-sm font-medium group ${
+                  isActive 
+                    ? "bg-blue-600 text-white" 
+                    : "text-gray-400 hover:text-white hover:bg-[#111827]"
                 }`}
               >
-                <item.icon className="w-4 h-4" /> {item.name}
+                <item.icon className={`w-4 h-4 transition-colors ${isActive ? "text-white" : "group-hover:text-blue-400"}`} /> {item.name}
               </Link>
             );
           })}
         </nav>
 
         {/* Tombol Logout */}
-        <div className="p-4 border-t border-white/10">
+        <div className="p-4">
           <button 
             onClick={handleLogout}
-            className="flex items-center gap-3 px-3 py-2 w-full rounded-md text-gray-400 hover:text-white hover:bg-white/5 transition-colors text-sm font-normal"
+            className="flex items-center gap-3 px-3 py-2.5 w-full rounded-lg text-gray-400 hover:text-white transition-all duration-200 text-sm font-medium hover:text-red-400 group"
           >
-            <LogOut className="w-4 h-4" /> Sign Out
+            <LogOut className="w-4 h-4 group-hover:text-red-400 transition-colors" /> Sign Out
           </button>
         </div>
 

@@ -203,19 +203,19 @@ export default function ParticipantsPage() {
       {/* HEADER CONTROLS */}
       <div className="flex flex-col md:flex-row justify-between items-center border-b border-white/10 p-6 gap-4">
         <div>
-          <h1 className="text-3xl font-medium flex items-center gap-3">Participants Data</h1>
-          <p className="text-sm text-gray-400 mt-1">Manage participant data and submissions</p>
+          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">Participants Data</h1>
+          <p className="text-sm text-gray-400/80 mt-1.5 font-light tracking-wide">Manage participant data and submissions</p>
         </div>
 
         <div className="flex items-center gap-3 w-full md:w-auto">
           <div className="relative w-full md:w-64">
-            <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-500" />
+            <Search className="absolute left-3 top-2.5 w-4 h-4 text-blue-400" />
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search participants..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#1c1c1c] border border-white/10 rounded-md py-2 pl-9 pr-4 text-sm focus:outline-none focus:border-emerald-500 transition-colors text-white"
+              className="w-full bg-[#0A1020] border border-white/5 rounded-full py-2 pl-9 pr-4 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all text-white shadow-sm"
             />
           </div>
           {accountType === "Participants" && (
@@ -223,27 +223,27 @@ export default function ParticipantsPage() {
               <div className="relative">
                 <button
                   onClick={() => setIsColumnDropdownOpen(!isColumnDropdownOpen)}
-                  className="flex items-center gap-2 px-4 py-2 bg-[#2a2a2a] border border-white/10 text-white rounded-md hover:bg-[#333] transition-colors text-sm font-medium shadow-sm"
+                  className="flex items-center gap-2 px-4 py-2 bg-[#0A1020] border border-white/5 text-white rounded-xl hover:bg-white/5 transition-colors text-sm font-medium shadow-sm"
                 >
-                  <Columns className="w-4 h-4" /> Columns
+                  <Columns className="w-4 h-4 text-blue-400" /> Columns
                 </button>
 
                 {isColumnDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-[#1c1c1c] border border-white/10 rounded-md shadow-xl z-50 p-2 flex flex-col gap-1">
-                    <label className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded cursor-pointer text-sm text-gray-300">
-                      <input type="checkbox" checked={visibleColumns.teamInfo} onChange={() => setVisibleColumns({...visibleColumns, teamInfo: !visibleColumns.teamInfo})} className="rounded bg-black border-white/20 text-emerald-500 focus:ring-emerald-500" />
+                  <div className="absolute right-0 mt-2 w-48 bg-[#0A1020] border border-white/5 rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.5)] z-50 p-2 flex flex-col gap-1">
+                    <label className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded-lg cursor-pointer text-sm text-gray-300">
+                      <input type="checkbox" checked={visibleColumns.teamInfo} onChange={() => setVisibleColumns({...visibleColumns, teamInfo: !visibleColumns.teamInfo})} className="rounded bg-[#050B1A] border-white/10 text-blue-500 focus:ring-blue-500" />
                       Team Info
                     </label>
-                    <label className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded cursor-pointer text-sm text-gray-300">
-                      <input type="checkbox" checked={visibleColumns.statusPayment} onChange={() => setVisibleColumns({...visibleColumns, statusPayment: !visibleColumns.statusPayment})} className="rounded bg-black border-white/20 text-emerald-500 focus:ring-emerald-500" />
+                    <label className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded-lg cursor-pointer text-sm text-gray-300">
+                      <input type="checkbox" checked={visibleColumns.statusPayment} onChange={() => setVisibleColumns({...visibleColumns, statusPayment: !visibleColumns.statusPayment})} className="rounded bg-[#050B1A] border-white/10 text-blue-500 focus:ring-blue-500" />
                       Status & Payment
                     </label>
-                    <label className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded cursor-pointer text-sm text-gray-300">
-                      <input type="checkbox" checked={visibleColumns.checkpoints} onChange={() => setVisibleColumns({...visibleColumns, checkpoints: !visibleColumns.checkpoints})} className="rounded bg-black border-white/20 text-emerald-500 focus:ring-emerald-500" />
+                    <label className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded-lg cursor-pointer text-sm text-gray-300">
+                      <input type="checkbox" checked={visibleColumns.checkpoints} onChange={() => setVisibleColumns({...visibleColumns, checkpoints: !visibleColumns.checkpoints})} className="rounded bg-[#050B1A] border-white/10 text-blue-500 focus:ring-blue-500" />
                       Checkpoints
                     </label>
-                    <label className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded cursor-pointer text-sm text-gray-300">
-                      <input type="checkbox" checked={visibleColumns.finalSubmission} onChange={() => setVisibleColumns({...visibleColumns, finalSubmission: !visibleColumns.finalSubmission})} className="rounded bg-black border-white/20 text-emerald-500 focus:ring-emerald-500" />
+                    <label className="flex items-center gap-2 px-2 py-1.5 hover:bg-white/5 rounded-lg cursor-pointer text-sm text-gray-300">
+                      <input type="checkbox" checked={visibleColumns.finalSubmission} onChange={() => setVisibleColumns({...visibleColumns, finalSubmission: !visibleColumns.finalSubmission})} className="rounded bg-[#050B1A] border-white/10 text-blue-500 focus:ring-blue-500" />
                       Final Submission
                     </label>
                   </div>
@@ -251,7 +251,7 @@ export default function ParticipantsPage() {
               </div>
               <button
                 onClick={handleExportCSV}
-                className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors text-sm font-medium shadow-sm"
+                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl hover:from-blue-500 hover:to-blue-400 transition-all text-sm font-medium shadow-[0_0_15px_rgba(37,99,235,0.3)]"
               >
                 <Download className="w-4 h-4" /> Export CSV
               </button>
@@ -261,14 +261,14 @@ export default function ParticipantsPage() {
       </div>
 
       {/* FILTERS */}
-      <div className="flex flex-col md:flex-row gap-4 bg-[#1c1c1c] p-4 border-b border-white/10">
+      <div className="flex flex-col md:flex-row gap-4 bg-[#111827] p-4 border-b border-[#1F2937]">
         {accountType === "Participants" && (
           <div className="flex flex-col gap-1.5 w-full md:w-1/2">
             <label className="text-xs text-gray-400 font-medium tracking-wider">Track</label>
             <select
               value={activeTrackTab}
               onChange={(e) => setActiveTrackTab(e.target.value)}
-              className="w-full bg-[#2a2a2a] border border-white/10 rounded-md py-2 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full bg-[#101A35] border border-white/5 rounded-xl py-2 px-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
             >
               {["All", "UI/UX", "Data Automation", "System Analyst"].map((tab) => (
                 <option key={tab} value={tab}>{tab}</option>
@@ -282,7 +282,7 @@ export default function ParticipantsPage() {
           <select
             value={activeStatusTab}
             onChange={(e) => setActiveStatusTab(e.target.value)}
-            className="w-full bg-[#2a2a2a] border border-white/10 rounded-md py-2 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
+            className="w-full bg-[#101A35] border border-white/5 rounded-xl py-2 px-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
           >
             {["All", "Approved", "Pending", "Rejected"].map((tab) => (
               <option key={tab} value={tab}>{tab}</option>
@@ -292,19 +292,19 @@ export default function ParticipantsPage() {
       </div>
 
       {/* TABEL DATA */}
-      <div className="bg-[#1c1c1c] border border-white/10 overflow-hidden shadow-sm overflow-x-auto relative min-h-[400px]">
+      <div className="bg-[#111827] border border-[#1F2937] rounded-2xl mx-4 lg:mx-6 mb-6 overflow-hidden overflow-x-auto relative min-h-[400px]">
 
         {isLoading ? (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#1c1c1c]/80 z-10 backdrop-blur-sm">
-            <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p className="text-emerald-400 text-sm animate-pulse">Loading data...</p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#111827]/80 z-10 backdrop-blur-sm">
+            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+            <p className="text-blue-500 text-sm animate-pulse">Loading data...</p>
           </div>
         ) : null}
 
         {accountType === "Participants" ? (
           <table className="w-full text-left whitespace-nowrap">
             <thead>
-              <tr className="bg-white/5 text-center tracking-widest text-gray-400 border-b border-white/10">
+              <tr className="bg-[#101A35]/50 text-center tracking-widest text-blue-300 border-b border-white/5 text-xs">
                 <th className="p-5 font-medium w-12">No.</th>
                 {visibleColumns.teamInfo && <th className="p-5 font-medium">Team Info</th>}
                 {visibleColumns.statusPayment && <th className="p-5 font-medium">Status & Payment</th>}
@@ -319,8 +319,8 @@ export default function ParticipantsPage() {
                   const finalSub = team.submissions && team.submissions.length > 0 ? team.submissions[0] : null;
 
                   return (
-                    <tr key={team.id} className="hover:bg-white/[0.02] transition-colors">
-                      <td className="p-4 border-r border-white/10 text-center text-gray-400 font-medium">
+                    <tr key={team.id} className="even:bg-white/[0.02] odd:bg-transparent hover:bg-white/[0.05] transition-colors">
+                      <td className="p-4 border-r border-[#1F2937] text-center text-gray-400 font-medium">
                         {index + 1}
                       </td>
                       {visibleColumns.teamInfo && (
@@ -350,8 +350,8 @@ export default function ParticipantsPage() {
                         <td className="p-5 border-r border-white/10">
                           <div className="flex flex-col gap-2 items-start">
                             {/* Status Label */}
-                            <span className={`flex items-center text-xs w-full py-2 rounded-md border border-white/10 justify-center ${team.status === 'approved' ? 'text-emerald-400 bg-emerald-400/10' : team.status === 'pending' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-400 bg-red-400/10'}`}>
-                              {team.status.toUpperCase()}
+                            <span className={`flex items-center text-[10px] uppercase font-bold tracking-wider w-full py-1.5 rounded-md justify-center ${team.status === 'approved' ? 'text-white bg-green-600' : team.status === 'pending' ? 'text-white bg-yellow-600' : 'text-white bg-red-600'}`}>
+                              {team.status}
                             </span>
 
                             {/* Bukti ID Card */}
@@ -391,31 +391,31 @@ export default function ParticipantsPage() {
                       )}
 
                       {visibleColumns.checkpoints && (
-                        <td className="p-5 border-r border-white/10">
+                        <td className="p-5 border-r border-[#1F2937]">
                           <div className="flex gap-4 items-center justify-center">
                             {[1, 2, 3].map((cpNum) => {
                               const cp = team.checkpoints?.find((c: any) => c.checkpoint_number === cpNum);
                               let statusColor = ""; let Icon = null;
                               if (cp) {
                                 const isLate = new Date(cp.created_at).getTime() > CP_DEADLINES[cpNum];
-                                if (!cp.is_reviewed) { statusColor = "text-yellow-400 bg-yellow-400/10 border-yellow-500/30 hover:bg-yellow-400/20"; Icon = Clock; }
-                                else { statusColor = isLate ? "text-red-400 bg-red-400/10 border-red-500/30 hover:bg-red-400/20" : "text-emerald-400 bg-emerald-400/10 border-emerald-500/30 hover:bg-emerald-400/20"; Icon = isLate ? AlertTriangle : CheckCircle2; }
+                                if (!cp.is_reviewed) { statusColor = "text-white bg-yellow-600"; Icon = Clock; }
+                                else { statusColor = isLate ? "text-white bg-red-600" : "text-white bg-green-600"; Icon = isLate ? AlertTriangle : CheckCircle2; }
                               } else {
-                                if (now > CP_DEADLINES[cpNum]) { statusColor = "text-gray-600 bg-gray-900 border-gray-800"; Icon = XCircle; }
-                                else { statusColor = "text-gray-500 bg-white/5 border-white/10"; Icon = CircleDashed; }
+                                if (now > CP_DEADLINES[cpNum]) { statusColor = "text-white bg-gray-700"; Icon = XCircle; }
+                                else { statusColor = "text-gray-400 bg-[#1F2937]"; Icon = CircleDashed; }
                               }
                               return (
                                 <div key={cpNum} className="flex flex-col items-center gap-1">
                                   <span className="text-[10px] text-gray-500 uppercase font-semibold">CP {cpNum}</span>
                                   {cp ? (
-                                    <button onClick={() => openCpModal(team, cp, cpNum)} className={`p-2 rounded-xl border transition-all hover:scale-105 ${statusColor} group relative`}>
+                                    <button onClick={() => openCpModal(team, cp, cpNum)} className={`p-2 rounded-xl transition-all hover:scale-105 ${statusColor} group relative`}>
                                       <Icon className="w-5 h-5" />
                                       <span className="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <Eye className="w-3 h-3" />
                                       </span>
                                     </button>
                                   ) : (
-                                    <div className={`p-2 rounded-xl border ${statusColor}`}><Icon className="w-5 h-5 opacity-50" /></div>
+                                    <div className={`p-2 rounded-xl ${statusColor}`}><Icon className="w-5 h-5 opacity-50" /></div>
                                   )}
                                 </div>
                               );
@@ -425,7 +425,7 @@ export default function ParticipantsPage() {
                       )}
 
                       {visibleColumns.finalSubmission && (
-                        <td className="p-5 border-r border-white/10">
+                        <td className="p-5 border-r border-[#1F2937]">
                           {finalSub ? (
                             <div className="flex flex-col gap-2">
                               <a href={finalSub.final_repo_link} target="_blank" rel="noreferrer" className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-1">
@@ -443,9 +443,9 @@ export default function ParticipantsPage() {
 
                       <td className="p-5">
                         <div className="flex justify-start gap-2">
-                          {team.status !== 'approved' && <button onClick={() => handleUpdateStatus(team.id, 'approved')} className="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg hover:bg-emerald-500/20" title="Approve"><UserCheck className="w-5 h-5" /></button>}
-                          {team.status !== 'rejected' && <button onClick={() => handleUpdateStatus(team.id, 'rejected')} className="p-2 bg-orange-500/10 text-orange-400 rounded-lg hover:bg-orange-500/20" title="Reject"><UserX className="w-5 h-5" /></button>}
-                          <button onClick={() => handleDeleteTeam(team.id, team.team_name)} className="p-2 bg-red-500/10 text-red-500 rounded-lg ml-2 hover:bg-red-500/20" title="Delete"><Trash2 className="w-5 h-5" /></button>
+                          {team.status !== 'approved' && <button onClick={() => handleUpdateStatus(team.id, 'approved')} className="p-2 bg-green-600 text-white rounded-lg hover:bg-green-700" title="Approve"><UserCheck className="w-5 h-5" /></button>}
+                          {team.status !== 'rejected' && <button onClick={() => handleUpdateStatus(team.id, 'rejected')} className="p-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700" title="Reject"><UserX className="w-5 h-5" /></button>}
+                          <button onClick={() => handleDeleteTeam(team.id, team.team_name)} className="p-2 bg-red-600 text-white rounded-lg ml-2 hover:bg-red-700" title="Delete"><Trash2 className="w-5 h-5" /></button>
                         </div>
                       </td>
                     </tr>
@@ -467,7 +467,7 @@ export default function ParticipantsPage() {
         ) : (
           <table className="w-full text-left whitespace-nowrap">
             <thead>
-              <tr className="bg-white/5 text-center tracking-widest text-gray-400 border-b border-white/10">
+              <tr className="bg-[#101A35]/50 text-center tracking-widest text-blue-300 border-b border-white/5 text-xs">
                 <th className="p-5 font-medium w-12">No.</th>
                 <th className="p-5 font-medium">Admin Info</th>
                 <th className="p-5 font-medium">Status</th>
@@ -477,24 +477,24 @@ export default function ParticipantsPage() {
             <tbody className="divide-y divide-white/5">
               {filteredAdmins.length > 0 ? (
                 filteredAdmins.map((admin, index) => (
-                  <tr key={admin.id} className="hover:bg-white/[0.02] transition-colors">
-                    <td className="p-4 border-r border-white/10 text-center text-gray-400 font-medium">{index + 1}</td>
-                    <td className="p-4 border-r border-white/10">
+                  <tr key={admin.id} className="even:bg-white/[0.02] odd:bg-transparent hover:bg-white/[0.05] transition-colors">
+                    <td className="p-4 border-r border-[#1F2937] text-center text-gray-400 font-medium">{index + 1}</td>
+                    <td className="p-4 border-r border-[#1F2937]">
                       <div className="flex flex-col gap-1">
                         <div className="text-lg font-medium text-white">{admin.full_name}</div>
                         <div className="text-sm text-gray-400 flex items-center gap-1"><Mail className="w-3 h-3" /> {admin.email}</div>
                       </div>
                     </td>
-                    <td className="p-5 border-r border-white/10 text-center">
-                      <span className={`inline-flex items-center text-xs px-3 py-1.5 rounded-md border border-white/10 justify-center w-32 ${admin.status === 'approved' ? 'text-emerald-400 bg-emerald-400/10' : admin.status === 'pending' ? 'text-yellow-400 bg-yellow-400/10' : 'text-red-400 bg-red-400/10'}`}>
-                        {admin.status?.toUpperCase() || 'UNKNOWN'}
+                    <td className="p-5 border-r border-[#1F2937] text-center">
+                      <span className={`inline-flex items-center text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-md justify-center w-32 ${admin.status === 'approved' ? 'text-white bg-green-600' : admin.status === 'pending' ? 'text-white bg-yellow-600' : 'text-white bg-red-600'}`}>
+                        {admin.status || 'UNKNOWN'}
                       </span>
                     </td>
                     <td className="p-5">
                       <div className="flex justify-center gap-2">
-                        {admin.status !== 'approved' && <button onClick={() => handleUpdateAdminStatus(admin.id, 'approved')} className="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg hover:bg-emerald-500/20" title="Approve"><UserCheck className="w-5 h-5" /></button>}
-                        {admin.status !== 'rejected' && <button onClick={() => handleUpdateAdminStatus(admin.id, 'rejected')} className="p-2 bg-orange-500/10 text-orange-400 rounded-lg hover:bg-orange-500/20" title="Reject"><UserX className="w-5 h-5" /></button>}
-                        <button onClick={() => handleDeleteAdmin(admin.id, admin.full_name)} className="p-2 bg-red-500/10 text-red-500 rounded-lg ml-2 hover:bg-red-500/20" title="Delete"><Trash2 className="w-5 h-5" /></button>
+                        {admin.status !== 'approved' && <button onClick={() => handleUpdateAdminStatus(admin.id, 'approved')} className="p-2 bg-green-600 text-white rounded-lg hover:bg-green-700" title="Approve"><UserCheck className="w-5 h-5" /></button>}
+                        {admin.status !== 'rejected' && <button onClick={() => handleUpdateAdminStatus(admin.id, 'rejected')} className="p-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700" title="Reject"><UserX className="w-5 h-5" /></button>}
+                        <button onClick={() => handleDeleteAdmin(admin.id, admin.full_name)} className="p-2 bg-red-600 text-white rounded-lg ml-2 hover:bg-red-700" title="Delete"><Trash2 className="w-5 h-5" /></button>
                       </div>
                     </td>
                   </tr>

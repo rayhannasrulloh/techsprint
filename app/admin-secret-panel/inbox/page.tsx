@@ -116,7 +116,7 @@ export default function AdminInboxPage() {
     }
   };
 
-  if (isLoading) return <div className="min-h-screen flex items-center justify-center text-emerald-500">Loading Secure Inbox...</div>;
+  if (isLoading) return <div className="min-h-screen flex items-center justify-center text-blue-500">Loading Secure Inbox...</div>;
 
   return (
     <div className="max-w-[90rem] mx-auto p-6 flex flex-col h-[calc(100vh-2rem)]">
@@ -126,29 +126,29 @@ export default function AdminInboxPage() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <div>
-              <h1 className="text-3xl font-medium flex items-center gap-3">
+              <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
                 Support Inbox
               </h1>
-              <p className="text-sm text-gray-400 mt-1">academic@techsprint.web.id</p>
+              <p className="text-sm text-gray-400/80 mt-1.5 font-light tracking-wide">academic@techsprint.web.id</p>
             </div>
           </div>
           <button 
             onClick={() => { setIsComposing(true); setSelectedEmail(null); }}
-            className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md text-sm font-medium transition-colors shadow-sm"
+            className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-medium transition-colors"
           >
             <Pencil className="w-4 h-4" /> Compose Email
           </button>
         </div>
 
         {/* Mailbox Container */}
-        <div className="flex-1 bg-[#1c1c1c] border border-white/10 rounded-xl overflow-hidden shadow-sm flex">
+        <div className="flex-1 bg-[#111827] border border-[#1F2937] rounded-2xl overflow-hidden flex">
 
           {/* Left Panel: Email List */}
-          <div className="w-1/3 border-r border-white/10 flex flex-col bg-[#1c1c1c]/50">
-            <div className="p-4 border-b border-white/10">
+          <div className="w-1/3 border-r border-[#1F2937] flex flex-col bg-[#111827]">
+            <div className="p-4 border-b border-[#1F2937]">
               <div className="relative w-full">
-                <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-500" />
-                <input type="text" placeholder="Search emails..." className="w-full bg-[#121212] border border-white/10 rounded-md py-2 pl-9 pr-4 text-sm focus:outline-none focus:border-emerald-500 transition-colors text-white" />
+                <Search className="absolute left-3 top-2.5 w-4 h-4 text-blue-400" />
+                <input type="text" placeholder="Search emails..." className="w-full bg-[#1F2937] border border-[#374151] rounded-full py-2 pl-9 pr-4 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors text-white" />
               </div>
             </div>
 
@@ -160,7 +160,7 @@ export default function AdminInboxPage() {
                   <button
                     key={email.id}
                     onClick={() => handleSelectEmail(email)}
-                    className={`w-full text-left p-4 border-b border-white/5 transition-colors hover:bg-white/[0.03] ${selectedEmail?.id === email.id ? 'bg-[#2e2e2e] border-l-2 border-l-emerald-500' : ''} ${!email.is_read ? 'bg-white/[0.02]' : ''}`}
+                    className={`w-full text-left p-4 border-b border-[#1F2937] transition-colors hover:bg-white/[0.03] ${selectedEmail?.id === email.id ? 'bg-blue-600/10 border-l-2 border-l-blue-500' : 'border-l-2 border-l-transparent'} ${!email.is_read ? 'bg-white/[0.02]' : ''}`}
                   >
                     <div className="flex justify-between items-start mb-1">
                       <span className={`text-sm truncate pr-2 ${!email.is_read ? 'font-medium text-white' : 'font-normal text-gray-300'}`}>
@@ -170,7 +170,7 @@ export default function AdminInboxPage() {
                         {new Date(email.created_at).toLocaleDateString()}
                       </span>
                     </div>
-                    <div className={`text-xs truncate mb-1 ${!email.is_read ? 'text-emerald-400 font-medium' : 'text-gray-400 font-normal'}`}>
+                    <div className={`text-xs truncate mb-1 ${!email.is_read ? 'text-blue-400 font-medium' : 'text-gray-400 font-normal'}`}>
                       {email.subject || '(No Subject)'}
                     </div>
                   </button>
@@ -180,12 +180,12 @@ export default function AdminInboxPage() {
           </div>
 
           {/* Right Panel: Email Content or Compose */}
-          <div className="flex-1 flex flex-col bg-[#1c1c1c]">
+          <div className="flex-1 flex flex-col bg-[#111827]">
             {isComposing ? (
               <div className="flex-1 flex flex-col overflow-y-auto">
-                <div className="p-6 border-b border-white/10 flex justify-between items-center bg-[#252525]">
+                <div className="p-6 border-b border-[#1F2937] flex justify-between items-center bg-[#030712]">
                   <h2 className="text-xl font-medium text-white flex items-center gap-2">
-                    <Pencil className="w-5 h-5 text-emerald-500" /> New Email Message
+                    <Pencil className="w-5 h-5 text-blue-500" /> New Email Message
                   </h2>
                   <button onClick={() => setIsComposing(false)} className="text-gray-400 hover:text-white transition-colors">
                     Cancel
@@ -197,13 +197,13 @@ export default function AdminInboxPage() {
                   <div className="flex flex-col gap-2">
                     <label className="text-sm font-medium text-gray-400">Recipient Mode</label>
                     <div className="flex gap-3">
-                      <button onClick={() => setRecipientMode('all')} className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm transition-colors border ${recipientMode === 'all' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-[#2a2a2a] border-white/10 text-gray-300 hover:bg-[#333]'}`}>
+                      <button onClick={() => setRecipientMode('all')} className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm transition-colors border ${recipientMode === 'all' ? 'bg-blue-600 border-blue-600 text-white' : 'bg-[#1F2937] border-[#374151] text-gray-300 hover:bg-[#374151]'}`}>
                         <Users className="w-4 h-4" /> Broadcast (All Teams)
                       </button>
-                      <button onClick={() => setRecipientMode('team')} className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm transition-colors border ${recipientMode === 'team' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-[#2a2a2a] border-white/10 text-gray-300 hover:bg-[#333]'}`}>
+                      <button onClick={() => setRecipientMode('team')} className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm transition-colors border ${recipientMode === 'team' ? 'bg-blue-600 border-blue-600 text-white' : 'bg-[#1F2937] border-[#374151] text-gray-300 hover:bg-[#374151]'}`}>
                         <User className="w-4 h-4" /> Specific Team
                       </button>
-                      <button onClick={() => setRecipientMode('custom')} className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm transition-colors border ${recipientMode === 'custom' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-[#2a2a2a] border-white/10 text-gray-300 hover:bg-[#333]'}`}>
+                      <button onClick={() => setRecipientMode('custom')} className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm transition-colors border ${recipientMode === 'custom' ? 'bg-blue-600 border-blue-600 text-white' : 'bg-[#1F2937] border-[#374151] text-gray-300 hover:bg-[#374151]'}`}>
                         <Type className="w-4 h-4" /> Custom Email
                       </button>
                     </div>
@@ -211,7 +211,7 @@ export default function AdminInboxPage() {
 
                   {/* To Field */}
                   {recipientMode === 'all' && (
-                    <div className="bg-emerald-500/10 text-emerald-400 p-3 rounded-md text-sm border border-emerald-500/20">
+                    <div className="bg-blue-600 text-white p-3 rounded-xl text-sm border border-blue-700">
                       This will send an email to all {teams.length} registered teams.
                     </div>
                   )}
@@ -222,7 +222,7 @@ export default function AdminInboxPage() {
                       <select 
                         value={composeData.to} 
                         onChange={(e) => setComposeData({...composeData, to: e.target.value})}
-                        className="w-full bg-[#121212] border border-white/10 rounded-md py-2 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                        className="w-full bg-[#1F2937] border border-[#374151] rounded-xl py-2 px-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       >
                         <option value="">-- Select a Team --</option>
                         {teams.map(t => (
@@ -240,7 +240,7 @@ export default function AdminInboxPage() {
                         value={composeData.to} 
                         onChange={(e) => setComposeData({...composeData, to: e.target.value})}
                         placeholder="john@example.com, jane@example.com"
-                        className="w-full bg-[#121212] border border-white/10 rounded-md py-2 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                        className="w-full bg-[#1F2937] border border-[#374151] rounded-xl py-2 px-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       />
                     </div>
                   )}
@@ -253,7 +253,7 @@ export default function AdminInboxPage() {
                       value={composeData.subject} 
                       onChange={(e) => setComposeData({...composeData, subject: e.target.value})}
                       placeholder="Email Subject"
-                      className="w-full bg-[#121212] border border-white/10 rounded-md py-2 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                      className="w-full bg-[#1F2937] border border-[#374151] rounded-xl py-2 px-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     />
                   </div>
 
@@ -264,19 +264,19 @@ export default function AdminInboxPage() {
                       value={composeData.message} 
                       onChange={(e) => setComposeData({...composeData, message: e.target.value})}
                       placeholder="Write your email message here..."
-                      className="w-full flex-1 bg-[#121212] border border-white/10 rounded-md py-3 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors resize-none min-h-[250px]"
+                      className="w-full flex-1 bg-[#1F2937] border border-[#374151] rounded-xl py-3 px-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none min-h-[250px]"
                     />
                   </div>
                 </div>
 
-                <div className="p-4 border-t border-white/10 bg-[#121212] flex justify-end gap-3">
-                  <button onClick={() => setIsComposing(false)} className="px-4 py-2 border border-white/10 hover:bg-white/5 text-white rounded-md text-sm font-medium transition-colors">
+                <div className="p-4 border-t border-[#1F2937] bg-[#111827] flex justify-end gap-3 rounded-br-2xl">
+                  <button onClick={() => setIsComposing(false)} className="px-4 py-2 border border-[#1F2937] hover:bg-[#1F2937] text-white rounded-xl text-sm font-medium transition-colors">
                     Discard
                   </button>
                   <button 
                     onClick={handleSendEmail} 
                     disabled={isSending}
-                    className="flex items-center gap-2 px-6 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-md text-sm font-medium transition-colors shadow-sm"
+                    className="flex items-center gap-2 px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-colors"
                   >
                     {isSending ? (
                       <>Sending...</>
@@ -288,11 +288,11 @@ export default function AdminInboxPage() {
               </div>
             ) : selectedEmail ? (
               <>
-                <div className="p-6 border-b border-white/10 flex justify-between items-start">
+                <div className="p-6 border-b border-[#1F2937] flex justify-between items-start">
                   <div>
                     <h2 className="text-xl font-medium text-white mb-2">{selectedEmail.subject || '(No Subject)'}</h2>
                     <p className="text-sm font-normal text-gray-400 flex items-center gap-2">
-                      From: <span className="text-emerald-400">{selectedEmail.sender}</span>
+                      From: <span className="text-blue-400">{selectedEmail.sender}</span>
                     </p>
                     <p className="text-xs font-light text-gray-500 mt-1">
                       Date: {new Date(selectedEmail.created_at).toLocaleString()}
@@ -315,8 +315,8 @@ export default function AdminInboxPage() {
                   )}
                 </div>
 
-                <div className="p-4 border-t border-white/10 bg-[#121212] flex gap-3">
-                  <button className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md text-sm font-medium transition-colors shadow-sm">
+                <div className="p-4 border-t border-[#1F2937] bg-[#111827] flex gap-3 rounded-br-2xl">
+                  <button className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-medium transition-colors">
                     Reply (via Mail Client)
                   </button>
                 </div>

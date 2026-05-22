@@ -114,15 +114,15 @@ export default function AnnouncementsPage() {
       
       {/* HEADER */}
       <div className="mb-6 flex flex-col gap-1">
-        <h1 className="text-3xl font-medium flex items-center gap-2">Announcements</h1>
-        <p className="text-sm text-gray-400 mt-1">Manage global updates sent to all participant dashboards.</p>
+        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">Announcements</h1>
+        <p className="text-sm text-gray-400/80 mt-1.5 font-light tracking-wide">Manage global updates sent to all participant dashboards.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         
         {/* --- KIRI: FORM CREATE/EDIT --- */}
         <div className="lg:col-span-2">
-          <div className={`bg-[#1c1c1c] border ${editId ? 'border-yellow-500/50 shadow-sm' : 'border-white/10 shadow-sm'} rounded-xl p-6 relative overflow-hidden transition-all duration-300`}>
+          <div className={`bg-[#111827] border ${editId ? 'border-yellow-500' : 'border-[#1F2937]'} rounded-2xl p-6 relative overflow-hidden transition-colors duration-300`}>
             {editId ? (
               <div className="mb-6 flex items-center justify-between border-b border-yellow-500/20 pb-4">
                 <h3 className="text-yellow-400 font-medium flex items-center gap-2"><Edit2 className="w-4 h-4"/> Edit Mode</h3>
@@ -133,20 +133,20 @@ export default function AnnouncementsPage() {
             <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
               <div>
                 <label className="block text-xs font-medium text-gray-300 mb-1.5">Announcement Title</label>
-                <input required type="text" value={broadcastTitle} onChange={(e) => setBroadcastTitle(e.target.value)} placeholder="e.g. Checkpoint 2 is now open!" className="w-full bg-[#121212] border border-white/10 rounded-md p-3 text-sm text-white focus:border-emerald-500 focus:outline-none transition-colors" />
+                <input required type="text" value={broadcastTitle} onChange={(e) => setBroadcastTitle(e.target.value)} placeholder="e.g. Checkpoint 2 is now open!" className="w-full bg-[#1F2937] border border-[#374151] rounded-xl p-3 text-sm text-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition-colors" />
               </div>
               
               <div>
                 <label className="block text-xs font-medium text-gray-300 mb-1.5">Message Content</label>
-                <textarea required rows={6} value={broadcastContent} onChange={(e) => setBroadcastContent(e.target.value)} placeholder="Type your message here..." className="w-full bg-[#121212] border border-white/10 rounded-md p-3 text-sm text-white focus:border-emerald-500 focus:outline-none resize-none transition-colors"></textarea>
+                <textarea required rows={6} value={broadcastContent} onChange={(e) => setBroadcastContent(e.target.value)} placeholder="Type your message here..." className="w-full bg-[#1F2937] border border-[#374151] rounded-xl p-3 text-sm text-white focus:ring-1 focus:ring-blue-500 focus:border-blue-500 focus:outline-none resize-none transition-colors"></textarea>
               </div>
 
               <div className="flex items-center gap-3 py-2 cursor-pointer" onClick={() => setIsPinned(!isPinned)}>
-                <input type="checkbox" checked={isPinned} onChange={() => {}} className="w-4 h-4 accent-emerald-500 border-white/10 rounded cursor-pointer pointer-events-none" />
+                <input type="checkbox" checked={isPinned} onChange={() => {}} className="w-4 h-4 accent-blue-500 border-white/5 rounded cursor-pointer pointer-events-none" />
                 <label className="text-sm font-medium text-gray-300 cursor-pointer select-none">Pin to top of feed</label>
               </div>
 
-              <button type="submit" disabled={isBroadcasting} className={`w-full flex items-center justify-center gap-2 px-6 py-2.5 text-white rounded-md text-sm font-medium transition-all disabled:opacity-50 mt-4 shadow-sm ${editId ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-emerald-600 hover:bg-emerald-700'}`}>
+              <button type="submit" disabled={isBroadcasting} className={`w-full flex items-center justify-center gap-2 px-6 py-3 text-white rounded-xl text-sm font-medium transition-colors disabled:opacity-50 mt-4 ${editId ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-blue-600 hover:bg-blue-700'}`}>
                 {isBroadcasting ? "Processing..." : editId ? "Update Announcement" : "Publish Announcement"} {!isBroadcasting && <Send className="w-4 h-4" />}
               </button>
             </form>
@@ -158,20 +158,20 @@ export default function AnnouncementsPage() {
           <h3 className="font-medium">Published Announcements</h3>
           
           {isLoadingList ? (
-            <div className="flex justify-center py-12"><div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div></div>
+            <div className="flex justify-center py-12"><div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div></div>
           ) : announcements.length === 0 ? (
-            <div className="bg-[#1c1c1c]/50 border border-white/10 border-dashed rounded-xl p-12 text-center text-gray-500 shadow-sm">No announcements published yet.</div>
+            <div className="bg-[#111827] border border-[#1F2937] border-dashed rounded-2xl p-12 text-center text-gray-500">No announcements published yet.</div>
           ) : (
             announcements.map((ann) => (
-              <div key={ann.id} className={`bg-[#1c1c1c] border rounded-xl p-5 shadow-sm transition-all ${ann.is_pinned ? 'border-emerald-500/30' : 'border-white/10'}`}>
+              <div key={ann.id} className={`bg-[#111827] border rounded-2xl p-5 hover:bg-[#1F2937]/50 transition-colors ${ann.is_pinned ? 'border-blue-500' : 'border-[#1F2937]'}`}>
                 
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex gap-3 items-start">
-                    <div className="mt-1">{ann.is_pinned ? <Pin className="w-4 h-4 text-white" /> : <Megaphone className="w-4 h-4 text-emerald-500" />}</div>
+                    <div className="mt-1">{ann.is_pinned ? <Pin className="w-4 h-4 text-white" /> : <Megaphone className="w-4 h-4 text-blue-500" />}</div>
                     <div>
                       <h4 className="font-medium text-gray-100 flex items-center gap-2">
                         {ann.title}
-                        {ann.is_pinned && <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2.5 py-0.5 rounded-md font-medium">Pinned</span>}
+                        {ann.is_pinned && <span className="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded-md font-bold uppercase tracking-wider">Pinned</span>}
                       </h4>
                       <p className="text-xs text-gray-500 mt-1">{new Date(ann.created_at).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}</p>
                     </div>
@@ -179,10 +179,10 @@ export default function AnnouncementsPage() {
                   
                   {/* Action Buttons (Edit & Delete) */}
                   <div className="flex items-center gap-1">
-                    <button onClick={() => handleEditClick(ann)} className="p-2 text-gray-400 hover:text-blue-400 hover:bg-blue-400/10 rounded-md transition-colors" title="Edit">
+                    <button onClick={() => handleEditClick(ann)} className="p-2 text-gray-400 hover:text-blue-400 hover:bg-[#1F2937] rounded-md transition-colors" title="Edit">
                       <Edit2 className="w-4 h-4" />
                     </button>
-                    <button onClick={() => handleDelete(ann.id, ann.title)} className="p-2 text-gray-400 hover:text-red-400 hover:bg-red-400/10 rounded-md transition-colors" title="Delete">
+                    <button onClick={() => handleDelete(ann.id, ann.title)} className="p-2 text-gray-400 hover:text-red-400 hover:bg-[#1F2937] rounded-md transition-colors" title="Delete">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>

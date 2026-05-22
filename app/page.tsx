@@ -440,24 +440,38 @@ export default function LandingPage() {
           {/* --- EVENT DESCRIPTION SECTION --- */}
           <section id="about" className="py-24 relative overflow-hidden">
 
-            <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
-              <h2
-                className="text-xl md:text-3xl font-bold dark:font-normal tracking-wide text-black dark:text-white leading-tight mb-10 transition-colors"
-                style={{ textShadow: mounted && resolvedTheme !== 'dark' ? "none" : "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
-              >
-                {mounted && !isMobile ? (
-                  <TextReveal
-                    text={tx.aboutHeading}
-                    delay={0.5}
-                    className="inline-block text-4xl md:text-5xl lg:text-6xl font-black dark:font-bold"
-                  />
-                ) : (
-                  <span className="inline-block text-4xl md:text-5xl lg:text-6xl font-black dark:font-bold">{tx.aboutHeading}</span>
-                )}
-              </h2>
-              <div className="space-y-6 text-black dark:text-gray-400 font-medium dark:font-light text-base md:text-lg leading-relaxed text-justify md:text-center transition-colors">
-                <p>{tx.aboutP1}</p>
-                <p>{tx.aboutP2}</p>
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
+              <div className="flex flex-col lg:flex-row items-center lg:items-stretch gap-12 lg:gap-16">
+                
+                {/* Left: Heading */}
+                <div className="lg:w-[45%] flex flex-col justify-center text-center lg:text-left">
+                  <h2
+                    className="text-xl md:text-3xl font-bold dark:font-normal tracking-wide text-black dark:text-white leading-tight transition-colors"
+                    style={{ textShadow: mounted && resolvedTheme !== 'dark' ? "none" : "0 0 3px rgba(255, 255, 255, 1), 0 0 6px rgba(40, 85, 124, 0.8), 0 0 9px rgba(67, 83, 207, 0.6)" }}
+                  >
+                    {mounted && !isMobile ? (
+                      <TextReveal
+                        text={tx.aboutHeading}
+                        delay={0.5}
+                        className="inline-block text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black dark:font-bold"
+                      />
+                    ) : (
+                      <span className="inline-block text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black dark:font-bold">{tx.aboutHeading}</span>
+                    )}
+                  </h2>
+                </div>
+
+                {/* Right: Paragraph in a Box */}
+                <div className="lg:w-[55%] flex flex-col justify-center">
+                  <div className="relative bg-white/70 dark:bg-white/[0.03] backdrop-blur-md dark:border-white/[0.06] rounded-3xl p-8 md:p-10 shadow-[0_4px_24px_rgba(59,130,246,0.08)] dark:shadow-[0_4px_32px_rgba(0,0,0,0.4)] hover:border-blue-400/40 dark:hover:border-blue-500/20 transition-all duration-500 group overflow-hidden">
+                    
+                    <div className="space-y-6 text-black/80 dark:text-gray-300 font-medium dark:font-light text-base md:text-md leading-relaxed text-justify relative z-10 transition-colors">
+                      <p>{tx.aboutP1}</p>
+                      <p>{tx.aboutP2}</p>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </section>
@@ -516,9 +530,7 @@ export default function LandingPage() {
                   <div className="relative bg-white/70 dark:bg-white/[0.03] backdrop-blur-md dark:border-white/[0.06] rounded-3xl p-7 shadow-[0_4px_24px_rgba(59,130,246,0.08)] dark:shadow-[0_4px_32px_rgba(0,0,0,0.4)] hover:border-blue-400/40 dark:hover:border-blue-500/20 transition-all duration-500 group overflow-hidden">
                     {/* Corner glow */}
                     <div className="absolute -top-6 -right-6 w-24 h-24 bg-blue-400/10 dark:bg-blue-500/10 rounded-full blur-2xl pointer-events-none transition-colors" />
-                    {/* Twinkling stars */}
-                    <span className="star-1 absolute top-4 left-4 text-blue-400 dark:text-blue-300 text-lg select-none pointer-events-none">✦</span>
-                    <span className="star-2 absolute top-6 right-10 text-blue-500 dark:text-cyan-400 text-sm select-none pointer-events-none">✦</span>
+                    
 
                     <p className="text-black/80 dark:text-gray-300 font-medium dark:font-light text-sm md:text-base leading-relaxed text-justify relative z-10 transition-colors">
                       {tx.mascotBio}
@@ -528,18 +540,9 @@ export default function LandingPage() {
                   {/* Card 2 - Motivational quote */}
                   <div className="relative bg-white/70 dark:bg-white/[0.03] backdrop-blur-md dark:border-white/[0.06] rounded-3xl p-7 shadow-[0_4px_24px_rgba(59,130,246,0.08)] dark:shadow-[0_4px_32px_rgba(0,0,0,0.4)] hover:border-blue-400/40 dark:hover:border-blue-500/20 transition-all duration-500 group overflow-hidden">
                     <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-cyan-400/10 dark:bg-cyan-500/10 rounded-full blur-2xl pointer-events-none transition-colors" />
-                    <span className="star-3 absolute bottom-5 right-6 text-blue-400 dark:text-cyan-300 text-lg select-none pointer-events-none">✦</span>
-                    <span className="star-4 absolute top-5 right-4 text-blue-500 dark:text-blue-300 text-sm select-none pointer-events-none">✦</span>
 
                     <p className="text-black/80 dark:text-gray-300 font-medium dark:font-light text-sm md:text-base leading-relaxed relative z-10 transition-colors">
                       {tx.mascotQuote}
-                    </p>
-                  </div>
-
-                  {/* Meet Mr. Sprint tagline */}
-                  <div className="text-center lg:text-left">
-                    <p className="text-gray-600 dark:text-gray-500 font-medium dark:font-light text-sm italic transition-colors">
-                      {tx.mascotTagline}
                     </p>
                   </div>
                 </div>
