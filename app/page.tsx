@@ -634,7 +634,7 @@ export default function LandingPage() {
 
               <div className="flex flex-col gap-6">
                 {/* Grid Style for Tiered Sponsors */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-4">
                   {/* Dicoding */}
                   <a href="https://www.dicoding.com/" target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-white/[0.02] p-8 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
                     <img
@@ -644,12 +644,12 @@ export default function LandingPage() {
                     />
                   </a>
 
-                  {/* Dyputu */}
-                  <a href="https://dyputustudio.com/" target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-white/[0.02] p-8 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
+                  {/* ITO EN */}
+                  <a href="https://itoen-ultrajaya.co.id/id/" target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-white/[0.02] p-8 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
                     <img
-                      src="/sponsor-logo/Dyputu.png"
-                      alt="Dyputu"
-                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                      src="/sponsor-logo/Logo ITO EN Horizontal (White type).png"
+                      alt="ITO EN"
+                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100 invert dark:invert-0"
                     />
                   </a>
 
@@ -667,6 +667,15 @@ export default function LandingPage() {
                     <img
                       src="/sponsor-logo/logo-sewa-HT.png"
                       alt="Sewa HT"
+                      className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                    />
+                  </a>
+
+                  {/* JOI Photobooth */}
+                  <a href="https://www.instagram.com/jose_imagi/" target="_blank" rel="noopener noreferrer" className="bg-white dark:bg-white/[0.02] p-8 rounded-3xl h-40 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 group hover:border-gray-300 dark:hover:border-white/20 shadow-sm dark:shadow-none">
+                    <img
+                      src="/sponsor-logo/Logo JOI PHOTOBOOTH.png"
+                      alt="JOI Photobooth"
                       className="max-h-full w-auto object-contain transition-all duration-300 group-hover:scale-105 opacity-80 group-hover:opacity-100"
                     />
                   </a>
